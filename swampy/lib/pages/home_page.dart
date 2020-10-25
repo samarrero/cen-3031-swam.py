@@ -113,6 +113,7 @@ class RowBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Row(
+      //TODO: ALIGNMENT
       children: new List.generate(this.itemCount,
               (index) => this.itemBuilder(context, index)).toList(),
     );
