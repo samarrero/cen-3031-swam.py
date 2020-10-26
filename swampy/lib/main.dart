@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:swampy/router/route_names.dart';
 import 'package:swampy/router/router.dart';
 import 'package:swampy/style.dart';
