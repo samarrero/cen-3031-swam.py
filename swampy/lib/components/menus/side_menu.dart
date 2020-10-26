@@ -4,6 +4,27 @@ class SideMenu extends StatelessWidget {
   @override
   Widget build(context) => ListView(
       children: [
+        MediaQuery.of(context).size.width < 600 ?
+        Column(
+          children: [
+            FlatButton(
+              child: ListTile(
+                leading: Icon(Icons.account_circle, color: Colors.black),
+                title: Text('Account', style: Theme.of(context).textTheme.headline6),
+              ),
+              onPressed: () {
+                //TODO
+              },
+            ),
+            Divider(
+              color: Colors.grey.shade700,
+              thickness: 1.0,
+            ),
+            SizedBox(
+              height: 8.0,
+            ),
+          ],
+        ) : SizedBox.shrink(),
         FlatButton(
             child: ListTile(
               leading: Icon(Icons.home_rounded, color: Colors.black),

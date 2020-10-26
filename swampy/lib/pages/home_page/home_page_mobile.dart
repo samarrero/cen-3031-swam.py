@@ -12,7 +12,7 @@ class HomePageMobile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70.0),
+        preferredSize: Size.fromHeight(55.0),
         child: NavBar.mobile(),
       ),
       drawer: Drawer(

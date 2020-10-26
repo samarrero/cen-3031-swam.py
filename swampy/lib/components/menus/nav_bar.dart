@@ -15,7 +15,7 @@ class NavBar extends StatelessWidget {
     return SafeArea(
       child: AppBar(
         title: Padding(
-          padding: const EdgeInsets.only(top: 10.0),
+          padding: EdgeInsets.only(top: mobile ? 0.0 : 10.0, bottom: mobile ? 2.0 : 0.0),
           child: mobile ?
           InkWell(
             child: Padding(
