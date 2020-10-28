@@ -1,4 +1,6 @@
+import 'package:fluro/fluro.dart' as fluro;
 import 'package:flutter/material.dart';
+import 'package:swampy/router/route.dart';
 
 class SideMenu extends StatelessWidget {
   @override
@@ -24,49 +26,65 @@ class SideMenu extends StatelessWidget {
               height: 8.0,
             ),
           ],
-        ) : SizedBox.shrink(),
+        ) : const SizedBox.shrink(),
         FlatButton(
             child: ListTile(
               leading: Icon(Icons.home_rounded, color: Colors.black),
               title: Text('Home', style: Theme.of(context).textTheme.headline6),
-              selected: true,
+              selected: ModalRoute.of(context).settings.name == HomeRoute ? true : false,
               selectedTileColor: Colors.grey.withOpacity(0.3),
             ),
             onPressed: () {
-              //TODO
+              FluroRouter.router.navigateTo(
+                  context,
+                  HomeRoute,
+                  transition: fluro.TransitionType.fadeIn,
+                  transitionDuration: Duration(milliseconds: 150));
             },
         ),
         FlatButton(
             child: ListTile(
               leading: Icon(Icons.widgets_rounded, color: Colors.black),
               title: Text('Products', style: Theme.of(context).textTheme.headline6,),
-              selected: false,
+              selected: ModalRoute.of(context).settings.name == ProductsRoute ? true : false,
               selectedTileColor: Colors.grey.withOpacity(0.3),
             ),
             onPressed: () {
-              //TODO
+              FluroRouter.router.navigateTo(
+                  context,
+                  ProductsRoute,
+                  transition: fluro.TransitionType.fadeIn,
+                  transitionDuration: Duration(milliseconds: 150));
             },
         ),
         FlatButton(
           child: ListTile(
             leading: Icon(Icons.description_rounded, color: Colors.black),
             title: Text('Orders', style: Theme.of(context).textTheme.headline6,),
-            selected: false,
+            selected: ModalRoute.of(context).settings.name == OrdersRoute ? true : false,
             selectedTileColor: Colors.grey.withOpacity(0.3),
           ),
           onPressed: () {
-            //TODO
+            FluroRouter.router.navigateTo(
+                context,
+                OrdersRoute,
+                transition: fluro.TransitionType.fadeIn,
+                transitionDuration: Duration(milliseconds: 150));
           },
         ),
         FlatButton(
           child: ListTile(
             leading: Icon(Icons.scatter_plot, color: Colors.black),
             title: Text('Analytics', style: Theme.of(context).textTheme.headline6,),
-            selected: false,
+            selected: ModalRoute.of(context).settings.name == AnalyticsRoute ? true : false,
             selectedTileColor: Colors.grey.withOpacity(0.3),
           ),
           onPressed: () {
-            //TODO
+            FluroRouter.router.navigateTo(
+                context,
+                AnalyticsRoute,
+                transition: fluro.TransitionType.fadeIn,
+                transitionDuration: Duration(milliseconds: 150));
           },
         ),
       ]
