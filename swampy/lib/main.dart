@@ -4,9 +4,11 @@ import 'package:swampy/router/route_names.dart';
 import 'package:swampy/router/router.dart';
 import 'package:swampy/services/firebase_auth_service.dart';
 import 'package:swampy/style.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp().then((v) => null);
   FluroRouter.setupRouter();
   runApp(
       // Swampy()

@@ -262,6 +262,7 @@ class CreateAccountForm extends StatelessWidget {
                         .createAccountWithEmailAndPassword(
                         controllers['email'].text, controllers['password'].text,
                         controllers['first'].text, controllers['last'].text);
+                    print('created account for ${controllers['first'].text} ${controllers['last'].text} with email ${controllers['email'].text}');
                   } catch (e) {
                     print(e);
                     Scaffold
@@ -460,6 +461,7 @@ class LoginForm extends StatelessWidget {
                   try {
                     await context.read<FirebaseAuthService>()
                         .signInWithEmailAndPassword(controllers['email'].text, controllers['password'].text);
+                    print('logged in as ${context.read<FirebaseAuthService>().currentUser().firstName} ${context.read<FirebaseAuthService>().currentUser().lastName} with uid ${context.read<FirebaseAuthService>().currentUser().uid}');
                   } catch (e) {
                     print(e.toString());
                     String message = '';
