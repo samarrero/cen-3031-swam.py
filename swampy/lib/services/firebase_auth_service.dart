@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:swampy/models/user.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirebaseAuthService {
   final FirebaseAuth _firebaseAuth;
+  CollectionReference _users = FirebaseFirestore.instance.collection('users');
 
   FirebaseAuthService({FirebaseAuth firebaseAuth})
       : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
@@ -18,20 +20,6 @@ class FirebaseAuthService {
         photoURL: user.photoURL,
         firstName: null,
         lastName: null,
-        phoneNumber: user.phoneNumber);
-  }
-
-  UserModel _userFromEmail(User user, String first, String last) {
-    if (user == null) {
-      return null;
-    }
-    return UserModel(
-        uid: user.uid,
-        email: user.email,
-        displayName: user.displayName,
-        photoURL: user.photoURL,
-        firstName: first,
-        lastName: last,
         phoneNumber: null);
   }
 
@@ -48,14 +36,31 @@ class FirebaseAuthService {
       String email, String password) async {
     final authResult = await _firebaseAuth.signInWithEmailAndPassword(
         email: email, password: password);
-    return _userFromFirebase(authResult.user);
+    final userDoc = await _users.doc(authResult.user.uid).get();
+    final data = userDoc.data();
+    return UserModel(
+      uid: authResult.user.uid,
+      email: data['email'],
+      firstName: data['first'],
+      lastName: data['last'],
+    );
   }
 
   Future<UserModel> createAccountWithEmailAndPassword(
       String email, String password, String first, String last) async {
     final authResult = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email, password: password);
-    return _userFromEmail(authResult.user, first, last);
+    _users.doc(authResult.user.uid).set({
+      'first' : '${first[0].toUpperCase()}${first.substring(1)}',
+      'last' : '${last[0].toUpperCase()}${last.substring(1)}',
+      'email' : email
+    }).then((value) => print('Added $first $last')).catchError((error) => print('Error: $error'));
+     return UserModel(
+      uid: authResult.user.uid,
+      email: email,
+      firstName: '${first[0].toUpperCase()}${first.substring(1)}',
+      lastName: '${last[0].toUpperCase()}${last.substring(1)}',
+    );;
   }
 
   Future<void> signOut() async {
