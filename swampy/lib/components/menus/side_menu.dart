@@ -15,7 +15,11 @@ class SideMenu extends StatelessWidget {
                 title: Text('Account', style: Theme.of(context).textTheme.headline6),
               ),
               onPressed: () {
-                //TODO
+                FluroRouter.router.navigateTo(
+                    context,
+                    LoginRoute,
+                    transition: fluro.TransitionType.fadeIn,
+                    transitionDuration: Duration(milliseconds: 150));
               },
             ),
             Divider(
