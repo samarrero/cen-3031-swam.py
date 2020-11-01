@@ -6,8 +6,12 @@ import 'package:swampy/pages/individual_product_page/individual_product_page_des
 import 'package:swampy/pages/individual_product_page/individual_product_page_mobile.dart';
 import 'package:swampy/pages/individual_product_page/individual_product_page_tablet.dart';
 
-class IndividualProductPage extends StatelessWidget {
+class ProductPage extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final String id;
+
+  ProductPage({@required this.id});
+
   List<ListElement> sample = List.generate(
       25,
       (index) => ListElement(
@@ -27,9 +31,9 @@ class IndividualProductPage extends StatelessWidget {
                 return;
               },
               child: ScreenTypeLayout(
-                desktop: IndividualProductPageDesktop(sample: sample),
-                tablet: IndividualProductPageTablet(sample: sample),
-                mobile: IndividualProductPageMobile(sample: sample),
+                desktop: ProductPageDesktop(sample: sample),
+                tablet: ProductPageTablet(sample: sample),
+                mobile: ProductPageMobile(sample: sample),
               ))),
     );
   }

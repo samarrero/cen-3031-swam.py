@@ -3,10 +3,10 @@ import 'package:swampy/components/list/list_element.dart';
 import 'package:swampy/components/menus/nav_bar.dart';
 import 'package:swampy/components/menus/side_menu.dart';
 
-class IndividualProductPageTablet extends StatelessWidget {
+class ProductPageTablet extends StatelessWidget {
   final List<ListElement> sample;
 
-  IndividualProductPageTablet({this.sample});
+  ProductPageTablet({this.sample});
 
   @override
   Widget build(BuildContext context) {
