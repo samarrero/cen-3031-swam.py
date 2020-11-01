@@ -28,10 +28,24 @@ class OrdersPageDesktop extends StatelessWidget {
             ),
             Container(
               width: MediaQuery.of(context).size.width - 200,
-              height: MediaQuery.of(context).size.height - 200,
-              child: ListView.builder(
-                itemCount: sample.length,
-                itemBuilder: (context, index) => sample[index],
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text('First'),
+                        Text('Second'),
+                        Text('Third'),
+                        Text('Fourth'),
+                      ],
+                    ),
+                    ColumnBuilder(
+                      itemCount: sample.length,
+                      itemBuilder: (context, index) => sample[index],
+                    ),
+                  ],
+                ),
               ),
             )
           ],
