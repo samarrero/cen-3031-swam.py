@@ -13,6 +13,9 @@ class FluroRouter {
   static fluro.Handler _productshandler = fluro.Handler(
       handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
           ProductsPage());
+  static fluro.Handler _individualproducthandler = fluro.Handler(
+      handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
+          ProductsPage());
   static fluro.Handler _ordershandler = fluro.Handler(
       handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
           OrdersPage());
@@ -29,6 +32,10 @@ class FluroRouter {
       handler: _productshandler,
     );
     router.define(
+      '/individualproduct',
+      handler: _individualproducthandler,
+    );
+    router.define(
       '/orders',
       handler: _ordershandler,
     );
@@ -42,4 +49,3 @@ class FluroRouter {
     // );
   }
 }
-
