@@ -22,6 +22,9 @@ class FluroRouter {
   static fluro.Handler _analyticshandler = fluro.Handler(
       handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
           AnalyticsPage());
+  static fluro.Handler _accountHandler = fluro.Handler(
+      handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
+          AccountPage());
   static void setupRouter() {
     router.define(
       '/',
@@ -42,6 +45,10 @@ class FluroRouter {
     router.define(
       '/analytics',
       handler: _analyticshandler,
+    );
+    router.define(
+      '/account',
+      handler: _accountHandler,
     );
     // router.define(
     //   '/product/:name',
