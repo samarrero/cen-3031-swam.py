@@ -32,22 +32,9 @@ class OrdersPageDesktop extends StatelessWidget {
               child: Section(
                 title: 'Orders',
                 child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text('First'),
-                          Text('Second'),
-                          Text('Third'),
-                          Text('Fourth'),
-                        ],
-                      ),
-                      ColumnBuilder(
-                        itemCount: sample.length,
-                        itemBuilder: (context, index) => sample[index],
-                      ),
-                    ],
+                  child: ColumnBuilder(
+                    itemCount: sample.length,
+                    itemBuilder: (context, index) => sample[index],
                   ),
                 ),
               ),
