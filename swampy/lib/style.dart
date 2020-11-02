@@ -9,6 +9,7 @@ class Style {
 
     fontFamily: 'Montserrat',
 
+    //TODO: MAKE ALL FONTS BOLD
     textTheme: TextTheme(
       headline1: TextStyle(fontSize: 50.50, fontWeight: FontWeight.w300, color: Colors.black),
       headline2: TextStyle(fontSize: 37.89, fontWeight: FontWeight.w500, color: Colors.black),
