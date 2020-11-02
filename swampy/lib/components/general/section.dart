@@ -8,6 +8,21 @@ class Section extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Padding(
+      padding: const EdgeInsets.only(top: 24.0),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: Theme.of(context).textTheme.headline3.copyWith(fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 16.0),
+            child
+          ],
+        ),
+      ),
+    );
   }
 }
