@@ -3,10 +3,10 @@ import 'package:swampy/components/list/list_element.dart';
 import 'package:swampy/components/menus/nav_bar.dart';
 import 'package:swampy/components/menus/side_menu.dart';
 
-class ProductPageTablet extends StatelessWidget {
+class OrdersPageTablet extends StatelessWidget {
   final List<ListElement> sample;
 
-  ProductPageTablet({this.sample});
+  OrdersPageTablet({this.sample});
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +27,7 @@ class ProductPageTablet extends StatelessWidget {
             ),
             Container(
               width: MediaQuery.of(context).size.width - 200,
+              height: MediaQuery.of(context).size.height - 100,
               child: ListView.builder(
                 itemCount: sample.length,
                 itemBuilder: (context, index) => sample[index],

@@ -25,20 +25,20 @@ class HomePage extends StatelessWidget {
     return ResponsiveBuilder(
       builder: (context, sizingInformation) =>
           Scaffold(
-            resizeToAvoidBottomInset: false,
-            backgroundColor: Colors.white,
-            key: _scaffoldKey,
-            body: NotificationListener<OverscrollIndicatorNotification>(
-                onNotification: (OverscrollIndicatorNotification overscroll) {
-                  overscroll.disallowGlow();
-                  return;
-                },
-                child: ScreenTypeLayout(
-                  desktop: HomePageDesktop(sample: sample,),
-                  tablet: HomePageTablet(sample: sample),
-                  mobile: HomePageMobile(sample: sample),
-                )
-            )
+              resizeToAvoidBottomInset: false,
+              backgroundColor: Colors.white,
+              key: _scaffoldKey,
+              body: NotificationListener<OverscrollIndicatorNotification>(
+                  onNotification: (OverscrollIndicatorNotification overscroll) {
+                    overscroll.disallowGlow();
+                    return;
+                  },
+                  child: ScreenTypeLayout(
+                    desktop: HomePageDesktop(sample: sample),
+                    tablet: HomePageTablet(sample: sample),
+                    mobile: HomePageMobile(sample: sample),
+                  )
+              )
           ),
     );
   }

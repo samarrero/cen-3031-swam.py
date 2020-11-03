@@ -3,10 +3,10 @@ import 'package:swampy/components/list/list_element.dart';
 import 'package:swampy/components/menus/nav_bar.dart';
 import 'package:swampy/components/menus/side_menu.dart';
 
-class ProductPageMobile extends StatelessWidget {
+class OrdersPageMobile extends StatelessWidget {
   final List<ListElement> sample;
 
-  ProductPageMobile({this.sample});
+  OrdersPageMobile({this.sample});
 
   @override
   Widget build(BuildContext context) {

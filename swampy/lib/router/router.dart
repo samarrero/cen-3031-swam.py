@@ -4,16 +4,13 @@ import 'package:swampy/pages/pages.dart';
 
 class FluroRouter {
   static fluro.FluroRouter router = fluro.FluroRouter();
-  // static fluro.Handler _productHandler = fluro.Handler(
-  //     handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
-  //         ProductPage(name: params['name'][0]));
+  static fluro.Handler _productHandler = fluro.Handler(
+      handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
+          ProductPage(id: params['id'][0]));
   static fluro.Handler _homehandler = fluro.Handler(
       handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
           HomePage());
   static fluro.Handler _productshandler = fluro.Handler(
-      handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
-          ProductsPage());
-  static fluro.Handler _individualproducthandler = fluro.Handler(
       handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
           ProductsPage());
   static fluro.Handler _ordershandler = fluro.Handler(
@@ -22,6 +19,9 @@ class FluroRouter {
   static fluro.Handler _analyticshandler = fluro.Handler(
       handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
           AnalyticsPage());
+  static fluro.Handler _accountHandler = fluro.Handler(
+      handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
+          AccountPage());
   static void setupRouter() {
     router.define(
       '/',
@@ -32,8 +32,8 @@ class FluroRouter {
       handler: _productshandler,
     );
     router.define(
-      '/individualproduct',
-      handler: _individualproducthandler,
+      '/products/:id',
+      handler: _productHandler,
     );
     router.define(
       '/orders',
@@ -42,6 +42,10 @@ class FluroRouter {
     router.define(
       '/analytics',
       handler: _analyticshandler,
+    );
+    router.define(
+      '/account',
+      handler: _accountHandler,
     );
     // router.define(
     //   '/product/:name',
