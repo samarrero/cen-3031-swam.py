@@ -1,9 +1,8 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:swampy/components/general/column_builder.dart';
 import 'package:swampy/components/list/list_element.dart';
+import 'package:swampy/components/list/list_category.dart';
 
 class ListWrapper extends StatefulWidget {
   final List<String> titles;
@@ -16,6 +15,14 @@ class ListWrapper extends StatefulWidget {
 }
 
 class _ListWrapperState extends State<ListWrapper> {
+  List<Sort> sorts;
+
+  @override
+  void initState() {
+    sorts = List.generate(widget.titles.length, (index) => Sort.none);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ResponsiveBuilder(
@@ -23,10 +30,21 @@ class _ListWrapperState extends State<ListWrapper> {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: List.generate(widget.titles.length, (index) => Text(
-                widget.titles[index], style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold),
-            )
-            ),
+            children: List.generate(widget.titles.length, (index) {
+              return InkWell(
+                  child: ListCategory(name: widget.titles[index], sort: sorts[index]),
+                  onTap: () {
+                    setState(() {
+                      for (int i = 0; i < sorts.length; i++) {
+                        if (i != index) sorts[i] = Sort.none;
+                      }
+                      if (sorts[index] == Sort.none) sorts[index] = Sort.descending;
+                      else if (sorts[index] == Sort.descending) sorts[index] = Sort.ascending;
+                      else if (sorts[index] == Sort.ascending) sorts[index] = Sort.none;
+                    });
+                  },
+              );
+            }),
           ),
           SizedBox(height: 6.0,),
           ConstrainedBox(
