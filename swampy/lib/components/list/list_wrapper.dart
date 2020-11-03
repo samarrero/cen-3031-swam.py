@@ -6,7 +6,7 @@ import 'package:swampy/components/list/list_category.dart';
 
 class ListWrapper extends StatefulWidget {
   final List<String> titles;
-  final List<ListElement> elements;
+  List<ListElement> elements;
 
   ListWrapper({@required this.titles, @required this.elements});
 
@@ -16,10 +16,12 @@ class ListWrapper extends StatefulWidget {
 
 class _ListWrapperState extends State<ListWrapper> {
   List<Sort> sorts;
+  List<ListElement> original;
 
   @override
   void initState() {
     sorts = List.generate(widget.titles.length, (index) => Sort.none);
+    original = List.from(widget.elements);
     super.initState();
   }
 
@@ -38,9 +40,30 @@ class _ListWrapperState extends State<ListWrapper> {
                       for (int i = 0; i < sorts.length; i++) {
                         if (i != index) sorts[i] = Sort.none;
                       }
-                      if (sorts[index] == Sort.none) sorts[index] = Sort.descending;
-                      else if (sorts[index] == Sort.descending) sorts[index] = Sort.ascending;
-                      else if (sorts[index] == Sort.ascending) sorts[index] = Sort.none;
+                      if (sorts[index] == Sort.none) {
+                        sorts[index] = Sort.descending;
+                        widget.elements.sort((a, b) {
+                          try {
+                            return int.parse(a.items[index]) < int.parse(b.items[index]) ? -1 : 1;
+                          } catch (e) {
+                            return a.items[index].compareTo(b.items[index]);
+                          }
+                        });
+                      }
+                      else if (sorts[index] == Sort.descending) {
+                        sorts[index] = Sort.ascending;
+                        widget.elements.sort((a, b) {
+                          try {
+                            return int.parse(a.items[index]) < int.parse(b.items[index]) ? 1 : -1;
+                          } catch (e) {
+                            return b.items[index].compareTo(a.items[index]);
+                          }
+                        });
+                      }
+                      else if (sorts[index] == Sort.ascending) {
+                        sorts[index] = Sort.none;
+                        widget.elements = original;
+                      }
                     });
                   },
               );

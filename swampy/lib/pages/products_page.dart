@@ -15,17 +15,14 @@ class ProductsPage extends StatelessWidget {
             items: ['$index', '${index + 7}', '${index + 8}', '${index + 9}'],
           ));
 
-  List<Product> products = List.generate(
-      25,
-          (index) => Product(
-          name: '$index',
-          vendor: '${index + 1}',
-          amountInInventory: index + 2,
-          type: '${index + 3}',
-          amountSold: index + 4,
-          id: 'no',
-          price: 0
-      ));
+  List<Product> products = [
+    Product(name: 'A', vendor: 'A', amountInInventory: 5, type: 'A', amountSold: 1, id: 'no', price: 0),
+    Product(name: 'B', vendor: 'B', amountInInventory: 2, type: 'B', amountSold: 2, id: 'no', price: 0),
+    Product(name: 'C', vendor: 'E', amountInInventory: 3, type: 'C', amountSold: 3, id: 'no', price: 0),
+    Product(name: 'D', vendor: 'G', amountInInventory: 76, type: 'G', amountSold: 1, id: 'no', price: 0),
+    Product(name: 'E', vendor: 'F', amountInInventory: 1, type: 'BG', amountSold: 2, id: 'no', price: 0),
+    Product(name: 'F', vendor: 'Z', amountInInventory: 67, type: 'C', amountSold: 3, id: 'no', price: 0),
+  ];
 
   @override
   Widget build(BuildContext context) {
