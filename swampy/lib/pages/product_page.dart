@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:swampy/components/list/list_element.dart';
 import 'package:swampy/components/menus/nav_bar.dart';
-import 'package:swampy/pages/individual_product_page/individual_product_page_desktop.dart';
-import 'package:swampy/pages/individual_product_page/individual_product_page_mobile.dart';
-import 'package:swampy/pages/individual_product_page/individual_product_page_tablet.dart';
+import 'package:swampy/pages/product_page/product_page_desktop.dart';
+import 'package:swampy/pages/product_page/product_page_mobile.dart';
+import 'package:swampy/pages/product_page/product_page_tablet.dart';
 
 class ProductPage extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
