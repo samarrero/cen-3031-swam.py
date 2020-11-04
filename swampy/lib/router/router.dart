@@ -39,6 +39,7 @@ class FluroRouter {
       '/orders',
       handler: _ordershandler,
     );
+    // to do: add individual order
     router.define(
       '/analytics',
       handler: _analyticshandler,
