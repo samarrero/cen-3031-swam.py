@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:swampy/components/general/section.dart';
 import 'package:swampy/components/list/list_element.dart';
 import 'package:swampy/components/menus/nav_bar.dart';
 import 'package:swampy/components/menus/side_menu.dart';
@@ -22,9 +23,12 @@ class OrdersPageMobile extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: ListView.builder(
-          itemCount: sample.length,
-          itemBuilder: (context, index) => sample[index],
+        child: Section(
+          title: 'Orders',
+          child: ListView.builder(
+            itemCount: sample.length,
+            itemBuilder: (context, index) => sample[index],
+          ),
         ),
       ),
     );
