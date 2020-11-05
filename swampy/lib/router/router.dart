@@ -16,6 +16,9 @@ class FluroRouter {
   static fluro.Handler _ordershandler = fluro.Handler(
       handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
           OrdersPage());
+  static fluro.Handler _orderhandler = fluro.Handler(
+      handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
+          OrderPage(id: params['id'][0]));
   static fluro.Handler _analyticshandler = fluro.Handler(
       handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
           AnalyticsPage());
@@ -39,7 +42,10 @@ class FluroRouter {
       '/orders',
       handler: _ordershandler,
     );
-    // to do: add individual order
+    router.define(
+      '/orders/:id',
+      handler: _orderhandler,
+    );
     router.define(
       '/analytics',
       handler: _analyticshandler,
