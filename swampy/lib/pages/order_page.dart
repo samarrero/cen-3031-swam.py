@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:swampy/components/list/list_element.dart';
 import 'package:swampy/components/menus/nav_bar.dart';
-import 'package:swampy/pages/product_page/product_page_desktop.dart';
-import 'package:swampy/pages/product_page/product_page_mobile.dart';
-import 'package:swampy/pages/product_page/product_page_tablet.dart';
+import 'package:swampy/pages/order_page/order_page_desktop.dart';
+import 'package:swampy/pages/order_page/order_page_mobile.dart';
+import 'package:swampy/pages/order_page/order_page_tablet.dart';
 
-class ProductPage extends StatelessWidget {
+class OrderPage extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final String id;
 
-  ProductPage({@required this.id});
+  OrderPage({@required this.id});
 
   List<ListElement> sample = List.generate(
       25,
@@ -31,9 +31,9 @@ class ProductPage extends StatelessWidget {
                 return;
               },
               child: ScreenTypeLayout(
-                desktop: ProductPageDesktop(sample: sample),
-                tablet: ProductPageTablet(sample: sample),
-                mobile: ProductPageMobile(sample: sample),
+                desktop: OrderPageDesktop(sample: sample),
+                tablet: OrderPageTablet(sample: sample),
+                mobile: OrderPageMobile(sample: sample),
               ))),
     );
   }
