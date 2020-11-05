@@ -18,7 +18,7 @@ class OrderPageDesktop extends StatelessWidget {
         child: NavBar(),
       ),
       body: SafeArea(
-        child: Row(
+          child: Row(
           children: [
             Container(
               width: 200,
@@ -28,44 +28,39 @@ class OrderPageDesktop extends StatelessWidget {
               ),
             ),
             Container(
-                width: MediaQuery.of(context).size.width - 200,
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(32.0)),
-                  elevation: 3.0,
-                  child: Row(children: <Widget>[
-                    Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          const ListTile(
-                              //title: Text('Order #', style: Theme.of(context).textTheme.bodyText2),
-                              ),
-                          const ListTile(
-                            title: Text('Date'),
-                          ),
-                          const ListTile(
-                            title: Text('Status'),
-                          ),
-                          const ListTile(
-                            title: Text('Total'),
-                          ),
-                        ]),
-                    Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          const ListTile(
-                            title: Text('Customer Info'),
-                          ),
-                        ])
-                  ]),
-                )),
-            Container(
               width: MediaQuery.of(context).size.width - 200,
-              child: ListView.builder(
-                itemCount: sample.length,
-                itemBuilder: (context, index) => sample[index],
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(32.0)),
+                      elevation: 3.0,
+                      child: Row(children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text('Order #', style: Theme.of(context).textTheme.bodyText2),
+                              Text('Date'),
+                              Text('Status'),
+                              Text('Total'),
+                            ]),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text('Customer Info'),
+                            ])
+                      ]),
+                    ),
+                    ColumnBuilder(
+                      itemCount: sample.length,
+                      itemBuilder: (context, index) => sample[index],
+                    )
+                  ],
+                ),
               ),
-            )
+            ),
+
           ],
         ),
       ),
