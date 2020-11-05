@@ -37,23 +37,24 @@ class OrderPageDesktop extends StatelessWidget {
                     Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                          const ListTile(
-                              //title: Text('Order #', style: Theme.of(context).textTheme.bodyText2),
-                              ),
-                          const ListTile(
+                          ListTile(
+                            title: Text('Order #',
+                                style: Theme.of(context).textTheme.headline1),
+                          ),
+                          ListTile(
                             title: Text('Date'),
                           ),
-                          const ListTile(
+                          ListTile(
                             title: Text('Status'),
                           ),
-                          const ListTile(
+                          ListTile(
                             title: Text('Total'),
                           ),
                         ]),
                     Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
-                          const ListTile(
+                          ListTile(
                             title: Text('Customer Info'),
                           ),
                         ])
