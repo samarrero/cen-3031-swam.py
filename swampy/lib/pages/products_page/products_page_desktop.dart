@@ -36,7 +36,7 @@ class ProductsPageDesktop extends StatelessWidget {
                 child: Section(
                   title: 'Products',
                   child: ListWrapper(
-                    titles: ['Product', 'Inventory', 'Type', 'Vendor', '#Sold'],
+                    titles: ['Product', 'Inventory', 'Type', 'Vendor', '# Sold'],
                     elements: products.map((product) => ListElement(
                       items: [
                         product.name,
