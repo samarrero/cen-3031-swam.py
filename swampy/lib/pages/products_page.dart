@@ -22,6 +22,10 @@ class ProductsPage extends StatelessWidget {
     Product(name: 'D', vendor: 'G', amountInInventory: 76, type: 'G', amountSold: 1, id: 'no', price: 0),
     Product(name: 'E', vendor: 'F', amountInInventory: 1, type: 'BG', amountSold: 2, id: 'no', price: 0),
     Product(name: 'F', vendor: 'Z', amountInInventory: 67, type: 'C', amountSold: 3, id: 'no', price: 0),
+    Product(name: 'ASDF', vendor: 'E', amountInInventory: 3, type: 'C', amountSold: 3, id: 'no', price: 0),
+    Product(name: 'OE EFSD', vendor: 'G', amountInInventory: 76, type: 'G', amountSold: 1, id: 'no', price: 0),
+    Product(name: 'AKEHEF', vendor: 'F', amountInInventory: 1, type: 'BG', amountSold: 2, id: 'no', price: 0),
+    Product(name: 'FAEYGF', vendor: 'Z', amountInInventory: 67, type: 'C', amountSold: 3, id: 'no', price: 0),
   ];
 
   @override

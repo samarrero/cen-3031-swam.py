@@ -1,8 +1,11 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:swampy/components/general/column_builder.dart';
 import 'package:swampy/components/list/list_element.dart';
 import 'package:swampy/components/list/list_category.dart';
+import 'package:autotrie/autotrie.dart';
 
 class ListWrapper extends StatefulWidget {
   final List<String> titles;
@@ -18,11 +21,17 @@ class _ListWrapperState extends State<ListWrapper> {
   List<Sort> sorts;
   List<ListElement> original;
   TextEditingController _searchController = TextEditingController();
+  AutoComplete searchComplete = AutoComplete(engine: SortEngine.configMulti(Duration(seconds: 1), 15, 0.5, 0.5));
+  HashMap<String, ListElement> lookupTable = HashMap<String, ListElement>();
 
   @override
   void initState() {
     sorts = List.generate(widget.titles.length, (index) => Sort.none);
     original = List.from(widget.elements);
+    for (ListElement element in original) {
+      searchComplete.enter(element.items[0].toLowerCase());
+      lookupTable[element.items[0].toLowerCase()] = element;
+    }
     super.initState();
   }
 
@@ -38,7 +47,17 @@ class _ListWrapperState extends State<ListWrapper> {
             child: TextFormField(
               controller: _searchController,
               onChanged: (val) {
-                print(val);
+                final matches = searchComplete.suggest(val.toLowerCase());
+                for (ListElement element in original) {
+                  setState(() {
+                    element.visible = false;
+                  });
+                }
+                for (String match in matches) {
+                  setState(() {
+                    lookupTable[match].visible = true;
+                  });
+                }
               },
               cursorColor: Theme.of(context).primaryColor,
               decoration: InputDecoration(
@@ -119,9 +138,8 @@ class _ListWrapperState extends State<ListWrapper> {
                 child: ColumnBuilder(
                     itemCount: widget.elements.length,
                     itemBuilder: (context, index) {
-                      // if (widget.elements[index].visible)
-                      return widget.elements[index];
-                      // return SizedBox.shrink();
+                      if(widget.elements[index].visible) return widget.elements[index];
+                      return SizedBox.shrink();
                     }
                 )
             ),
