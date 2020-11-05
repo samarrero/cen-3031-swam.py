@@ -137,10 +137,12 @@ class _ListWrapperState extends State<ListWrapper> {
             child: SingleChildScrollView(
                 child: ColumnBuilder(
                     itemCount: widget.elements.length,
-                    itemBuilder: (context, index) {
-                      if(widget.elements[index].visible) return widget.elements[index];
-                      return SizedBox.shrink();
-                    }
+                    itemBuilder: (context, index) => AnimatedCrossFade(
+                      firstChild: widget.elements[index],
+                      secondChild: SizedBox.shrink(),
+                      crossFadeState: widget.elements[index].visible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                      duration: Duration(milliseconds: 200),
+                    )
                 )
             ),
           )
