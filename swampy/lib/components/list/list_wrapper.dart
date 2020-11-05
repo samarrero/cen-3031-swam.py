@@ -20,7 +20,6 @@ class ListWrapper extends StatefulWidget {
 class _ListWrapperState extends State<ListWrapper> {
   List<Sort> sorts;
   List<ListElement> original;
-  TextEditingController _searchController = TextEditingController();
   AutoComplete searchComplete = AutoComplete(engine: SortEngine.configMulti(Duration(seconds: 1), 15, 0.5, 0.5));
   HashMap<String, ListElement> lookupTable = HashMap<String, ListElement>();
 
@@ -45,7 +44,6 @@ class _ListWrapperState extends State<ListWrapper> {
                 borderRadius: BorderRadius.circular(32.0)),
             elevation: 3.0,
             child: TextFormField(
-              controller: _searchController,
               onChanged: (val) {
                 final matches = searchComplete.suggest(val.toLowerCase());
                 for (ListElement element in original) {
