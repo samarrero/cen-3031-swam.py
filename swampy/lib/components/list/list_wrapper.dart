@@ -129,12 +129,13 @@ class _ListWrapperState extends State<ListWrapper> {
             }),
           ),
           SizedBox(height: 6.0,),
-          ConstrainedBox(
-            constraints: BoxConstraints(
-                maxHeight: sizingInformation.deviceScreenType == DeviceScreenType.mobile ?
-                MediaQuery.of(context).size.height - (55 + 24 + 28.42 + 46.6) : MediaQuery.of(context).size.height - (70 + 24 + 28.42 + 46.6)
-            ),
+          Flexible(
             child: SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                    maxHeight: sizingInformation.deviceScreenType == DeviceScreenType.mobile ?
+                    MediaQuery.of(context).size.height - (55 + 24 + 28.42 + 46.6) : MediaQuery.of(context).size.height - (70 + 24 + 28.42 + 46.6)
+                ),
                 child: ColumnBuilder(
                     itemCount: widget.elements.length,
                     itemBuilder: (context, index) => AnimatedCrossFade(
@@ -143,7 +144,8 @@ class _ListWrapperState extends State<ListWrapper> {
                       crossFadeState: widget.elements[index].visible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
                       duration: Duration(milliseconds: 200),
                     )
-                )
+                ),
+              ),
             ),
           )
         ],
