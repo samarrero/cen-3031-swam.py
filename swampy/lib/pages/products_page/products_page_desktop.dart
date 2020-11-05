@@ -14,40 +14,43 @@ class ProductsPageDesktop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70.0),
-        child: NavBar(),
-      ),
-      body: SafeArea(
-        child: Row(
-          children: [
-            Container(
-              width: 200,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 10.0),
-                child: SideMenu(),
-              ),
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width - 200,
-              child: Section(
-                title: 'Products',
-                child: ListWrapper(
-                  titles: ['Product', 'Inventory', 'Type', 'Vendor', '#Sold'],
-                  elements: products.map((product) => ListElement(
-                    items: [
-                      product.name,
-                      product.amountInInventory.toString(),
-                      product.type,
-                      product.vendor,
-                      product.amountSold.toString()
-                    ],
-                  )).toList(),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(70.0),
+          child: NavBar(),
+        ),
+        body: SafeArea(
+          child: Row(
+            children: [
+              Container(
+                width: 200,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: SideMenu(),
                 ),
               ),
-            )
-          ],
+              Container(
+                width: MediaQuery.of(context).size.width - 200,
+                child: Section(
+                  title: 'Products',
+                  child: ListWrapper(
+                    titles: ['Product', 'Inventory', 'Type', 'Vendor', '#Sold'],
+                    elements: products.map((product) => ListElement(
+                      items: [
+                        product.name,
+                        product.amountInInventory.toString(),
+                        product.type,
+                        product.vendor,
+                        product.amountSold.toString()
+                      ],
+                    )).toList(),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

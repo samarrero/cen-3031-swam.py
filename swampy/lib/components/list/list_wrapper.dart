@@ -17,6 +17,7 @@ class ListWrapper extends StatefulWidget {
 class _ListWrapperState extends State<ListWrapper> {
   List<Sort> sorts;
   List<ListElement> original;
+  TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
@@ -30,6 +31,45 @@ class _ListWrapperState extends State<ListWrapper> {
     return ResponsiveBuilder(
       builder: (context, sizingInformation) => Column(
         children: [
+          Card(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(32.0)),
+            elevation: 3.0,
+            child: TextFormField(
+              controller: _searchController,
+              onChanged: (val) {
+                print(val);
+              },
+              cursorColor: Theme.of(context).primaryColor,
+              decoration: InputDecoration(
+                suffixIcon: Padding(
+                  padding: const EdgeInsets.only(right: 18.0),
+                  child: Icon(Icons.search_rounded),
+                ),
+                alignLabelWithHint: true,
+                enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(width: 0, color: Colors.transparent),
+                    borderRadius: BorderRadius.circular(32.0)
+                ),
+                border: OutlineInputBorder(
+                    borderSide: BorderSide(width: 0, color: Colors.transparent),
+                    borderRadius: BorderRadius.circular(32.0)
+                ),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(width: 0, color: Colors.transparent),
+                    borderRadius: BorderRadius.circular(32.0)
+                ),
+                errorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(width: 0, color: Colors.transparent),
+                    borderRadius: BorderRadius.circular(32.0)
+                ),
+                contentPadding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 18.0),
+                hintText: 'Search for a product',
+                hintStyle: Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.normal),
+              ),
+            ),
+          ),
+          SizedBox(height: 18.0,),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: List.generate(widget.titles.length, (index) {
@@ -78,7 +118,11 @@ class _ListWrapperState extends State<ListWrapper> {
             child: SingleChildScrollView(
                 child: ColumnBuilder(
                     itemCount: widget.elements.length,
-                    itemBuilder: (context, index) => widget.elements[index]
+                    itemBuilder: (context, index) {
+                      // if (widget.elements[index].visible)
+                      return widget.elements[index];
+                      // return SizedBox.shrink();
+                    }
                 )
             ),
           )
