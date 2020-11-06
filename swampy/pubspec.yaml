@@ -21,7 +21,6 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-  circular_check_box: ^1.0.4
   autotrie: ^1.0.0+2
   provider: ^4.3.2+2
   fluro: ^1.7.6

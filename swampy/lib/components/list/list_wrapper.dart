@@ -1,11 +1,11 @@
 import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+import 'package:swampy/components/general/circular_checkbox.dart';
 import 'package:swampy/components/general/column_builder.dart';
 import 'package:swampy/components/list/list_element.dart';
 import 'package:swampy/components/list/list_category.dart';
 import 'package:autotrie/autotrie.dart';
-import 'package:circular_check_box/circular_check_box.dart';
 
 //TODO: There's a bug where if you resize, the filtering doesn't work
 class ListWrapper extends StatefulWidget {
@@ -210,7 +210,7 @@ class _ListWrapperState extends State<ListWrapper> {
                           duration: Duration(milliseconds: 150),
                           constraints: BoxConstraints(
                             maxWidth: MediaQuery.of(context).size.width * 0.2,
-                              maxHeight: 300
+                              maxHeight: 400
                           ),
                           child: showFilterMenu ? Column(
                             mainAxisSize: MainAxisSize.min,
@@ -259,6 +259,11 @@ class _ListWrapperState extends State<ListWrapper> {
                                 ),
                               ),
                               Flexible(
+                                child: SizedBox(
+                                  height: 12.0,
+                                ),
+                              ),
+                              Flexible(
                                 child: Padding(
                                     padding: const EdgeInsets.symmetric(horizontal: 18.0),
                                     child: Text('# Sold', style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold),)
@@ -297,77 +302,123 @@ class _ListWrapperState extends State<ListWrapper> {
                                 ),
                               ),
                               Flexible(
+                                child: SizedBox(
+                                  height: 12.0,
+                                ),
+                              ),
+                              Flexible(
                                 child: Padding(
                                     padding: const EdgeInsets.symmetric(horizontal: 18.0),
                                     child: Text('Type', style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold),)
                                 ),
                               ),
                               Flexible(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                  child: CheckboxListTile(
-                                    checkColor: Theme.of(context).primaryColor,
-                                    activeColor: Theme.of(context).primaryColor,
-                                    title: Text('Hat'),
-                                    value: typesValues['Hat'],
-                                    onChanged: (newValue) {
-                                      setState(() {
-                                        typesValues['Hat'] = newValue;
-                                      });
-                                    },
-                                    controlAffinity: ListTileControlAffinity.leading,  //  <-- leading Checkbox
-                                  ),
+                                child: SizedBox(
+                                  height: 12.0,
                                 ),
                               ),
                               Flexible(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                  child: CheckboxListTile(
-                                    checkColor: Theme.of(context).primaryColor,
-                                    activeColor: Theme.of(context).primaryColor,
-                                    title: Text('Shirt'),
-                                    value: typesValues['Shirt'],
-                                    onChanged: (newValue) {
-                                      setState(() {
-                                        typesValues['Shirt'] = newValue;
-                                      });
-                                    },
-                                    controlAffinity: ListTileControlAffinity.leading,  //  <-- leading Checkbox
-                                  ),
-                                ),
-                              ),
-                              Flexible(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                  child: CheckboxListTile(
-                                    checkColor: Theme.of(context).primaryColor,
-                                    activeColor: Theme.of(context).primaryColor,
-                                    title: Text('Pants'),
-                                    value: typesValues['Pants'],
-                                    onChanged: (newValue) {
-                                      setState(() {
-                                        typesValues['Pants'] = newValue;
-                                      });
-                                    },
-                                    controlAffinity: ListTileControlAffinity.leading,  //  <-- leading Checkbox
-                                  ),
-                                ),
-                              ),
-                              Flexible(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                  child: CheckboxListTile(
-                                    checkColor: Theme.of(context).primaryColor,
-                                    activeColor: Theme.of(context).primaryColor,
-                                    title: Text('Shoes'),
-                                    value: typesValues['Shoes'],
-                                    onChanged: (newValue) {
-                                      setState(() {
-                                        typesValues['Shoes'] = newValue;
-                                      });
-                                    },
-                                    controlAffinity: ListTileControlAffinity.leading,  //  <-- leading Checkbox
-                                  ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Flexible(
+                                          child: CircularCheckBox(
+                                            value: typesValues['Hat'],
+                                            inactiveColor: Colors.grey[300],
+                                            checkColor: Theme.of(context).primaryColor,
+                                            activeColor: Theme.of(context).primaryColor,
+                                            materialTapTargetSize: MaterialTapTargetSize.padded,
+                                            onChanged: (_) {
+                                              setState(() {
+                                                typesValues['Hat'] = !typesValues['Hat'];
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                        Flexible(
+                                          child: SizedBox(
+                                            height: 6.0,
+                                          ),
+                                        ),
+                                        Flexible(child: Text('Hat', style: Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.bold), ))
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        Flexible(
+                                          child: CircularCheckBox(
+                                            value: typesValues['Shirt'],
+                                            inactiveColor: Colors.grey[300],
+                                            checkColor: Theme.of(context).primaryColor,
+                                            activeColor: Theme.of(context).primaryColor,
+                                            materialTapTargetSize: MaterialTapTargetSize.padded,
+                                            onChanged: (_) {
+                                              setState(() {
+                                                typesValues['Shirt'] = !typesValues['Shirt'];
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                        Flexible(
+                                          child: SizedBox(
+                                            height: 6.0,
+                                          ),
+                                        ),
+                                        Flexible(child: Text('Shirt', style: Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.bold), ))
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        Flexible(
+                                          child: CircularCheckBox(
+                                            value: typesValues['Pants'],
+                                            inactiveColor: Colors.grey[300],
+                                            checkColor: Theme.of(context).primaryColor,
+                                            activeColor: Theme.of(context).primaryColor,
+                                            materialTapTargetSize: MaterialTapTargetSize.padded,
+                                            onChanged: (_) {
+                                              setState(() {
+                                                typesValues['Pants'] = !typesValues['Pants'];
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                        Flexible(
+                                          child: SizedBox(
+                                            height: 6.0,
+                                          ),
+                                        ),
+                                        Flexible(child: Text('Pants', style: Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.bold), ))
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        Flexible(
+                                          child: CircularCheckBox(
+                                            value: typesValues['Shoes'],
+                                            inactiveColor: Colors.grey[300],
+                                            checkColor: Theme.of(context).primaryColor,
+                                            activeColor: Theme.of(context).primaryColor,
+                                            materialTapTargetSize: MaterialTapTargetSize.padded,
+                                            onChanged: (_) {
+                                              setState(() {
+                                                typesValues['Shoes'] = !typesValues['Shoes'];
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                        Flexible(
+                                          child: SizedBox(
+                                            height: 6.0,
+                                          ),
+                                        ),
+                                        Flexible(child: Text('Shoes', style: Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.bold), ))
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ),
                               Flexible(

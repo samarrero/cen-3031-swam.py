@@ -35,6 +35,8 @@ class Style {
       rangeThumbShape: CustomThumbShape(),
       overlayShape: RoundSliderOverlayShape(overlayRadius: 16.0),
       tickMarkShape: RoundSliderTickMarkShape(),
+      overlappingShapeStrokeColor: Colors.transparent,
+      activeTickMarkColor: Colors.transparent,
       inactiveTickMarkColor: Colors.transparent,
       valueIndicatorShape: PaddleSliderValueIndicatorShape(),
       valueIndicatorColor: Color(0xff416BE0),
