@@ -62,11 +62,11 @@ class _ListWrapperState extends State<ListWrapper> {
                               MediaQuery.of(context).size.height - (55 + 24 + 28.42 + 46.6) : MediaQuery.of(context).size.height - (70 + 24 + 28.42 + 46.6)
                           ),
                           child: ColumnBuilder(
-                              itemCount: widget.elements.length,
+                              itemCount: original.length,
                               itemBuilder: (context, index) => AnimatedCrossFade(
-                                firstChild: widget.elements[index],
+                                firstChild: original[index],
                                 secondChild: SizedBox.shrink(),
-                                crossFadeState: widget.elements[index].visible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                                crossFadeState: original[index].visible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
                                 duration: Duration(milliseconds: 200),
                               )
                           ),
