@@ -274,7 +274,6 @@ class _ListWrapperState extends State<ListWrapper> {
                                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                                   child: RangeSlider(
                                     values: soldValues,
-                                    activeColor: Theme.of(context).primaryColor,
                                     min: 0,
                                     max: 60,
                                     divisions: 6,
@@ -291,7 +290,7 @@ class _ListWrapperState extends State<ListWrapper> {
                                         for (ListElement element in original) {
                                           if (
                                           int.parse(element.items[1]) >= inventoryValues.start && int.parse(element.items[1]) <= inventoryValues.end &&
-                                          int.parse(element.items[4]) >= soldValues.start && int.parse(element.items[4]) <= soldValues.end)
+                                              int.parse(element.items[4]) >= soldValues.start && int.parse(element.items[4]) <= soldValues.end)
                                           {
                                             element.visible = true;
                                           }
