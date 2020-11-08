@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:swampy/components/list/list_element.dart';
 import 'package:swampy/components/menus/nav_bar.dart';
+import 'package:swampy/models/product.dart';
 import 'package:swampy/pages/products_page/products_page_desktop.dart';
 import 'package:swampy/pages/products_page/products_page_mobile.dart';
 import 'package:swampy/pages/products_page/products_page_tablet.dart';
+import 'package:swampy/data/sample_data.dart';
 
 class ProductsPage extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -13,6 +15,9 @@ class ProductsPage extends StatelessWidget {
       (index) => ListElement(
             items: ['$index', '${index + 7}', '${index + 8}', '${index + 9}'],
           ));
+
+
+  List<Product> products = sampleProducts;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +32,7 @@ class ProductsPage extends StatelessWidget {
                 return;
               },
               child: ScreenTypeLayout(
-                desktop: ProductsPageDesktop(sample: sample),
+                desktop: ProductsPageDesktop(products: products),
                 tablet: ProductsPageTablet(sample: sample),
                 mobile: ProductsPageMobile(sample: sample),
               ))),

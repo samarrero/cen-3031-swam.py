@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:swampy/components/general/section.dart';
 import 'package:swampy/components/list/list_element.dart';
 import 'package:swampy/components/menus/nav_bar.dart';
 import 'package:swampy/components/menus/side_menu.dart';
@@ -27,10 +28,12 @@ class OrdersPageTablet extends StatelessWidget {
             ),
             Container(
               width: MediaQuery.of(context).size.width - 200,
-              height: MediaQuery.of(context).size.height - 100,
-              child: ListView.builder(
-                itemCount: sample.length,
-                itemBuilder: (context, index) => sample[index],
+              child: Section(
+                title: 'Orders',
+                child: ListView.builder(
+                  itemCount: sample.length,
+                  itemBuilder: (context, index) => sample[index],
+                ),
               ),
             )
           ],

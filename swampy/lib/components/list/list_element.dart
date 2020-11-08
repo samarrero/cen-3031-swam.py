@@ -3,8 +3,9 @@ import 'package:swampy/components/general/row_builder.dart';
 
 class ListElement extends StatelessWidget {
   final List<String> items;
+  bool visible;
 
-  ListElement({this.items});
+  ListElement({this.items, this.visible = true});
 
   @override
   Widget build(BuildContext context) {
