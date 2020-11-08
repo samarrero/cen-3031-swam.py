@@ -37,6 +37,11 @@ class ProductsPageDesktop extends StatelessWidget {
                   title: 'Products',
                   child: ListWrapper(
                     titles: ['Product', 'Inventory', 'Type', 'Vendor', '# Sold'],
+                    filterSliders: [1, 4],
+                    filterCategories: {
+                      'Type' : ['Hat', 'Shirt', 'Pants', 'Shoes', 'Jacket'],
+                      'Other Thing' : ['Hello', 'From', 'The', 'Other', 'Side']
+                    },
                     elements: products.map((product) => ListElement(
                       items: [
                         product.name,
