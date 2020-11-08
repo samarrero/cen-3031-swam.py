@@ -6,6 +6,8 @@ import 'package:swampy/pages/product_page/product_page_desktop.dart';
 import 'package:swampy/pages/product_page/product_page_mobile.dart';
 import 'package:swampy/pages/product_page/product_page_tablet.dart';
 
+//TODO: Product Page will have Product object passed in based on ID routing
+
 class ProductPage extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final String id;
@@ -17,6 +19,7 @@ class ProductPage extends StatelessWidget {
       (index) => ListElement(
             items: ['$index', '${index + 4}', '${index + 8}', '${index + 12}'],
           ));
+
 
   @override
   Widget build(BuildContext context) {
