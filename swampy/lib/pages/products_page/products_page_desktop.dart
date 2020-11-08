@@ -38,6 +38,7 @@ class ProductsPageDesktop extends StatelessWidget {
                   child: ListWrapper(
                     titles: ['Product', 'Inventory', 'Type', 'Vendor', '# Sold'],
                     elements: products.map((product) => ListElement(
+                      id: product.id,
                       items: [
                         product.name,
                         product.amountInInventory.toString(),

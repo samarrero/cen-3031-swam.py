@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:swampy/components/general/row_builder.dart';
+import 'package:swampy/router/route_names.dart';
+import 'package:swampy/router/router.dart';
+import 'package:fluro/fluro.dart' as fluro;
 
 class ListElement extends StatelessWidget {
   final List<String> items;
   bool visible;
+  String id;
 
-  ListElement({this.items, this.visible = true});
+  ListElement({this.items, this.visible = true, this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +20,13 @@ class ListElement extends StatelessWidget {
         elevation: 3.0,
         child: InkWell(
         onTap: () {
-      
+          Navigator.pushNamed(context, IndividualProductRoute + id, arguments: items);
+         /*FluroRouter.router.navigateTo(
+            context,
+              IndividualProductRoute + id,
+
+            transition: fluro.TransitionType.fadeIn,
+            transitionDuration: Duration(milliseconds: 150));*/
         },
           child: RowBuilder(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
