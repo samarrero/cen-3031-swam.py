@@ -11,6 +11,7 @@ class ProductPageDesktop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(ModalRoute.of(context).settings.arguments.toString());
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(70.0),
