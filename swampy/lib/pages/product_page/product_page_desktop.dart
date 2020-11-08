@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:swampy/components/general/column_builder.dart';
 import 'package:swampy/components/list/list_element.dart';
@@ -11,7 +13,10 @@ class ProductPageDesktop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(ModalRoute.of(context).settings.arguments.toString());
+
+    List<String> productInfo = ModalRoute.of(context).settings.arguments != null
+        ? ModalRoute.of(context).settings.arguments as List<String> : [];
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(70.0),
@@ -30,8 +35,8 @@ class ProductPageDesktop extends StatelessWidget {
             Container(
               width: MediaQuery.of(context).size.width - 200,
               child: ListView.builder(
-                itemCount: sample.length,
-                itemBuilder: (context, index) => sample[index],
+                itemCount: productInfo.length,
+                itemBuilder: (context, index) => Text(productInfo[index]),
               ),
             )
           ],
