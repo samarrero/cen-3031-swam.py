@@ -16,7 +16,7 @@ class OrdersPage extends StatelessWidget {
             items: ['$index', '${index + 7}', '${index + 8}', '${index + 9}'],
           ));
 
-  List<Order> ordersl = sampleOrders;
+  List<Order> orders = sampleOrders;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class OrdersPage extends StatelessWidget {
                 return;
               },
               child: ScreenTypeLayout(
-                desktop: OrdersPageDesktop(orders: ordersl),
+                desktop: OrdersPageDesktop(orders: orders),
                 tablet: OrdersPageTablet(sample: sample),
                 mobile: OrdersPageMobile(sample: sample),
               ))),
