@@ -76,23 +76,23 @@ class OrderPageDesktop extends StatelessWidget {
                                           EdgeInsets.symmetric(vertical: 7.0)),
                                   Text('Order #' + orderInfo.orderNumber,
                                       style:
-                                          Theme.of(context).textTheme.headline4,
+                                        Theme.of(context).textTheme.headline4.copyWith(fontWeight: FontWeight.bold),
                                       textAlign: TextAlign.justify),
                                   Padding(
                                       padding: EdgeInsets.fromLTRB(
                                           0.0, 7.0, 0.0, 0.0)),
-                                  Text('Date:' + orderInfo.date.toString(),
+                                  Text('Date: ' + orderInfo.date.toString(),
                                       // order.date.month.toString() + "/" + order.date.day.toString() + "/" + order.date.year.toString()
                                       style:
                                           Theme.of(context).textTheme.headline5,
                                       textAlign: TextAlign.justify),
-                                  Text('Status:' + (orderInfo.fulfilled ? 'Fulfilled' : 'Pending'),
+                                  Text('Status: ' + (orderInfo.fulfilled ? 'Fulfilled' : 'Pending'),
                                       style:
                                           Theme.of(context).textTheme.headline5,
                                       textAlign: TextAlign.justify),
-                                  Text('Total:' + orderInfo.total.toString(),
+                                  Text('Total: \$' + orderInfo.total.toString(),
                                       style:
-                                          Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold),
+                                          Theme.of(context).textTheme.headline5,
                                       textAlign: TextAlign.justify),
                                   Padding(
                                       padding:
