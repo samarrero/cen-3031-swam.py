@@ -6,6 +6,7 @@ import 'package:swampy/components/general/column_builder.dart';
 import 'package:swampy/components/list/list_element.dart';
 import 'package:swampy/components/list/list_category.dart';
 import 'package:autotrie/autotrie.dart';
+import 'package:intl/intl.dart';
 
 //TODO:
 //Change type valus to passed in array of categories
@@ -117,9 +118,15 @@ class _ListWrapperState extends State<ListWrapper> {
                                 sorts[index] = Sort.descending;
                                 visibleElements.sort((a, b) {
                                   try {
-                                    return double.parse(a.items[index]) < double.parse(b.items[index]) ? -1 : 1;
-                                  } catch (e) {
-                                    return a.items[index].compareTo(b.items[index]);
+                                    return reformatDateTime(a.items[index]).isBefore(reformatDateTime(b.items[index])) ? -1 : 1;
+                                  }
+                                  catch (e) {
+                                    try {
+                                      return double.parse(a.items[index]) < double.parse(b.items[index]) ? -1 : 1;
+                                    }
+                                    catch (e) {
+                                      return a.items[index].compareTo(b.items[index]);
+                                    }
                                   }
                                 });
                               }
@@ -127,8 +134,14 @@ class _ListWrapperState extends State<ListWrapper> {
                                 sorts[index] = Sort.ascending;
                                 visibleElements.sort((a, b) {
                                   try {
-                                    return double.parse(a.items[index]) < double.parse(b.items[index]) ? 1 : -1;
+
+                                    return reformatDateTime(a.items[index]).isBefore(reformatDateTime(b.items[index])) ? 1 : -1;
                                   } catch (e) {
+                                    try {
+                                      return double.parse(a.items[index]) < double.parse(b.items[index]) ? 1 : -1;
+                                    } catch (e) {
+                                      return b.items[index].compareTo(a.items[index]);
+                                    }
                                     return b.items[index].compareTo(a.items[index]);
                                   }
                                 });
@@ -357,7 +370,15 @@ class _ListWrapperState extends State<ListWrapper> {
       ),
     );
   }
-  
+
+  DateTime reformatDateTime(String s) {
+    var inputFormat = DateFormat('MM/dd/yyyy');
+    var date1 = inputFormat.parse(s);
+
+    var outputFormat = DateFormat('yyyy-MM-dd');
+    return outputFormat.parse('$date1');
+  }
+
   List<Widget> createCategoryButtons(String categoryName) {
     List<Widget> buttons = List<Widget>();
     for (String categoryValue in categoryValues[categoryName].keys) {
