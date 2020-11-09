@@ -36,7 +36,81 @@ class ProductPageDesktop extends StatelessWidget {
             ),
             Container(
               width: MediaQuery.of(context).size.width - 200,
-            )
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(32.0)),
+                      elevation: 3.0,
+                      child: Row(mainAxisAlignment: MainAxisAlignment.start,
+                          // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Padding(
+                                padding:
+                                EdgeInsets.symmetric(horizontal: 15.0)),
+                            Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                      padding:
+                                      EdgeInsets.symmetric(vertical: 7.0)),
+                                  Text(productInfo.name,
+                                      style:
+                                      Theme.of(context).textTheme.headline4.copyWith(fontWeight: FontWeight.bold),
+                                      textAlign: TextAlign.justify),
+
+                                  Padding(
+                                      padding: EdgeInsets.fromLTRB(
+                                          0.0, 7.0, 0.0, 0.0)),
+                                  Text('Price: \$' + productInfo.price.toString(),
+                                      // order.date.month.toString() + "/" + order.date.day.toString() + "/" + order.date.year.toString()
+                                      style:
+                                      Theme.of(context).textTheme.headline5,
+                                      textAlign: TextAlign.justify),
+                                  Text('Vendor: ' + productInfo.vendor,
+                                      style:
+                                      Theme.of(context).textTheme.headline5,
+                                      textAlign: TextAlign.justify),
+                                  Text('Type: ' + productInfo.type,
+                                      style:
+                                      Theme.of(context).textTheme.headline5,
+                                      textAlign: TextAlign.justify),
+                                  Text('Current Inventory: ' + productInfo.amountInInventory.toString(),
+                                      style:
+                                      Theme.of(context).textTheme.headline5,
+                                      textAlign: TextAlign.justify),
+                                  Text('Inventory Ordered: ' + productInfo.amountInInventory.toString(),
+                                      style:
+                                      Theme.of(context).textTheme.headline5,
+                                      textAlign: TextAlign.justify),
+                                  Padding(
+                                      padding:
+                                      EdgeInsets.symmetric(vertical: 7.0)),
+                                ]),
+                            // Padding(
+                            //     padding:
+                            //         EdgeInsets.symmetric(horizontal: 100.0)),
+                            // Column(
+                            //     crossAxisAlignment: CrossAxisAlignment.start,
+                            //     children: [
+                            //       Padding(
+                            //           padding: EdgeInsets.symmetric(
+                            //               vertical: 7.0, horizontal: 15.0)),
+                            //       Text('Customer Information',
+                            //           style:
+                            //               Theme.of(context).textTheme.headline5,
+                            //           textAlign: TextAlign.start),
+                            //       Padding(
+                            //           padding: EdgeInsets.symmetric(
+                            //               vertical: 7.0, horizontal: 15.0)),
+                            //     ]),
+                          ]),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
