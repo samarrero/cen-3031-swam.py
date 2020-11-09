@@ -7,7 +7,6 @@ import 'package:swampy/components/list/list_element.dart';
 import 'package:swampy/components/list/list_category.dart';
 import 'package:autotrie/autotrie.dart';
 
-//TODO: There's a bug where if you resize, the filtering doesn't work
 class ListWrapper extends StatefulWidget {
   final List<String> titles;
   List<ListElement> elements;
@@ -20,9 +19,10 @@ class ListWrapper extends StatefulWidget {
 
 class _ListWrapperState extends State<ListWrapper> {
   List<Sort> sorts;
-  List<ListElement> original;
+  List<ListElement> visibleElements;
   AutoComplete searchComplete = AutoComplete(engine: SortEngine.configMulti(Duration(seconds: 1), 15, 0.5, 0.5));
   HashMap<String, ListElement> lookupTable = HashMap<String, ListElement>();
+  TextEditingController searchController = TextEditingController();
   bool showFilterMenu = false;
   RangeValues inventoryValues = const RangeValues(0, 80);
   RangeValues soldValues = const RangeValues(0, 60);
@@ -31,8 +31,8 @@ class _ListWrapperState extends State<ListWrapper> {
   @override
   void initState() {
     sorts = List.generate(widget.titles.length, (index) => Sort.none);
-    original = List.from(widget.elements);
-    for (ListElement element in original) {
+    visibleElements = List.from(widget.elements);
+    for (ListElement element in visibleElements) {
       searchComplete.enter(element.items[0].toLowerCase());
       lookupTable[element.items[0].toLowerCase()] = element;
     }
@@ -62,11 +62,11 @@ class _ListWrapperState extends State<ListWrapper> {
                               MediaQuery.of(context).size.height - (55 + 24 + 28.42 + 46.6) : MediaQuery.of(context).size.height - (70 + 24 + 28.42 + 46.6)
                           ),
                           child: ColumnBuilder(
-                              itemCount: widget.elements.length,
+                              itemCount: visibleElements.length,
                               itemBuilder: (context, index) => AnimatedCrossFade(
-                                firstChild: widget.elements[index],
+                                firstChild: visibleElements[index],
                                 secondChild: SizedBox.shrink(),
-                                crossFadeState: widget.elements[index].visible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                                crossFadeState: visibleElements[index].visible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
                                 duration: Duration(milliseconds: 200),
                               )
                           ),
@@ -91,7 +91,7 @@ class _ListWrapperState extends State<ListWrapper> {
                             }
                             if (sorts[index] == Sort.none) {
                               sorts[index] = Sort.descending;
-                              widget.elements.sort((a, b) {
+                              visibleElements.sort((a, b) {
                                 try {
                                   return int.parse(a.items[index]) < int.parse(b.items[index]) ? -1 : 1;
                                 } catch (e) {
@@ -101,7 +101,7 @@ class _ListWrapperState extends State<ListWrapper> {
                             }
                             else if (sorts[index] == Sort.descending) {
                               sorts[index] = Sort.ascending;
-                              widget.elements.sort((a, b) {
+                              visibleElements.sort((a, b) {
                                 try {
                                   return int.parse(a.items[index]) < int.parse(b.items[index]) ? 1 : -1;
                                 } catch (e) {
@@ -111,7 +111,7 @@ class _ListWrapperState extends State<ListWrapper> {
                             }
                             else if (sorts[index] == Sort.ascending) {
                               sorts[index] = Sort.none;
-                              widget.elements = original;
+                              visibleElements = widget.elements;
                             }
                           });
                         },
@@ -133,16 +133,21 @@ class _ListWrapperState extends State<ListWrapper> {
                         maxWidth: MediaQuery.of(context).size.width * 0.5
                       ),
                       child: TextFormField(
+                        controller: searchController,
                         onChanged: (val) {
                           final matches = searchComplete.suggest(val.toLowerCase());
-                          for (ListElement element in original) {
+                          for (ListElement element in visibleElements) {
                             setState(() {
                               element.visible = false;
                             });
                           }
                           for (String match in matches) {
                             setState(() {
-                              lookupTable[match].visible = true;
+                              if (int.parse(lookupTable[match].items[1]) >= inventoryValues.start && int.parse(lookupTable[match].items[1]) <= inventoryValues.end &&
+                                  int.parse(lookupTable[match].items[4]) >= soldValues.start && int.parse(lookupTable[match].items[4]) <= soldValues.end)
+                              {
+                                lookupTable[match].visible = true;
+                              }
                             });
                           }
                         },
@@ -242,16 +247,18 @@ class _ListWrapperState extends State<ListWrapper> {
                                     onChanged: (RangeValues values) {
                                       setState(() {
                                         inventoryValues = values;
-                                        for (ListElement element in original) {
+                                        final matches = searchComplete.suggest(searchController.text.toLowerCase());
+                                        for (ListElement element in visibleElements) {
                                           element.visible = false;
                                         }
-                                        for (ListElement element in original) {
-                                          if (
-                                          int.parse(element.items[1]) >= inventoryValues.start && int.parse(element.items[1]) <= inventoryValues.end &&
-                                          int.parse(element.items[4]) >= soldValues.start && int.parse(element.items[4]) <= soldValues.end)
-                                          {
-                                            element.visible = true;
-                                          }
+                                        for (String match in matches) {
+                                          setState(() {
+                                            if (int.parse(lookupTable[match].items[1]) >= inventoryValues.start && int.parse(lookupTable[match].items[1]) <= inventoryValues.end &&
+                                                int.parse(lookupTable[match].items[4]) >= soldValues.start && int.parse(lookupTable[match].items[4]) <= soldValues.end)
+                                            {
+                                              lookupTable[match].visible = true;
+                                            }
+                                          });
                                         }
                                       });
                                     },
@@ -274,7 +281,6 @@ class _ListWrapperState extends State<ListWrapper> {
                                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                                   child: RangeSlider(
                                     values: soldValues,
-                                    activeColor: Theme.of(context).primaryColor,
                                     min: 0,
                                     max: 60,
                                     divisions: 6,
@@ -285,16 +291,18 @@ class _ListWrapperState extends State<ListWrapper> {
                                     onChanged: (RangeValues values) {
                                       setState(() {
                                         soldValues = values;
-                                        for (ListElement element in original) {
+                                        final matches = searchComplete.suggest(searchController.text.toLowerCase());
+                                        for (ListElement element in visibleElements) {
                                           element.visible = false;
                                         }
-                                        for (ListElement element in original) {
-                                          if (
-                                          int.parse(element.items[1]) >= inventoryValues.start && int.parse(element.items[1]) <= inventoryValues.end &&
-                                          int.parse(element.items[4]) >= soldValues.start && int.parse(element.items[4]) <= soldValues.end)
-                                          {
-                                            element.visible = true;
-                                          }
+                                        for (String match in matches) {
+                                          setState(() {
+                                            if (int.parse(lookupTable[match].items[1]) >= inventoryValues.start && int.parse(lookupTable[match].items[1]) <= inventoryValues.end &&
+                                                int.parse(lookupTable[match].items[4]) >= soldValues.start && int.parse(lookupTable[match].items[4]) <= soldValues.end)
+                                            {
+                                              lookupTable[match].visible = true;
+                                            }
+                                          });
                                         }
                                       });
                                     },

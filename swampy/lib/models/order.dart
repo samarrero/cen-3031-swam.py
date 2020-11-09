@@ -10,6 +10,11 @@ class Order {
   final bool fulfilled; //could be enum with different statuses
   //maybe: billing stuff
 
+  int getAmount() {
+    int total = 0;
+    productsAndAmount.forEach((key, value) {total += value;});
+    return total;
+  }
   const Order({
     @required this.id,
     @required this.orderNumber,

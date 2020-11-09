@@ -6,6 +6,7 @@ import 'package:swampy/components/list/list_wrapper.dart';
 import 'package:swampy/components/menus/nav_bar.dart';
 import 'package:swampy/components/menus/side_menu.dart';
 import 'package:swampy/models/product.dart';
+import 'package:swampy/router/route.dart';
 
 class ProductsPageDesktop extends StatelessWidget {
   final List<Product> products;
@@ -38,6 +39,7 @@ class ProductsPageDesktop extends StatelessWidget {
                   child: ListWrapper(
                     titles: ['Product', 'Inventory', 'Type', 'Vendor', '# Sold'],
                     elements: products.map((product) => ListElement(
+                      route: IndividualProductRoute + product.id,
                       items: [
                         product.name,
                         product.amountInInventory.toString(),
