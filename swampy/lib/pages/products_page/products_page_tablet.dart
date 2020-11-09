@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:swampy/components/general/section.dart';
 import 'package:swampy/components/list/list_element.dart';
+import 'package:swampy/components/list/list_wrapper.dart';
 import 'package:swampy/components/menus/nav_bar.dart';
 import 'package:swampy/components/menus/side_menu.dart';
+import 'package:swampy/models/product.dart';
 
 class ProductsPageTablet extends StatelessWidget {
-  final List<ListElement> sample;
+  final List<Product> products;
 
-  ProductsPageTablet({this.sample});
+  ProductsPageTablet({this.products});
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +30,25 @@ class ProductsPageTablet extends StatelessWidget {
             ),
             Container(
               width: MediaQuery.of(context).size.width - 200,
-              child: ListView.builder(
-                itemCount: sample.length,
-                itemBuilder: (context, index) => sample[index],
+              child: Section(
+                title: 'Products',
+                child: ListWrapper(
+                  titles: ['Product', 'Inventory', 'Type', 'Vendor', '# Sold'],
+                  filterSliders: [1, 4],
+                  filterCategories: {
+                    'Type' : ['Hat', 'Shirt', 'Pants', 'Shoes', 'Jacket'],
+                    'Other Thing' : ['Hello', 'From', 'The', 'Other', 'Side']
+                  },
+                  elements: products.map((product) => ListElement(
+                    items: [
+                      product.name,
+                      product.amountInInventory.toString(),
+                      product.type,
+                      product.vendor,
+                      product.amountSold.toString()
+                    ],
+                  )).toList(),
+                ),
               ),
             )
           ],

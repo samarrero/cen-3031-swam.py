@@ -38,8 +38,8 @@ class ProductsPage extends StatelessWidget {
               },
               child: ScreenTypeLayout(
                 desktop: ProductsPageDesktop(products: products),
-                tablet: ProductsPageTablet(sample: sample),
-                mobile: ProductsPageMobile(sample: sample),
+                tablet: ProductsPageTablet(products: products),
+                mobile: ProductsPageMobile(products: products),
               ))),
     );
   }
