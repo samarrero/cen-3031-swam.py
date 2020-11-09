@@ -9,14 +9,15 @@ import 'package:swampy/models/product.dart';
 
 class ProductPageDesktop extends StatelessWidget {
   final List<ListElement> sample;
+  final Product product;
 
-  ProductPageDesktop({this.sample});
+  ProductPageDesktop({this.sample, this.product});
 
   @override
   Widget build(BuildContext context) {
 
-    Product productInfo = ModalRoute.of(context).settings.arguments != null
-        ? ModalRoute.of(context).settings.arguments as Product :
+    Product productInfo = product != null
+        ? product :
     Product(id: 'null', name: 'null', vendor: 'null', price: -1, amountInInventory: -1, type: 'null', amountSold: -1);
 
     return Scaffold(

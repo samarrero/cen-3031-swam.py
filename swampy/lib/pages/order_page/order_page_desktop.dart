@@ -11,14 +11,15 @@ import 'package:swampy/components/general/row_builder.dart';
 import 'package:swampy/router/route_names.dart';
 
 class OrderPageDesktop extends StatelessWidget {
+  final Order order;
 
-  OrderPageDesktop();
+  OrderPageDesktop({this.order});
 
   @override
   Widget build(BuildContext context) {
 
-    Order orderInfo = ModalRoute.of(context).settings.arguments != null
-        ? ModalRoute.of(context).settings.arguments as Order :
+    Order orderInfo = order != null
+        ? order :
     Order(id: 'null', orderNumber: 'null', date: DateTime(0), productsAndAmount: Map<Product, int>(), total: -1, fulfilled: false);
 
     List<ListElement> productsList = [];
@@ -128,7 +129,7 @@ class OrderPageDesktop extends StatelessWidget {
                           'Price',
                           'Vendor'
                         ],
-                          filterSliders: [1],
+                          filterSliders: [1, 3],
                           filterCategories: {
                             'Type' : ['Hat', 'Shirt', 'Pants', 'Shoes', 'Jacket'],
                             'Other Thing' : ['Hello', 'From', 'The', 'Other', 'Side']

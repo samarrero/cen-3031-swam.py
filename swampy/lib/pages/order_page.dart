@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:swampy/components/list/list_element.dart';
 import 'package:swampy/components/menus/nav_bar.dart';
+import 'package:swampy/models/order.dart';
 import 'package:swampy/pages/order_page/order_page_desktop.dart';
 import 'package:swampy/pages/order_page/order_page_mobile.dart';
 import 'package:swampy/pages/order_page/order_page_tablet.dart';
@@ -12,8 +13,9 @@ import 'package:swampy/models/product.dart';
 class OrderPage extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final String id;
+  final Order order;
 
-  OrderPage({@required this.id});
+  OrderPage({@required this.id, @required this.order});
 
   List<ListElement> sample = List.generate(
       25,
@@ -34,7 +36,7 @@ class OrderPage extends StatelessWidget {
                 return;
               },
               child: ScreenTypeLayout(
-                desktop: OrderPageDesktop(),
+                desktop: OrderPageDesktop(order: order),
                 tablet: OrderPageTablet(sample: sample),
                 mobile: OrderPageMobile(sample: sample),
               ))),

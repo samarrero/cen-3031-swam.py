@@ -21,13 +21,15 @@ class ListElement extends StatelessWidget {
         elevation: 3.0,
         child: InkWell(
         onTap: () {
-          Navigator.pushNamed(context, route, arguments: object);
-         /*FluroRouter.router.navigateTo(
+          // Navigator.pushNamed(context, route, arguments: object);
+         FluroRouter.router.navigateTo(
             context,
-              IndividualProductRoute + id,
-
+            route,
+            routeSettings: RouteSettings(
+              arguments: object
+            ),
             transition: fluro.TransitionType.fadeIn,
-            transitionDuration: Duration(milliseconds: 150));*/
+            transitionDuration: Duration(milliseconds: 150));
         },
           child: RowBuilder(
           mainAxisAlignment: MainAxisAlignment.spaceAround,

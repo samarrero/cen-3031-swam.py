@@ -9,8 +9,7 @@ import 'package:autotrie/autotrie.dart';
 import 'package:intl/intl.dart';
 
 //TODO:
-//Change type valus to passed in array of categories
-//Probably make more individual elements
+//Apply category filters
 class ListWrapper extends StatefulWidget {
   final List<String> titles;
   final List<ListElement> elements;
@@ -46,7 +45,11 @@ class _ListWrapperState extends State<ListWrapper> {
       lookupTable[element.items[0].toLowerCase()] = element;
       for (int i = 0; i < element.items.length; i++) {
         if (widget.filterSliders.contains(i)) {
-          maxSliderValues[i] = int.parse(element.items[i]) > maxSliderValues[i] ? int.parse(element.items[i]) : maxSliderValues[i];
+          try {
+            maxSliderValues[i] = double.parse(element.items[i]) > maxSliderValues[i] ? double.parse(element.items[i]) : maxSliderValues[i];
+          } catch (e) {
+            maxSliderValues[i] = double.parse(element.items[i].substring(1)) > maxSliderValues[i] ? double.parse(element.items[i].substring(1)) : maxSliderValues[i];
+          }
         }
       }
     }
@@ -118,14 +121,18 @@ class _ListWrapperState extends State<ListWrapper> {
                                 sorts[index] = Sort.descending;
                                 visibleElements.sort((a, b) {
                                   try {
-                                    return reformatDateTime(a.items[index]).isBefore(reformatDateTime(b.items[index])) ? -1 : 1;
+                                    return reformatDateTime(a.items[index]).isBefore(reformatDateTime(b.items[index])) ? -1 : 1; //date
                                   }
                                   catch (e) {
                                     try {
-                                      return double.parse(a.items[index]) < double.parse(b.items[index]) ? -1 : 1;
+                                      return double.parse(a.items[index]) < double.parse(b.items[index]) ? -1 : 1; //number
                                     }
                                     catch (e) {
-                                      return a.items[index].compareTo(b.items[index]);
+                                      try {
+                                        return double.parse(a.items[index].substring(1)) < double.parse(b.items[index].substring(1)) ? -1 : 1; //$amount
+                                      } catch (e) {
+                                        return a.items[index].compareTo(b.items[index]); //string
+                                      }
                                     }
                                   }
                                 });
@@ -134,15 +141,17 @@ class _ListWrapperState extends State<ListWrapper> {
                                 sorts[index] = Sort.ascending;
                                 visibleElements.sort((a, b) {
                                   try {
-
-                                    return reformatDateTime(a.items[index]).isBefore(reformatDateTime(b.items[index])) ? 1 : -1;
+                                    return reformatDateTime(a.items[index]).isBefore(reformatDateTime(b.items[index])) ? 1 : -1; //date
                                   } catch (e) {
                                     try {
-                                      return double.parse(a.items[index]) < double.parse(b.items[index]) ? 1 : -1;
+                                      return double.parse(a.items[index]) < double.parse(b.items[index]) ? 1 : -1; //number
                                     } catch (e) {
-                                      return b.items[index].compareTo(a.items[index]);
+                                      try {
+                                        return double.parse(a.items[index].substring(1)) < double.parse(b.items[index].substring(1)) ? 1 : -1; //$amount
+                                      } catch (e) {
+                                        return b.items[index].compareTo(a.items[index]); //string
+                                      }
                                     }
-                                    return b.items[index].compareTo(a.items[index]);
                                   }
                                 });
                               }
@@ -287,7 +296,7 @@ class _ListWrapperState extends State<ListWrapper> {
                                           values: sliderValues[filter],
                                           min: 0,
                                           max: maxSliderValues[filter],
-                                          divisions: maxSliderValues[filter] ~/ 10,
+                                          divisions: maxSliderValues[filter] > 10 ? maxSliderValues[filter] ~/ 10 : maxSliderValues[filter],
                                           labels: RangeLabels(
                                             sliderValues[filter].start.round().toString(),
                                             sliderValues[filter].end.round().toString(),
@@ -302,9 +311,16 @@ class _ListWrapperState extends State<ListWrapper> {
                                               for (String match in matches) {
                                                 bool allGood = true;
                                                 for (int matchFilter in widget.filterSliders) {
-                                                  if (int.parse(lookupTable[match].items[matchFilter]) < sliderValues[matchFilter].start || int.parse(lookupTable[match].items[matchFilter]) > sliderValues[matchFilter].end) {
-                                                    allGood = false;
-                                                    break;
+                                                  try {
+                                                    if (double.parse(lookupTable[match].items[matchFilter]) < sliderValues[matchFilter].start || double.parse(lookupTable[match].items[matchFilter]) > sliderValues[matchFilter].end) {
+                                                      allGood = false;
+                                                      break;
+                                                    }
+                                                  } catch (e) {
+                                                    if (double.parse(lookupTable[match].items[matchFilter].substring(1)) < sliderValues[matchFilter].start || double.parse(lookupTable[match].items[matchFilter].substring(1)) > sliderValues[matchFilter].end) {
+                                                      allGood = false;
+                                                      break;
+                                                    }
                                                   }
                                                 }
                                                 setState(() {

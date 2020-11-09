@@ -1,12 +1,16 @@
 import 'package:fluro/fluro.dart' as fluro;
 import 'package:flutter/material.dart';
+import 'package:swampy/models/order.dart';
+import 'package:swampy/models/product.dart';
 import 'package:swampy/pages/pages.dart';
 
 class FluroRouter {
   static fluro.FluroRouter router = fluro.FluroRouter();
   static fluro.Handler _productHandler = fluro.Handler(
-      handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
-          ProductPage(id: params['id'][0]));
+      handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+          final args = context.settings.arguments as Product;
+          return ProductPage(id: params['id'][0], product: args);
+    });
   static fluro.Handler _homehandler = fluro.Handler(
       handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
           HomePage());
@@ -17,8 +21,10 @@ class FluroRouter {
       handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
           OrdersPage());
   static fluro.Handler _orderhandler = fluro.Handler(
-      handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
-          OrderPage(id: params['id'][0]));
+      handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+          final args = context.settings.arguments as Order;
+          return OrderPage(id: params['id'][0], order: args);
+      });
   static fluro.Handler _analyticshandler = fluro.Handler(
       handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
           AnalyticsPage());
