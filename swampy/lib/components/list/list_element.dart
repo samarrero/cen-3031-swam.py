@@ -7,9 +7,9 @@ import 'package:fluro/fluro.dart' as fluro;
 class ListElement extends StatelessWidget {
   final List<String> items;
   bool visible;
-  String id;
+  String route;
 
-  ListElement({this.items, this.visible = true, this.id});
+  ListElement({this.items, this.visible = true, this.route});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class ListElement extends StatelessWidget {
         elevation: 3.0,
         child: InkWell(
         onTap: () {
-          Navigator.pushNamed(context, IndividualProductRoute + id, arguments: items);
+          Navigator.pushNamed(context, route, arguments: items);
          /*FluroRouter.router.navigateTo(
             context,
               IndividualProductRoute + id,
