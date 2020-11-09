@@ -15,8 +15,9 @@ class ListWrapper extends StatefulWidget {
   final List<ListElement> elements;
   final List<int> filterSliders;
   final Map<String, List<String>> filterCategories;
+  final String searchType;
 
-  ListWrapper({@required this.titles, @required this.elements, this.filterSliders, this.filterCategories});
+  ListWrapper({@required this.titles, @required this.elements, this.filterSliders, this.filterCategories, this.searchType});
 
   @override
   _ListWrapperState createState() => _ListWrapperState();
@@ -204,7 +205,7 @@ class _ListWrapperState extends State<ListWrapper> {
                                 borderRadius: BorderRadius.circular(32.0)
                             ),
                             contentPadding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 18.0),
-                            hintText: 'Search for a product',
+                            hintText: 'Search for a${widget.searchType}',
                             hintStyle: Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.normal),
                           ),
                         ),

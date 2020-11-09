@@ -37,6 +37,7 @@ class ProductsPageDesktop extends StatelessWidget {
                 child: Section(
                   title: 'Products',
                   child: ListWrapper(
+                    searchType: ' product',
                     titles: ['Product', 'Inventory', 'Type', 'Vendor', '# Sold'],
                     filterSliders: [1, 4],
                     filterCategories: {

@@ -37,6 +37,7 @@ class OrdersPageDesktop extends StatelessWidget {
                 child: Section(
                   title: 'Orders',
                   child: ListWrapper(
+                    searchType: 'n order',
                     titles: ['Order #', 'Date', 'Amount', 'Total', 'Status'],
                     elements: orders.map((order) => ListElement(
                       route: OrderRoute + order.id,
