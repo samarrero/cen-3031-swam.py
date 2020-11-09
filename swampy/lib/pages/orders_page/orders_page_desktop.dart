@@ -52,7 +52,7 @@ class OrdersPageDesktop extends StatelessWidget {
                         //TODO: SORTING NUMERICAL VALUES ARE INCORRECT, SORTING BY STRING INSTEAD
                         order.date.month.toString() + "/" + order.date.day.toString() + "/" + order.date.year.toString(),
                         order.getAmount().toString(),
-                        order.total.toString(),
+                        "\$" + order.total.toString(),
                         order.fulfilled ? 'Fulfilled' : 'Pending'
                       ],
                     )).toList(),
