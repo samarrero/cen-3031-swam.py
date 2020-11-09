@@ -45,6 +45,7 @@ class ProductsPageDesktop extends StatelessWidget {
                     },
                     elements: products.map((product) => ListElement(
                       route: IndividualProductRoute + product.id,
+                      object: product,
                       items: [
                         product.name,
                         product.amountInInventory.toString(),

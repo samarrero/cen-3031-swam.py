@@ -5,6 +5,7 @@ import 'package:swampy/components/menus/nav_bar.dart';
 import 'package:swampy/pages/order_page/order_page_desktop.dart';
 import 'package:swampy/pages/order_page/order_page_mobile.dart';
 import 'package:swampy/pages/order_page/order_page_tablet.dart';
+import 'package:swampy/models/product.dart';
 
 //TODO: Order Page will have Order object passed in based on ID routing
 
@@ -33,7 +34,7 @@ class OrderPage extends StatelessWidget {
                 return;
               },
               child: ScreenTypeLayout(
-                desktop: OrderPageDesktop(sample: sample),
+                desktop: OrderPageDesktop(),
                 tablet: OrderPageTablet(sample: sample),
                 mobile: OrderPageMobile(sample: sample),
               ))),

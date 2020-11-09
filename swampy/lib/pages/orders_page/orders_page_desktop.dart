@@ -6,6 +6,7 @@ import 'package:swampy/components/list/list_wrapper.dart';
 import 'package:swampy/components/menus/nav_bar.dart';
 import 'package:swampy/components/menus/side_menu.dart';
 import 'package:swampy/models/order.dart';
+import 'package:swampy/router/route_names.dart';
 
 class OrdersPageDesktop extends StatelessWidget {
   final List<Order> orders;
@@ -38,6 +39,8 @@ class OrdersPageDesktop extends StatelessWidget {
                   child: ListWrapper(
                     titles: ['Order #', 'Date', 'Amount', 'Total', 'Status'],
                     elements: orders.map((order) => ListElement(
+                      route: OrderRoute + order.id,
+                      object: order,
                       items: [
                         order.orderNumber,
                         //TODO: SORTING NUMERICAL VALUES ARE INCORRECT, SORTING BY STRING INSTEAD

@@ -8,8 +8,9 @@ class ListElement extends StatelessWidget {
   final List<String> items;
   bool visible;
   String route;
+  Object object;
 
-  ListElement({this.items, this.visible = true, this.route});
+  ListElement({this.items, this.visible = true, this.route, this.object});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class ListElement extends StatelessWidget {
         elevation: 3.0,
         child: InkWell(
         onTap: () {
-          Navigator.pushNamed(context, route, arguments: items);
+          Navigator.pushNamed(context, route, arguments: object);
          /*FluroRouter.router.navigateTo(
             context,
               IndividualProductRoute + id,
