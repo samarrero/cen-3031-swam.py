@@ -40,7 +40,7 @@ class _ListWrapperState extends State<ListWrapper> {
     sorts = List.generate(widget.titles.length, (index) => Sort.none);
     visibleElements = List.from(widget.elements);
     sliderValues = List<RangeValues>(widget.titles.length);
-    maxSliderValues = List<double>.generate(widget.elements.length, (index) => 0);
+    maxSliderValues = List<double>.generate(widget.titles.length, (index) => 0);
     for (ListElement element in visibleElements) {
       searchComplete.enter(element.items[0].toLowerCase());
       lookupTable[element.items[0].toLowerCase()] = element;

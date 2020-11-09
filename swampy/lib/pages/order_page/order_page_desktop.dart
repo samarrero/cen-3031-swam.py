@@ -120,14 +120,19 @@ class OrderPageDesktop extends StatelessWidget {
                     Container(
                       width: MediaQuery.of(context).size.width - 200,
                       child: ListWrapper(
-                        searchType: 'n order',
+                        searchType: ' product',
                         titles: [
                           'Product',
-                          'Inventory',
+                          'Amount',
                           'Type',
-                          'Vendor',
-                          '# Sold'
+                          'Price',
+                          'Vendor'
                         ],
+                          filterSliders: [1],
+                          filterCategories: {
+                            'Type' : ['Hat', 'Shirt', 'Pants', 'Shoes', 'Jacket'],
+                            'Other Thing' : ['Hello', 'From', 'The', 'Other', 'Side']
+                          },
                         elements: productsList
                       ),
                     ),
