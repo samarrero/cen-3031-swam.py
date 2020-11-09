@@ -39,6 +39,11 @@ class OrdersPageDesktop extends StatelessWidget {
                   child: ListWrapper(
                     searchType: 'n order',
                     titles: ['Order #', 'Date', 'Amount', 'Total', 'Status'],
+                    filterSliders: [2],
+                    filterCategories: {
+                      'Type' : ['Hat', 'Shirt', 'Pants', 'Shoes', 'Jacket'],
+                      'Other Thing' : ['Hello', 'From', 'The', 'Other', 'Side']
+                    },
                     elements: orders.map((order) => ListElement(
                       route: OrderRoute + order.id,
                       object: order,
