@@ -192,9 +192,26 @@ class _ListWrapperState extends State<ListWrapper> {
                             for (String match in matches) {
                               bool allGood = true;
                               for (int filter in widget.filterSliders) {
-                                if (int.parse(lookupTable[match].items[filter]) < sliderValues[filter].start || int.parse(lookupTable[match].items[filter]) > sliderValues[filter].end) {
-                                  allGood = false;
-                                  break;
+                                try {
+                                  if (double.parse(lookupTable[match].items[filter]) < sliderValues[filter].start || double.parse(lookupTable[match].items[filter]) > sliderValues[filter].end) {
+                                    allGood = false;
+                                    break;
+                                  }
+                                } catch (e) {
+                                  if (double.parse(lookupTable[match].items[filter].substring(1)) < sliderValues[filter].start || double.parse(lookupTable[match].items[filter].substring(1)) > sliderValues[filter].end) {
+                                    allGood = false;
+                                    break;
+                                  }
+                                }
+                              }
+                              for (int filterCategory in widget.filterCategories) {
+                                for (String key in categoryValues.keys) {
+                                  for (String mapping in categoryValues[key].keys) {
+                                    if (lookupTable[match].items[filterCategory] == mapping && !categoryValues[widget.titles[filterCategory]][mapping]) {
+                                      allGood = false;
+                                      break;
+                                    }
+                                  }
                                 }
                               }
                               setState(() {
@@ -325,6 +342,16 @@ class _ListWrapperState extends State<ListWrapper> {
                                                     }
                                                   }
                                                 }
+                                                for (int filterCategory in widget.filterCategories) {
+                                                  for (String key in categoryValues.keys) {
+                                                    for (String mapping in categoryValues[key].keys) {
+                                                      if (lookupTable[match].items[filterCategory] == mapping && !categoryValues[widget.titles[filterCategory]][mapping]) {
+                                                        allGood = false;
+                                                        break;
+                                                      }
+                                                    }
+                                                  }
+                                                }
                                                 setState(() {
                                                   if (allGood)
                                                   {
@@ -412,6 +439,42 @@ class _ListWrapperState extends State<ListWrapper> {
                 onChanged: (_) {
                   setState(() {
                     categoryValues[categoryName][categoryValue] = !categoryValues[categoryName][categoryValue];
+                    final matches = searchComplete.suggest(searchController.text.toLowerCase());
+                    for (ListElement element in visibleElements) {
+                      element.visible = false;
+                    }
+                    for (String match in matches) {
+                      bool allGood = true;
+                      for (int matchFilter in widget.filterSliders) {
+                        try {
+                          if (double.parse(lookupTable[match].items[matchFilter]) < sliderValues[matchFilter].start || double.parse(lookupTable[match].items[matchFilter]) > sliderValues[matchFilter].end) {
+                            allGood = false;
+                            break;
+                          }
+                        } catch (e) {
+                          if (double.parse(lookupTable[match].items[matchFilter].substring(1)) < sliderValues[matchFilter].start || double.parse(lookupTable[match].items[matchFilter].substring(1)) > sliderValues[matchFilter].end) {
+                            allGood = false;
+                            break;
+                          }
+                        }
+                      }
+                      for (int filterCategory in widget.filterCategories) {
+                        for (String key in categoryValues.keys) {
+                          for (String mapping in categoryValues[key].keys) {
+                            if (lookupTable[match].items[filterCategory] == mapping && !categoryValues[widget.titles[filterCategory]][mapping]) {
+                              allGood = false;
+                              break;
+                            }
+                          }
+                        }
+                      }
+                      setState(() {
+                        if (allGood)
+                        {
+                          lookupTable[match].visible = true;
+                        }
+                      });
+                    }
                   });
                 },
               ),
