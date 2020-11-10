@@ -20,7 +20,6 @@ class ListCategory extends StatelessWidget {
       child: Center(
         child: Row(
           mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(this.name, style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold)),
             SizedBox(width: 4.0),
