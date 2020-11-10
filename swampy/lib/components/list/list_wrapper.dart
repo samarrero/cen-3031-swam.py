@@ -14,7 +14,7 @@ class ListWrapper extends StatefulWidget {
   final List<String> titles;
   final List<ListElement> elements;
   final List<int> filterSliders;
-  final Map<String, List<String>> filterCategories;
+  final List<int> filterCategories;
   final String searchType;
 
   ListWrapper({@required this.titles, @required this.elements, this.filterSliders, this.filterCategories, this.searchType});
@@ -57,10 +57,12 @@ class _ListWrapperState extends State<ListWrapper> {
       maxSliderValues[filter] = ((maxSliderValues[filter] / 10.0).ceil() * 10).toDouble();
       sliderValues[filter] = RangeValues(0, maxSliderValues[filter]);
     }
-    for (String categoryName in widget.filterCategories.keys) {
-      categoryValues[categoryName] = Map<String, bool>();
-      for (String categoryValue in widget.filterCategories[categoryName]) {
-        categoryValues[categoryName][categoryValue] = true;
+    for (int i = 0; i < widget.titles.length; i++) {
+      if (widget.filterCategories.contains(i)) {
+        categoryValues[widget.titles[i]] = Map<String, bool>();
+        for (ListElement element in visibleElements) {
+          categoryValues[widget.titles[i]][element.items[i]] = true;
+        }
       }
     }
     super.initState();
@@ -340,7 +342,7 @@ class _ListWrapperState extends State<ListWrapper> {
                                     ],
                                   ),
                                 ),
-                                for (String categoryName in widget.filterCategories.keys) ConstrainedBox(
+                                for (String categoryName in categoryValues.keys) ConstrainedBox(
                                   constraints: BoxConstraints(
                                       maxHeight: 800
                                   ),

@@ -40,10 +40,7 @@ class ProductsPageDesktop extends StatelessWidget {
                     searchType: ' product',
                     titles: ['Product', 'Inventory', 'Type', 'Vendor', '# Sold'],
                     filterSliders: [1, 4],
-                    filterCategories: {
-                      'Type' : ['Hat', 'Shirt', 'Pants', 'Shoes', 'Jacket'],
-                      'Other Thing' : ['Hello', 'From', 'The', 'Other', 'Side']
-                    },
+                    filterCategories: [2, 3],
                     elements: products.map((product) => ListElement(
                       route: IndividualProductRoute + product.id,
                       object: product,

@@ -130,10 +130,7 @@ class OrderPageDesktop extends StatelessWidget {
                           'Vendor'
                         ],
                           filterSliders: [1, 3],
-                          filterCategories: {
-                            'Type' : ['Hat', 'Shirt', 'Pants', 'Shoes', 'Jacket'],
-                            'Other Thing' : ['Hello', 'From', 'The', 'Other', 'Side']
-                          },
+                          filterCategories: [2, 4],
                         elements: productsList
                       ),
                     ),

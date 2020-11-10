@@ -5,7 +5,7 @@ List<Product> sampleProducts = [
   // PRODUCT VENDOR, PRODUCT TYPE, PRODUCT NAME, AMOUNT IN INVENTORY, AMOUNT SOLD
   Product(id: '0', name: 'Example T-Shirt', type: 'T-Shirt', vendor: 'Shirt Co.', price: 20, amountInInventory: 45, amountSold: 5),
   Product(id: '1', name: 'Example Jeans', vendor: 'Jeans Co.', type: 'Pants', price: 30, amountInInventory: 42, amountSold: 6),
-  Product(id: '2', name: 'Example Jacket', vendor: 'Jackert Co.', type: 'Jacket', price: 45, amountInInventory: 34, amountSold: 12),
+  Product(id: '2', name: 'Example Jacket', vendor: 'Jacket Co.', type: 'Jacket', price: 45, amountInInventory: 34, amountSold: 12),
   Product(id: '3', name: 'Dad Jorts', vendor: 'Pants Co.', type: 'Pants', price: 35, amountInInventory: 34, amountSold: 17),
   Product(id: '4', name: 'No Cap', vendor: 'Hat Co.', type: 'Hat', price: 25, amountInInventory: 12, amountSold: 9),
   Product(id: '5', name: 'Example Beanie', vendor: 'Hat Co.', type: 'Hat', price: 16, amountInInventory: 554, amountSold: 14),
