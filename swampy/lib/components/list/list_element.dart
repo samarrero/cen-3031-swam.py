@@ -37,9 +37,14 @@ class ListElement extends StatelessWidget {
           itemBuilder: (context, index) {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 12.0),
-              child: Text(
-                items[index],
-                style: Theme.of(context).textTheme.headline6,
+              child: SizedBox(
+                width: 150,
+                child: Center(
+                  child: Text(
+                    items[index],
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                ),
               ),
             );
           },
