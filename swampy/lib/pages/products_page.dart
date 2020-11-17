@@ -10,14 +10,6 @@ import 'package:swampy/data/sample_data.dart';
 
 class ProductsPage extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  List<ListElement> sample = List.generate(
-      25,
-      (index) => ListElement(
-            items: ['$index', '${index + 7}', '${index + 8}', '${index + 9}'],
-          ));
-
-
-  List<Product> products = sampleProducts;
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +24,9 @@ class ProductsPage extends StatelessWidget {
                 return;
               },
               child: ScreenTypeLayout(
-                desktop: ProductsPageDesktop(products: products),
-                tablet: ProductsPageTablet(sample: sample),
-                mobile: ProductsPageMobile(sample: sample),
+                desktop: ProductsPageDesktop(products: sampleProducts),
+                tablet: ProductsPageTablet(products: sampleProducts),
+                mobile: ProductsPageMobile(products: sampleProducts),
               ))),
     );
   }

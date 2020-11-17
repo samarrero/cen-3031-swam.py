@@ -81,7 +81,7 @@ class _ListWrapperState extends State<ListWrapper> {
                   ),
                   child: Column(
                     children: [
-                      SizedBox(height: 100,),
+                      SizedBox(height: sizingInformation.deviceScreenType == DeviceScreenType.desktop ? 100 : 72),
                       Flexible(
                         child: SingleChildScrollView(
                           child: ConstrainedBox(
@@ -92,7 +92,7 @@ class _ListWrapperState extends State<ListWrapper> {
                             child: ColumnBuilder(
                                 itemCount: visibleElements.length,
                                 itemBuilder: (context, index) => AnimatedCrossFade(
-                                  firstChild: visibleElements[index],
+                                  firstChild: sizingInformation.deviceScreenType != DeviceScreenType.desktop ? createCardFromElement(visibleElements[index]) : visibleElements[index],
                                   secondChild: SizedBox.shrink(),
                                   crossFadeState: visibleElements[index].visible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
                                   duration: Duration(milliseconds: 200),
@@ -104,6 +104,7 @@ class _ListWrapperState extends State<ListWrapper> {
                     ],
                   ),
                 ),
+                sizingInformation.deviceScreenType == DeviceScreenType.desktop ?
                 Column(
                   children: [
                     SizedBox(height: 72.0,),
@@ -165,9 +166,12 @@ class _ListWrapperState extends State<ListWrapper> {
                       }),
                     ),
                   ],
-                ),
+                ) : SizedBox.shrink(),
                 ConstrainedBox(
-                  constraints: BoxConstraints(minWidth: MediaQuery.of(context).size.width - 200, maxWidth: MediaQuery.of(context).size.width - 200),
+                  constraints: BoxConstraints(
+                      minWidth: sizingInformation.deviceScreenType != DeviceScreenType.mobile ? MediaQuery.of(context).size.width - 200 : MediaQuery.of(context).size.width,
+                      maxWidth: sizingInformation.deviceScreenType != DeviceScreenType.mobile ? MediaQuery.of(context).size.width - 200 : MediaQuery.of(context).size.width
+                  ),
                   child: Stack(
                     alignment: Alignment.topRight,
                     children: [
@@ -179,7 +183,7 @@ class _ListWrapperState extends State<ListWrapper> {
                           elevation: 3.0,
                           child: ConstrainedBox(
                             constraints: BoxConstraints(
-                              maxWidth: MediaQuery.of(context).size.width * 0.5
+                              maxWidth: sizingInformation.deviceScreenType != DeviceScreenType.mobile ? MediaQuery.of(context).size.width * 0.5 : MediaQuery.of(context).size.width * 0.7
                             ),
                             child: TextFormField(
                               controller: searchController,
@@ -272,14 +276,15 @@ class _ListWrapperState extends State<ListWrapper> {
                                   });
                                 },
                                 child: Padding(
-                                  padding: const EdgeInsets.only(left: 24.0, top: 12.0, bottom: 12.0, right: 14.0),
-                                  child: Row(
+                                  padding: EdgeInsets.only(left: sizingInformation.deviceScreenType == DeviceScreenType.desktop ? 24.0 : 12.0, top: 12.0, bottom: 12.0, right: sizingInformation.deviceScreenType == DeviceScreenType.desktop ? 14.0 : 12.0),
+                                  child:
+                                  sizingInformation.deviceScreenType == DeviceScreenType.desktop ? Row(
                                     children: [
                                       Text('Filters', style: Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.normal),),
                                       SizedBox(width: 4.0,),
                                       Icon(showFilterMenu ?  Icons.arrow_drop_up : Icons.arrow_drop_down, color: Colors.grey[500],)
                                     ],
-                                  ),
+                                  ) : Icon(Icons.filter_list_rounded, color: Colors.grey[600]),
                                 ),
                               ),
                             ),
@@ -430,6 +435,30 @@ class _ListWrapperState extends State<ListWrapper> {
 
     var outputFormat = DateFormat('yyyy-MM-dd');
     return outputFormat.parse('$date1');
+  }
+
+  Widget createCardFromElement(ListElement element) {
+    Map<String, String> categoryValuePairs = Map<String, String>();
+    for (int i = 0; i < element.items.length; i++) {
+      categoryValuePairs[widget.titles[i]] = element.items[i];
+    }
+
+    return Card(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.0)),
+      elevation: 3.0,
+      child: ColumnBuilder(
+        itemCount: element.items.length,
+        itemBuilder: (context, index) {
+          return Row(
+            children: [
+              Text(widget.titles[index], style: Theme.of(context).textTheme.headline3),
+              Text(element.items[index], style: Theme.of(context).textTheme.headline4)
+            ],
+          );
+        },
+      ),
+    );
   }
 
   List<Widget> createCategoryButtons(String categoryName) {
