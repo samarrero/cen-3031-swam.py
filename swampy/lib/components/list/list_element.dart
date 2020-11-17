@@ -38,10 +38,11 @@ class ListElement extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 12.0),
               child: SizedBox(
-                width: 150,
+                width: MediaQuery.of(context).size.width * 0.11,
                 child: Center(
                   child: Text(
                     items[index],
+                    overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.headline6,
                   ),
                 ),

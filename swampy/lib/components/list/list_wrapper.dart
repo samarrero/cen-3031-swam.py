@@ -8,8 +8,6 @@ import 'package:swampy/components/list/list_category.dart';
 import 'package:autotrie/autotrie.dart';
 import 'package:intl/intl.dart';
 
-//TODO:
-//Apply category filters
 class ListWrapper extends StatefulWidget {
   final List<String> titles;
   final List<ListElement> elements;
@@ -168,245 +166,255 @@ class _ListWrapperState extends State<ListWrapper> {
                     ),
                   ],
                 ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(32.0)),
-                      elevation: 3.0,
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxWidth: MediaQuery.of(context).size.width * 0.5
-                        ),
-                        child: TextFormField(
-                          controller: searchController,
-                          onChanged: (val) {
-                            final matches = searchComplete.suggest(val.toLowerCase());
-                            for (ListElement element in visibleElements) {
-                              setState(() {
-                                element.visible = false;
-                              });
-                            }
-                            for (String match in matches) {
-                              bool allGood = true;
-                              for (int filter in widget.filterSliders) {
-                                try {
-                                  if (double.parse(lookupTable[match].items[filter]) < sliderValues[filter].start || double.parse(lookupTable[match].items[filter]) > sliderValues[filter].end) {
-                                    allGood = false;
-                                    break;
-                                  }
-                                } catch (e) {
-                                  if (double.parse(lookupTable[match].items[filter].substring(1)) < sliderValues[filter].start || double.parse(lookupTable[match].items[filter].substring(1)) > sliderValues[filter].end) {
-                                    allGood = false;
-                                    break;
-                                  }
-                                }
-                              }
-                              for (int filterCategory in widget.filterCategories) {
-                                for (String key in categoryValues.keys) {
-                                  for (String mapping in categoryValues[key].keys) {
-                                    if (lookupTable[match].items[filterCategory] == mapping && !categoryValues[widget.titles[filterCategory]][mapping]) {
-                                      allGood = false;
-                                      break;
-                                    }
-                                  }
-                                }
-                              }
-                              setState(() {
-                                if (allGood)
-                                {
-                                  lookupTable[match].visible = true;
-                                }
-                              });
-                            }
-                          },
-                          cursorColor: Theme.of(context).primaryColor,
-                          decoration: InputDecoration(
-                            suffixIcon: Padding(
-                              padding: const EdgeInsets.only(right: 18.0),
-                              child: Icon(Icons.search_rounded),
-                            ),
-                            alignLabelWithHint: true,
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(width: 0, color: Colors.transparent),
-                                borderRadius: BorderRadius.circular(32.0)
-                            ),
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(width: 0, color: Colors.transparent),
-                                borderRadius: BorderRadius.circular(32.0)
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(width: 0, color: Colors.transparent),
-                                borderRadius: BorderRadius.circular(32.0)
-                            ),
-                            errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(width: 0, color: Colors.transparent),
-                                borderRadius: BorderRadius.circular(32.0)
-                            ),
-                            contentPadding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 18.0),
-                            hintText: 'Search for a${widget.searchType}',
-                            hintStyle: Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.normal),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Card(
+                ConstrainedBox(
+                  constraints: BoxConstraints(minWidth: MediaQuery.of(context).size.width - 200, maxWidth: MediaQuery.of(context).size.width - 200),
+                  child: Stack(
+                    alignment: Alignment.topRight,
+                    children: [
+                      Positioned(
+                        left: 0,
+                        child: Card(
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(32.0)),
                           elevation: 3.0,
-                          child: InkWell(
-                            onTap: () {
-                              setState(() {
-                                showFilterMenu = !showFilterMenu;
-                              });
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 24.0, top: 12.0, bottom: 12.0, right: 14.0),
-                              child: Row(
-                                children: [
-                                  Text('Filters', style: Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.normal),),
-                                  SizedBox(width: 4.0,),
-                                  Icon(showFilterMenu ?  Icons.arrow_drop_up : Icons.arrow_drop_down, color: Colors.grey[500],)
-                                ],
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(
+                              maxWidth: MediaQuery.of(context).size.width * 0.5
+                            ),
+                            child: TextFormField(
+                              controller: searchController,
+                              onChanged: (val) {
+                                final matches = searchComplete.suggest(val.toLowerCase());
+                                for (ListElement element in visibleElements) {
+                                  setState(() {
+                                    element.visible = false;
+                                  });
+                                }
+                                for (String match in matches) {
+                                  bool allGood = true;
+                                  for (int filter in widget.filterSliders) {
+                                    try {
+                                      if (double.parse(lookupTable[match].items[filter]) < sliderValues[filter].start || double.parse(lookupTable[match].items[filter]) > sliderValues[filter].end) {
+                                        allGood = false;
+                                        break;
+                                      }
+                                    } catch (e) {
+                                      if (double.parse(lookupTable[match].items[filter].substring(1)) < sliderValues[filter].start || double.parse(lookupTable[match].items[filter].substring(1)) > sliderValues[filter].end) {
+                                        allGood = false;
+                                        break;
+                                      }
+                                    }
+                                  }
+                                  for (int filterCategory in widget.filterCategories) {
+                                    for (String key in categoryValues.keys) {
+                                      for (String mapping in categoryValues[key].keys) {
+                                        if (lookupTable[match].items[filterCategory] == mapping && !categoryValues[widget.titles[filterCategory]][mapping]) {
+                                          allGood = false;
+                                          break;
+                                        }
+                                      }
+                                    }
+                                  }
+                                  setState(() {
+                                    if (allGood)
+                                    {
+                                      lookupTable[match].visible = true;
+                                    }
+                                  });
+                                }
+                              },
+                              cursorColor: Theme.of(context).primaryColor,
+                              decoration: InputDecoration(
+                                suffixIcon: Padding(
+                                  padding: const EdgeInsets.only(right: 18.0),
+                                  child: Icon(Icons.search_rounded),
+                                ),
+                                alignLabelWithHint: true,
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(width: 0, color: Colors.transparent),
+                                    borderRadius: BorderRadius.circular(32.0)
+                                ),
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide(width: 0, color: Colors.transparent),
+                                    borderRadius: BorderRadius.circular(32.0)
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(width: 0, color: Colors.transparent),
+                                    borderRadius: BorderRadius.circular(32.0)
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(width: 0, color: Colors.transparent),
+                                    borderRadius: BorderRadius.circular(32.0)
+                                ),
+                                contentPadding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 18.0),
+                                hintText: 'Search for a${widget.searchType}',
+                                hintStyle: Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.normal),
                               ),
                             ),
                           ),
                         ),
-                        SizedBox(height: 8.0,),
-                        Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16.0)),
-                          elevation: 3.0,
-                          child: AnimatedContainer(
-                            duration: Duration(milliseconds: 150),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          ConstrainedBox(
                             constraints: BoxConstraints(
-                              maxWidth: MediaQuery.of(context).size.width * 0.2,
-                                maxHeight: 800
+                              maxWidth: 111
                             ),
-                            child: showFilterMenu ? Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Flexible(
-                                  child: SizedBox(
-                                    height: 18.0,
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(32.0)),
+                              elevation: 3.0,
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    showFilterMenu = !showFilterMenu;
+                                  });
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 24.0, top: 12.0, bottom: 12.0, right: 14.0),
+                                  child: Row(
+                                    children: [
+                                      Text('Filters', style: Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.normal),),
+                                      SizedBox(width: 4.0,),
+                                      Icon(showFilterMenu ?  Icons.arrow_drop_up : Icons.arrow_drop_down, color: Colors.grey[500],)
+                                    ],
                                   ),
                                 ),
-                                for (int filter in widget.filterSliders) ConstrainedBox(
-                                  constraints: BoxConstraints(
-                                    maxHeight: 800
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 8.0,),
+                          Card(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16.0)),
+                            elevation: 3.0,
+                            child: AnimatedContainer(
+                              duration: Duration(milliseconds: 150),
+                              constraints: BoxConstraints(
+                                maxWidth: MediaQuery.of(context).size.width * 0.3,
+                                  maxHeight: 800
+                              ),
+                              child: showFilterMenu ? Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Flexible(
+                                    child: SizedBox(
+                                      height: 18.0,
+                                    ),
                                   ),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                          padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                                          child: Text(widget.titles[filter], style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold),)
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                        child: RangeSlider(
-                                          values: sliderValues[filter],
-                                          min: 0,
-                                          max: maxSliderValues[filter],
-                                          divisions: maxSliderValues[filter] > 10 ? maxSliderValues[filter] ~/ 10 : maxSliderValues[filter],
-                                          labels: RangeLabels(
-                                            sliderValues[filter].start.round().toString(),
-                                            sliderValues[filter].end.round().toString(),
-                                          ),
-                                          onChanged: (RangeValues values) {
-                                            setState(() {
-                                              sliderValues[filter] = values;
-                                              final matches = searchComplete.suggest(searchController.text.toLowerCase());
-                                              for (ListElement element in visibleElements) {
-                                                element.visible = false;
-                                              }
-                                              for (String match in matches) {
-                                                bool allGood = true;
-                                                for (int matchFilter in widget.filterSliders) {
-                                                  try {
-                                                    if (double.parse(lookupTable[match].items[matchFilter]) < sliderValues[matchFilter].start || double.parse(lookupTable[match].items[matchFilter]) > sliderValues[matchFilter].end) {
-                                                      allGood = false;
-                                                      break;
-                                                    }
-                                                  } catch (e) {
-                                                    if (double.parse(lookupTable[match].items[matchFilter].substring(1)) < sliderValues[matchFilter].start || double.parse(lookupTable[match].items[matchFilter].substring(1)) > sliderValues[matchFilter].end) {
-                                                      allGood = false;
-                                                      break;
-                                                    }
-                                                  }
+                                  for (int filter in widget.filterSliders) ConstrainedBox(
+                                    constraints: BoxConstraints(
+                                      maxHeight: 800
+                                    ),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                            padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                                            child: Text(widget.titles[filter], style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold),)
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                          child: RangeSlider(
+                                            values: sliderValues[filter],
+                                            min: 0,
+                                            max: maxSliderValues[filter],
+                                            divisions: maxSliderValues[filter] > 10 ? maxSliderValues[filter] ~/ 10 : maxSliderValues[filter],
+                                            labels: RangeLabels(
+                                              sliderValues[filter].start.round().toString(),
+                                              sliderValues[filter].end.round().toString(),
+                                            ),
+                                            onChanged: (RangeValues values) {
+                                              setState(() {
+                                                sliderValues[filter] = values;
+                                                final matches = searchComplete.suggest(searchController.text.toLowerCase());
+                                                for (ListElement element in visibleElements) {
+                                                  element.visible = false;
                                                 }
-                                                for (int filterCategory in widget.filterCategories) {
-                                                  for (String key in categoryValues.keys) {
-                                                    for (String mapping in categoryValues[key].keys) {
-                                                      if (lookupTable[match].items[filterCategory] == mapping && !categoryValues[widget.titles[filterCategory]][mapping]) {
+                                                for (String match in matches) {
+                                                  bool allGood = true;
+                                                  for (int matchFilter in widget.filterSliders) {
+                                                    try {
+                                                      if (double.parse(lookupTable[match].items[matchFilter]) < sliderValues[matchFilter].start || double.parse(lookupTable[match].items[matchFilter]) > sliderValues[matchFilter].end) {
+                                                        allGood = false;
+                                                        break;
+                                                      }
+                                                    } catch (e) {
+                                                      if (double.parse(lookupTable[match].items[matchFilter].substring(1)) < sliderValues[matchFilter].start || double.parse(lookupTable[match].items[matchFilter].substring(1)) > sliderValues[matchFilter].end) {
                                                         allGood = false;
                                                         break;
                                                       }
                                                     }
                                                   }
-                                                }
-                                                setState(() {
-                                                  if (allGood)
-                                                  {
-                                                    lookupTable[match].visible = true;
+                                                  for (int filterCategory in widget.filterCategories) {
+                                                    for (String key in categoryValues.keys) {
+                                                      for (String mapping in categoryValues[key].keys) {
+                                                        if (lookupTable[match].items[filterCategory] == mapping && !categoryValues[widget.titles[filterCategory]][mapping]) {
+                                                          allGood = false;
+                                                          break;
+                                                        }
+                                                      }
+                                                    }
                                                   }
-                                                });
-                                              }
-                                            });
-                                          },
+                                                  setState(() {
+                                                    if (allGood)
+                                                    {
+                                                      lookupTable[match].visible = true;
+                                                    }
+                                                  });
+                                                }
+                                              });
+                                            },
+                                          ),
                                         ),
-                                      ),
-                                      SizedBox(
-                                        height: 12.0
-                                      )
-                                    ],
+                                        SizedBox(
+                                          height: 12.0
+                                        )
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                for (String categoryName in categoryValues.keys) ConstrainedBox(
-                                  constraints: BoxConstraints(
-                                      maxHeight: 800
-                                  ),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                          padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                                          child: Text(categoryName, style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold),)
-                                      ),
-                                      SizedBox(
-                                        height: 6.0,
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 10.0),
-                                        child: Wrap(
-                                          spacing: 8.0,
-                                          direction: Axis.horizontal,
-                                          children: createCategoryButtons(categoryName),
+                                  for (String categoryName in categoryValues.keys) ConstrainedBox(
+                                    constraints: BoxConstraints(
+                                        maxHeight: 800
+                                    ),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                            padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                                            child: Text(categoryName, style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold),)
                                         ),
-                                      ),
-                                    ],
+                                        SizedBox(
+                                          height: 6.0,
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 10.0),
+                                          child: Wrap(
+                                            spacing: 8.0,
+                                            direction: Axis.horizontal,
+                                            children: createCategoryButtons(categoryName),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                Flexible(
-                                  child: SizedBox(
-                                    height: 12.0,
+                                  Flexible(
+                                    child: SizedBox(
+                                      height: 12.0,
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ) : SizedBox.shrink(),
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
+                                ],
+                              ) : SizedBox.shrink(),
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

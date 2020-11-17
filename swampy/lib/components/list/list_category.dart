@@ -16,7 +16,7 @@ class ListCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 150,
+      width: MediaQuery.of(context).size.width * 0.11,
       child: Center(
         child: Row(
           mainAxisSize: MainAxisSize.min,
