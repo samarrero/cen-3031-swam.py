@@ -33,6 +33,8 @@ class ProductsPageMobile extends StatelessWidget {
             titles: ['Product', 'Inventory', 'Type', 'Vendor', '# Sold'],
             filterSliders: [1, 4],
             filterCategories: [2, 3],
+            primaryKey: 0,
+            secondaryKey: 4,
             elements: products.map((product) => ListElement(
               route: IndividualProductRoute + product.id,
               object: product,

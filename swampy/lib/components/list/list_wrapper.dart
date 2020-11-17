@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:swampy/components/general/circular_checkbox.dart';
 import 'package:swampy/components/general/column_builder.dart';
+import 'package:swampy/components/list/list_card.dart';
 import 'package:swampy/components/list/list_element.dart';
 import 'package:swampy/components/list/list_category.dart';
 import 'package:autotrie/autotrie.dart';
@@ -14,8 +15,9 @@ class ListWrapper extends StatefulWidget {
   final List<int> filterSliders;
   final List<int> filterCategories;
   final String searchType;
+  final int primaryKey, secondaryKey;
 
-  ListWrapper({@required this.titles, @required this.elements, this.filterSliders, this.filterCategories, this.searchType});
+  ListWrapper({@required this.titles, @required this.elements, this.filterSliders, this.filterCategories, this.searchType, this.primaryKey = 0, this.secondaryKey = 0});
 
   @override
   _ListWrapperState createState() => _ListWrapperState();
@@ -92,7 +94,13 @@ class _ListWrapperState extends State<ListWrapper> {
                             child: ColumnBuilder(
                                 itemCount: visibleElements.length,
                                 itemBuilder: (context, index) => AnimatedCrossFade(
-                                  firstChild: sizingInformation.deviceScreenType != DeviceScreenType.desktop ? createCardFromElement(visibleElements[index]) : visibleElements[index],
+                                  firstChild: sizingInformation.deviceScreenType != DeviceScreenType.desktop ?
+                                  ListCard(
+                                      primaryKey: widget.primaryKey,
+                                      secondaryKey: widget.secondaryKey,
+                                      attributes: visibleElements[index],
+                                      descriptors: widget.titles,
+                                  ) : visibleElements[index],
                                   secondChild: SizedBox.shrink(),
                                   crossFadeState: visibleElements[index].visible ? CrossFadeState.showFirst : CrossFadeState.showSecond,
                                   duration: Duration(milliseconds: 200),
@@ -435,69 +443,6 @@ class _ListWrapperState extends State<ListWrapper> {
 
     var outputFormat = DateFormat('yyyy-MM-dd');
     return outputFormat.parse('$date1');
-  }
-
-  Widget createCardFromElement(ListElement element) {
-    Map<String, String> categoryValuePairs = Map<String, String>();
-    for (int i = 0; i < element.items.length; i++) {
-      categoryValuePairs[widget.titles[i]] = element.items[i];
-    }
-
-    return Card(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.0)),
-      elevation: 3.0,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Expanded(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.only(left:  16.0, top: 16.0, bottom: 16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(element.items.first, style: Theme.of(context).textTheme.headline4.copyWith(fontWeight: FontWeight.bold),),
-                  SizedBox(height: 12.0,),
-                  Row(
-                    children: [
-                      Text(widget.titles[3], style: Theme.of(context).textTheme.headline5,),
-                      SizedBox(width: 8.0,),
-                      Text(element.items[3], style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold),),
-                    ],
-                  ),
-                  SizedBox(height: 6.0,),
-                  Row(
-                    children: [
-                      Text(widget.titles[2], style: Theme.of(context).textTheme.headline5,),
-                      SizedBox(width: 8.0,),
-                      Text(element.items[2], style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold),),
-                    ],
-                  ),
-                  SizedBox(height: 6.0,),
-                  Row(
-                    children: [
-                      Text(widget.titles[1], style: Theme.of(context).textTheme.headline5,),
-                      SizedBox(width: 8.0,),
-                      Text(element.items[1], style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold),),
-                    ],
-                  ),
-                ]
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Column(
-              children: [
-                Text(element.items.last, style: Theme.of(context).textTheme.headline3.copyWith(fontWeight: FontWeight.bold),),
-                Text(widget.titles.last, style: Theme.of(context).textTheme.headline5,)
-              ],
-            ),
-          )
-        ],
-      ),
-    );
   }
 
   List<Widget> createCategoryButtons(String categoryName) {

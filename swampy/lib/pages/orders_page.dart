@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
-import 'package:swampy/components/list/list_element.dart';
-import 'package:swampy/components/menus/nav_bar.dart';
-import 'package:swampy/models/order.dart';
 import 'package:swampy/pages/orders_page/orders_page_desktop.dart';
 import 'package:swampy/pages/orders_page/orders_page_mobile.dart';
 import 'package:swampy/pages/orders_page/orders_page_tablet.dart';
@@ -10,13 +7,6 @@ import 'package:swampy/data/sample_data.dart';
 
 class OrdersPage extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  List<ListElement> sample = List.generate(
-      25,
-      (index) => ListElement(
-            items: ['$index', '${index + 7}', '${index + 8}', '${index + 9}'],
-          ));
-
-  List<Order> orders = sampleOrders;
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +21,9 @@ class OrdersPage extends StatelessWidget {
                 return;
               },
               child: ScreenTypeLayout(
-                desktop: OrdersPageDesktop(orders: orders),
-                tablet: OrdersPageTablet(sample: sample),
-                mobile: OrdersPageMobile(sample: sample),
+                desktop: OrdersPageDesktop(orders: sampleOrders),
+                tablet: OrdersPageTablet(orders: sampleOrders),
+                mobile: OrdersPageMobile(orders: sampleOrders),
               ))),
     );
   }
