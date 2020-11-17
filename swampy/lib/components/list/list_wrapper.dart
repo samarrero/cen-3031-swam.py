@@ -297,7 +297,7 @@ class _ListWrapperState extends State<ListWrapper> {
                             child: AnimatedContainer(
                               duration: Duration(milliseconds: 150),
                               constraints: BoxConstraints(
-                                maxWidth: MediaQuery.of(context).size.width * 0.3,
+                                  maxWidth: sizingInformation.deviceScreenType == DeviceScreenType.desktop ? MediaQuery.of(context).size.width * 0.3 : sizingInformation.deviceScreenType == DeviceScreenType.tablet ? MediaQuery.of(context).size.width * 0.5 : MediaQuery.of(context).size.width * 0.8,
                                   maxHeight: 800
                               ),
                               child: showFilterMenu ? Column(
@@ -447,16 +447,55 @@ class _ListWrapperState extends State<ListWrapper> {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.0)),
       elevation: 3.0,
-      child: ColumnBuilder(
-        itemCount: element.items.length,
-        itemBuilder: (context, index) {
-          return Row(
-            children: [
-              Text(widget.titles[index], style: Theme.of(context).textTheme.headline3),
-              Text(element.items[index], style: Theme.of(context).textTheme.headline4)
-            ],
-          );
-        },
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            flex: 2,
+            child: Padding(
+              padding: const EdgeInsets.only(left:  16.0, top: 16.0, bottom: 16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(element.items.first, style: Theme.of(context).textTheme.headline4.copyWith(fontWeight: FontWeight.bold),),
+                  SizedBox(height: 12.0,),
+                  Row(
+                    children: [
+                      Text(widget.titles[3], style: Theme.of(context).textTheme.headline5,),
+                      SizedBox(width: 8.0,),
+                      Text(element.items[3], style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold),),
+                    ],
+                  ),
+                  SizedBox(height: 6.0,),
+                  Row(
+                    children: [
+                      Text(widget.titles[2], style: Theme.of(context).textTheme.headline5,),
+                      SizedBox(width: 8.0,),
+                      Text(element.items[2], style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold),),
+                    ],
+                  ),
+                  SizedBox(height: 6.0,),
+                  Row(
+                    children: [
+                      Text(widget.titles[1], style: Theme.of(context).textTheme.headline5,),
+                      SizedBox(width: 8.0,),
+                      Text(element.items[1], style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold),),
+                    ],
+                  ),
+                ]
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Column(
+              children: [
+                Text(element.items.last, style: Theme.of(context).textTheme.headline3.copyWith(fontWeight: FontWeight.bold),),
+                Text(widget.titles.last, style: Theme.of(context).textTheme.headline5,)
+              ],
+            ),
+          )
+        ],
       ),
     );
   }
