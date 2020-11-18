@@ -6,7 +6,7 @@ import 'package:swampy/models/product.dart';
 import 'package:swampy/pages/products_page/products_page_desktop.dart';
 import 'package:swampy/pages/products_page/products_page_mobile.dart';
 import 'package:swampy/pages/products_page/products_page_tablet.dart';
-import 'package:swampy/data/sample_data.dart';
+import 'package:swampy/data/data.dart';
 
 class ProductsPage extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -17,7 +17,7 @@ class ProductsPage extends StatelessWidget {
           ));
 
 
-  List<Product> products = sampleProducts;
+  List<Product> products = productsList;
 
   @override
   Widget build(BuildContext context) {
