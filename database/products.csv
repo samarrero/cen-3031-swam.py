@@ -1,0 +1,52 @@
+id,name,type,price,vendor,amount_sold,inventory
+0,3-Stripes Double Knit Quarter-Zip Pullover,Jacket,54,Adidas,36,180
+1,4-in-1 Flip Power Bank,Tech,15,IG,34,102
+2,Chambray Cap,Hat,36,Adidas,19,95
+3,Core Performance Relaxed Cap,Hat,28,Adidas,29,145
+4,Performance Sport Shirt,Shirt,41,Adidas,49,294
+5,Women's 3-Stripes Double Knit Full-Zip,Jacket,54,Adidas,26,52
+6,Vintage Heavy Knit Weekender Zip Hoodie,Hoodie,40,Alternative,7,14
+7,Indy Blended Fleece Zip Hoodie,Hoodie,40,Alternative,24,120
+8,Vbaxter Beanie,Hat,32,Baxter,7,35
+9,Unisex Jersey Long Sleeve Tee,Shirt,20,BELLA + CANVAS,9,54
+10,Women's The Favorite T-Shirt,Shirt,15,BELLA + CANVAS,37,222
+11,Unisex Jersey Tee,Shirt,15,BELLA + CANVAS,32,192
+12,Unisex Sponge Fleece Full-Zip Hoodie,Hoodie,37,BELLA + CANVAS,32,192
+13,Youth Sponge Fleece Full-Zip Hoodie,Hoodie,29,BELLA + CANVAS,5,15
+14,Watch Cap 2.0,Hat,27,Carhartt,12,24
+15,Firm Duck Hood,Hat,33,Carhartt,16,96
+16,Fleece 2-In-1 Headwear,Hat,26,Carhartt,25,125
+17,Fanny Pack,Bag,24,Champion,17,34
+18,Wireless Speaker,Tech,25,Cancan,34,204
+19,Camper Hat,Hat,26,Cranston,41,123
+20,Cropped Cut-Off Hooded Sweatshirt,Hoodie,55,Champion,34,170
+21,Heavyweight Full-Zip Hooded Sweatshirt with Thermal Lining,Jacket,54,CornerStone,14,28
+22,Heritage 7-Oz. Jersey Tee,Shirt,18,Champion,35,105
+23,Desktop Vacuum,Tech,19,Crumbee,45,90
+24,Slouch Beanie,Hat,15,District,49,294
+25,Women's Re-Tee V-Neck,Shirt,16,District,36,216
+26,Women’s V.I.T. Gathered Back Tank,Shirt,13,District,11,22
+27,Re-Fleece Crew,Jacket,26,District,39,117
+28,Duffel,Bag,101,Danville,30,150
+29,Enamel Campfire Mug,Office,23,IG,42,84
+30,Mill Pack,Bag,75,Finley,12,48
+31,Folio,Office,43,Fletcher,6,24
+32,Passport Holder,Bag,25,Hitchcock,46,92
+33,Youth Heavy Blend Full-Zip Hooded Sweatshirt,Jacket,30,Gildan,15,45
+34,Trading Track Unisex Jacket,Jacket,39,Independent,32,128
+35,Keychain Signature Collection,Office,16,Signature,22,66
+36,Personal Organizer,Office,45,Main Post,13,78
+37,Luxe Bottle,Office,38,Signature,6,24
+38,Mission Pack,Bag,83,IG,30,90
+39,Speckled Beanie,Hat,21,New Era,35,70
+40,Colorblock Cuffed Beanie,Hat,22,New Era,11,66
+41,Adjustable Structured Cap,Hat,20,New Era,40,80
+42,Myers Tag,Office,13,Myers,9,18
+43,Cotton Long Sleeve Crew,Shirt,19,Next Level,32,192
+44,Sueded Long Sleeve Crew,Shirt,20,Next Level,32,96
+45,Unisex Pullover Hoodie,Hoodie,29,Next Level,23,115
+46,Girls’ Princess Crew,Shirt,11,Next Level,26,104
+47,Club Fleece Pullover Hoodie,Hoodie,53,Nike,30,60
+48,Dri-FIT Hex Textured Polo,Shirt,57,Nike,21,126
+49,Dri-FIT Micro Pique Polo,Shirt,44,Nike,46,276
+50,Brasilia Backpack,Bag,53,Nike,23,115
