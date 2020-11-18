@@ -81,7 +81,7 @@ class ProductPageDesktop extends StatelessWidget {
                                       style:
                                       Theme.of(context).textTheme.headline5,
                                       textAlign: TextAlign.justify),
-                                  Text('Inventory Ordered: ' + productInfo.amountInInventory.toString(),
+                                  Text('Inventory Ordered: ' + productInfo.amountSold.toString(),
                                       style:
                                       Theme.of(context).textTheme.headline5,
                                       textAlign: TextAlign.justify),
