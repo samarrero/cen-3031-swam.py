@@ -30,6 +30,7 @@ class _ListWrapperState extends State<ListWrapper> {
   HashMap<String, ListElement> lookupTable = HashMap<String, ListElement>();
   TextEditingController searchController = TextEditingController();
   bool showFilterMenu = false;
+  bool showSortingMenu = false;
   List<double> maxSliderValues;
   List<RangeValues> sliderValues;
   Map<String, Map<String, bool>> categoryValues = Map<String, Map<String, bool>>();
@@ -191,7 +192,7 @@ class _ListWrapperState extends State<ListWrapper> {
                           elevation: 3.0,
                           child: ConstrainedBox(
                             constraints: BoxConstraints(
-                              maxWidth: sizingInformation.deviceScreenType != DeviceScreenType.mobile ? MediaQuery.of(context).size.width * 0.5 : MediaQuery.of(context).size.width * 0.7
+                                maxWidth: sizingInformation.deviceScreenType == DeviceScreenType.desktop ? MediaQuery.of(context).size.width * 0.5 : sizingInformation.deviceScreenType == DeviceScreenType.tablet ? MediaQuery.of(context).size.width - 200 - 184 : MediaQuery.of(context).size.width - 184
                             ),
                             child: TextFormField(
                               controller: searchController,
@@ -266,6 +267,77 @@ class _ListWrapperState extends State<ListWrapper> {
                           ),
                         ),
                       ),
+                      sizingInformation.deviceScreenType != DeviceScreenType.desktop ?
+                      Padding(
+                        padding: const EdgeInsets.only(right: 64.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            ConstrainedBox(
+                              constraints: BoxConstraints(
+                                  maxWidth: 111
+                              ),
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(32.0)),
+                                elevation: 3.0,
+                                child: InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      showSortingMenu = !showSortingMenu;
+                                      if (showSortingMenu) {
+                                        showFilterMenu = false;
+                                      }
+                                    });
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 12.0, top: 12.0, bottom: 12.0, right: 12.0),
+                                    child: Icon(Icons.sort_rounded, color: Colors.grey[600]),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 8.0,),
+                            Card(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16.0)),
+                              elevation: 3.0,
+                              child: AnimatedContainer(
+                                duration: Duration(milliseconds: 150),
+                                constraints: BoxConstraints(
+                                    maxWidth: sizingInformation.deviceScreenType == DeviceScreenType.desktop ? MediaQuery.of(context).size.width * 0.3 : sizingInformation.deviceScreenType == DeviceScreenType.tablet ? MediaQuery.of(context).size.width * 0.5 : MediaQuery.of(context).size.width * 0.8,
+                                    maxHeight: 800
+                                ),
+                                child: showSortingMenu ? Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 18.0),
+                                      child: Row(
+                                        children: [
+                                          Text('Sort by: ', style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold),),
+                                          SizedBox(width: 32.0),
+                                          DropdownButton(
+                                            hint: Text('None', style: Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.bold)),
+                                            items: (['None'] + widget.titles).map((title) {
+                                              return DropdownMenuItem(
+                                                value: title,
+                                                child: Text(title, style: Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.bold)),
+                                              );
+                                            }).toList(),
+                                            onChanged: (_) {},
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ) : SizedBox.shrink(),
+                              ),
+                            )
+                          ],
+                        ),
+                      ) : SizedBox.shrink(),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
@@ -281,6 +353,9 @@ class _ListWrapperState extends State<ListWrapper> {
                                 onTap: () {
                                   setState(() {
                                     showFilterMenu = !showFilterMenu;
+                                    if (showFilterMenu) {
+                                      showSortingMenu = false;
+                                    }
                                   });
                                 },
                                 child: Padding(
