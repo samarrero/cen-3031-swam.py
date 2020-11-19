@@ -4,6 +4,7 @@
 
 // Modified by Mash Ibtesum
 // Modified by Lorenzo Calisti
+// Modified by Fabio Suarez
 
 library circular_check_box;
 

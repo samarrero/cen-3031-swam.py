@@ -1,8 +1,8 @@
-import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:swampy/components/general/circular_checkbox.dart';
 import 'package:swampy/components/general/column_builder.dart';
+import 'package:swampy/components/general/dropdown.dart' as Custom;
 import 'package:swampy/components/list/list_card.dart';
 import 'package:swampy/components/list/list_element.dart';
 import 'package:swampy/components/list/list_category.dart';
@@ -27,10 +27,13 @@ class _ListWrapperState extends State<ListWrapper> {
   List<Sort> sorts;
   List<ListElement> visibleElements;
   AutoComplete searchComplete = AutoComplete(engine: SortEngine.configMulti(Duration(seconds: 1), 15, 0.5, 0.5));
-  HashMap<String, ListElement> lookupTable = HashMap<String, ListElement>();
+  Map<String, ListElement> lookupTable = Map<String, ListElement>();
   TextEditingController searchController = TextEditingController();
   bool showFilterMenu = false;
   bool showSortingMenu = false;
+  String sortingValue = 'None';
+  String sortingDirection = 'Ascending';
+  Map<String, int> sortingIndex = Map<String, int>();
   List<double> maxSliderValues;
   List<RangeValues> sliderValues;
   Map<String, Map<String, bool>> categoryValues = Map<String, Map<String, bool>>();
@@ -58,7 +61,9 @@ class _ListWrapperState extends State<ListWrapper> {
       maxSliderValues[filter] = ((maxSliderValues[filter] / 10.0).ceil() * 10).toDouble();
       sliderValues[filter] = RangeValues(0, maxSliderValues[filter]);
     }
+    sortingIndex['None'] = -1;
     for (int i = 0; i < widget.titles.length; i++) {
+      sortingIndex[widget.titles[i]] = i;
       if (widget.filterCategories.contains(i)) {
         categoryValues[widget.titles[i]] = Map<String, bool>();
         for (ListElement element in visibleElements) {
@@ -308,30 +313,144 @@ class _ListWrapperState extends State<ListWrapper> {
                                     maxWidth: sizingInformation.deviceScreenType == DeviceScreenType.desktop ? MediaQuery.of(context).size.width * 0.3 : sizingInformation.deviceScreenType == DeviceScreenType.tablet ? MediaQuery.of(context).size.width * 0.5 : MediaQuery.of(context).size.width * 0.8,
                                     maxHeight: 800
                                 ),
-                                child: showSortingMenu ? Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 18.0),
-                                      child: Row(
-                                        children: [
-                                          Text('Sort by: ', style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold),),
-                                          SizedBox(width: 32.0),
-                                          DropdownButton(
-                                            hint: Text('None', style: Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.bold)),
-                                            items: (['None'] + widget.titles).map((title) {
-                                              return DropdownMenuItem(
-                                                value: title,
-                                                child: Text(title, style: Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.bold)),
-                                              );
-                                            }).toList(),
-                                            onChanged: (_) {},
+                                child: showSortingMenu ? Padding(
+                                  padding: const EdgeInsets.only(left: 18.0, right: 18.0, top: 18.0, bottom: 12.0),
+                                  child: Wrap(
+                                    direction: Axis.vertical,
+                                    alignment: WrapAlignment.spaceBetween,
+                                    crossAxisAlignment: WrapCrossAlignment.start,
+                                    children: [
+                                      Text('Sort by: ', style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold),),
+                                      SizedBox(height: 6.0),
+                                      Custom.DropdownButton(
+                                        elevation: 3,
+                                        hint: Text(sortingValue, style: Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.bold)),
+                                        value: sortingValue,
+                                        items: (['None'] + widget.titles).map((title) {
+                                          return Custom.DropdownMenuItem(
+                                            value: title,
+                                            child: Text(title, style: Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.bold)),
+                                          );
+                                        }).toList(),
+                                        onChanged: (value) {
+                                          setState(() {
+                                            sortingValue = value;
+                                            int index = sortingIndex[sortingValue];
+                                            for (int i = 0; i < sorts.length; i++) {
+                                              if (i != index) sorts[i] = Sort.none;
+                                            }
+                                            if (index == -1) {
+                                              visibleElements = widget.elements;
+                                            } else if (sortingDirection == 'Descending') {
+                                              sorts[index] = Sort.descending;
+                                              visibleElements.sort((a, b) {
+                                                try {
+                                                  return reformatDateTime(a.items[index]).isBefore(reformatDateTime(b.items[index])) ? 1 : -1; //date
+                                                } catch (e) {
+                                                  try {
+                                                    return double.parse(a.items[index]) < double.parse(b.items[index]) ? 1 : -1; //number
+                                                  } catch (e) {
+                                                    try {
+                                                      return double.parse(a.items[index].substring(1)) < double.parse(b.items[index].substring(1)) ? 1 : -1; //$amount
+                                                    } catch (e) {
+                                                      return b.items[index].compareTo(a.items[index]); //string
+                                                    }
+                                                  }
+                                                }
+                                              });
+                                            } else if (sortingDirection == 'Ascending') {
+                                              sorts[index] = Sort.ascending;
+                                              visibleElements.sort((a, b) {
+                                                try {
+                                                  return reformatDateTime(a.items[index]).isBefore(reformatDateTime(b.items[index])) ? -1 : 1; //date
+                                                }
+                                                catch (e) {
+                                                  try {
+                                                    return double.parse(a.items[index]) < double.parse(b.items[index]) ? -1 : 1; //number
+                                                  }
+                                                  catch (e) {
+                                                    try {
+                                                      return double.parse(a.items[index].substring(1)) < double.parse(b.items[index].substring(1)) ? -1 : 1; //$amount
+                                                    } catch (e) {
+                                                      return a.items[index].compareTo(b.items[index]); //string
+                                                    }
+                                                  }
+                                                }
+                                              });
+                                            }
+                                          });
+                                        },
+                                      ),
+                                      Custom.DropdownButton(
+                                        elevation: 3,
+                                        hint: Text(sortingDirection, style: Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.bold)),
+                                        value: sortingDirection,
+                                        items: [
+                                          Custom.DropdownMenuItem(
+                                            // height: 43.0,
+                                            value: 'Ascending',
+                                            child: Text('Ascending', style: Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.bold)),
+                                          ),
+                                          Custom.DropdownMenuItem(
+                                            // height: 43.0,
+                                            value: 'Descending',
+                                            child: Text('Descending', style: Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.bold)),
                                           )
                                         ],
-                                      ),
-                                    )
-                                  ],
+                                        onChanged: (value) {
+                                          setState(() {
+                                            sortingDirection = value;
+                                            int index = sortingIndex[sortingValue];
+                                            if (index != -1 && sortingDirection == 'Descending') {
+                                              sorts[index] = Sort.descending;
+                                            } else if (index != -1) {
+                                              sorts[index] = Sort.ascending;
+                                            }
+                                            for (int i = 0; i < sorts.length; i++) {
+                                              if (i != index) sorts[i] = Sort.none;
+                                            }
+                                            if (index == -1) {
+                                              visibleElements = widget.elements;
+                                            } else if (sorts[index] == Sort.descending) {
+                                              visibleElements.sort((a, b) {
+                                                try {
+                                                  return reformatDateTime(a.items[index]).isBefore(reformatDateTime(b.items[index])) ? 1 : -1; //date
+                                                } catch (e) {
+                                                  try {
+                                                    return double.parse(a.items[index]) < double.parse(b.items[index]) ? 1 : -1; //number
+                                                  } catch (e) {
+                                                    try {
+                                                      return double.parse(a.items[index].substring(1)) < double.parse(b.items[index].substring(1)) ? 1 : -1; //$amount
+                                                    } catch (e) {
+                                                      return b.items[index].compareTo(a.items[index]); //string
+                                                    }
+                                                  }
+                                                }
+                                              });
+                                            } else if (sorts[index] == Sort.ascending) {
+                                              visibleElements.sort((a, b) {
+                                                try {
+                                                  return reformatDateTime(a.items[index]).isBefore(reformatDateTime(b.items[index])) ? -1 : 1; //date
+                                                }
+                                                catch (e) {
+                                                  try {
+                                                    return double.parse(a.items[index]) < double.parse(b.items[index]) ? -1 : 1; //number
+                                                  }
+                                                  catch (e) {
+                                                    try {
+                                                      return double.parse(a.items[index].substring(1)) < double.parse(b.items[index].substring(1)) ? -1 : 1; //$amount
+                                                    } catch (e) {
+                                                      return a.items[index].compareTo(b.items[index]); //string
+                                                    }
+                                                  }
+                                                }
+                                              });
+                                            }
+                                          });
+                                        },
+                                      )
+                                    ],
+                                  ),
                                 ) : SizedBox.shrink(),
                               ),
                             )
