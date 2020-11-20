@@ -31,9 +31,9 @@ class OrdersPage extends StatelessWidget {
                 return;
               },
               child: ScreenTypeLayout(
-                desktop: OrdersPageDesktop(orders: sampleOrders),
-                tablet: OrdersPageTablet(orders: sampleOrders),
-                mobile: OrdersPageMobile(orders: sampleOrders),
+                desktop: Container(),
+                tablet: Container(),
+                mobile: Container(),
               ))),
     );
   }

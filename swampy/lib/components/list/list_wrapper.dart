@@ -16,8 +16,9 @@ class ListWrapper extends StatefulWidget {
   final List<int> filterCategories;
   final String searchType;
   final int primaryKey, secondaryKey;
+  final ScrollController scrollController;
 
-  ListWrapper({@required this.titles, @required this.elements, this.filterSliders, this.filterCategories, this.searchType, this.primaryKey = 0, this.secondaryKey = 0});
+  ListWrapper({@required this.titles, @required this.elements, this.filterSliders, this.filterCategories, this.searchType, this.primaryKey = 0, this.secondaryKey = 0, this.scrollController});
 
   @override
   _ListWrapperState createState() => _ListWrapperState();
@@ -97,7 +98,9 @@ class _ListWrapperState extends State<ListWrapper> {
                                 maxHeight: sizingInformation.deviceScreenType == DeviceScreenType.mobile ?
                                 MediaQuery.of(context).size.height - (55 + 24 + 28.42 + 46.6) : MediaQuery.of(context).size.height - (70 + 24 + 28.42 + 46.6)
                             ),
-                            child: ColumnBuilder(
+                            child: ListView.builder(
+                                physics: AlwaysScrollableScrollPhysics(),
+                                controller: widget.scrollController,
                                 itemCount: visibleElements.length,
                                 itemBuilder: (context, index) => AnimatedCrossFade(
                                   firstChild: sizingInformation.deviceScreenType != DeviceScreenType.desktop ?
