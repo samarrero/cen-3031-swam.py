@@ -9,8 +9,9 @@ class ListElement extends StatelessWidget {
   bool visible;
   String route;
   Object object;
+  final String id;
 
-  ListElement({this.items, this.visible = true, this.route, this.object});
+  ListElement({this.items, this.visible = true, this.route, this.object, this.id});
 
   @override
   Widget build(BuildContext context) {

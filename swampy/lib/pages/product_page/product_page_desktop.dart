@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:swampy/components/general/column_builder.dart';
 import 'package:swampy/components/list/list_element.dart';
@@ -9,17 +10,11 @@ import 'package:swampy/models/product.dart';
 
 class ProductPageDesktop extends StatelessWidget {
   final List<ListElement> sample;
-  final Product product;
 
-  ProductPageDesktop({this.sample, this.product});
+  ProductPageDesktop({this.sample});
 
   @override
   Widget build(BuildContext context) {
-
-    Product productInfo = product != null
-        ? product :
-    Product(id: 'null', name: 'null', vendor: 'null', price: -1, amountInInventory: -1, type: 'null', amountSold: -1);
-
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(70.0),
@@ -50,45 +45,51 @@ class ProductPageDesktop extends StatelessWidget {
                             Padding(
                                 padding:
                                 EdgeInsets.symmetric(horizontal: 15.0)),
-                            Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                      padding:
-                                      EdgeInsets.symmetric(vertical: 7.0)),
-                                  Text(productInfo.name,
-                                      style:
-                                      Theme.of(context).textTheme.headline4.copyWith(fontWeight: FontWeight.bold),
-                                      textAlign: TextAlign.justify),
+                            FutureBuilder(
+                              future: FirebaseFirestore.instance.collection('products').doc(ModalRoute.of(context).settings.name.substring(9)).get(),
+                              builder: (context, snapshot) {
+                                print(ModalRoute.of(context).settings.name.substring(9));
+                                return Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                          padding:
+                                          EdgeInsets.symmetric(vertical: 7.0)),
+                                      Text(snapshot.data['name'],
+                                          style:
+                                          Theme.of(context).textTheme.headline4.copyWith(fontWeight: FontWeight.bold),
+                                          textAlign: TextAlign.justify),
 
-                                  Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                          0.0, 7.0, 0.0, 0.0)),
-                                  Text('Price: \$' + productInfo.price.toString(),
-                                      // order.date.month.toString() + "/" + order.date.day.toString() + "/" + order.date.year.toString()
-                                      style:
-                                      Theme.of(context).textTheme.headline5,
-                                      textAlign: TextAlign.justify),
-                                  Text('Vendor: ' + productInfo.vendor,
-                                      style:
-                                      Theme.of(context).textTheme.headline5,
-                                      textAlign: TextAlign.justify),
-                                  Text('Type: ' + productInfo.type,
-                                      style:
-                                      Theme.of(context).textTheme.headline5,
-                                      textAlign: TextAlign.justify),
-                                  Text('Current Inventory: ' + productInfo.amountInInventory.toString(),
-                                      style:
-                                      Theme.of(context).textTheme.headline5,
-                                      textAlign: TextAlign.justify),
-                                  Text('Inventory Ordered: ' + productInfo.amountInInventory.toString(),
-                                      style:
-                                      Theme.of(context).textTheme.headline5,
-                                      textAlign: TextAlign.justify),
-                                  Padding(
-                                      padding:
-                                      EdgeInsets.symmetric(vertical: 7.0)),
-                                ]),
+                                      Padding(
+                                          padding: EdgeInsets.fromLTRB(
+                                              0.0, 7.0, 0.0, 0.0)),
+                                      Text('Price: \$' + snapshot.data['price'],
+                                          // order.date.month.toString() + "/" + order.date.day.toString() + "/" + order.date.year.toString()
+                                          style:
+                                          Theme.of(context).textTheme.headline5,
+                                          textAlign: TextAlign.justify),
+                                      Text('Vendor: ' + snapshot.data['vendor'],
+                                          style:
+                                          Theme.of(context).textTheme.headline5,
+                                          textAlign: TextAlign.justify),
+                                      Text('Type: ' + snapshot.data['type'],
+                                          style:
+                                          Theme.of(context).textTheme.headline5,
+                                          textAlign: TextAlign.justify),
+                                      Text('Current Inventory: ' + snapshot.data['inventory'],
+                                          style:
+                                          Theme.of(context).textTheme.headline5,
+                                          textAlign: TextAlign.justify),
+                                      Text('Inventory Ordered: ' + snapshot.data['amount_sold'],
+                                          style:
+                                          Theme.of(context).textTheme.headline5,
+                                          textAlign: TextAlign.justify),
+                                      Padding(
+                                          padding:
+                                          EdgeInsets.symmetric(vertical: 7.0)),
+                                    ]);
+                              }
+                            ),
                             // Padding(
                             //     padding:
                             //         EdgeInsets.symmetric(horizontal: 100.0)),

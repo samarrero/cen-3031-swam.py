@@ -6,7 +6,7 @@ import 'package:swampy/models/product.dart';
 import 'package:swampy/pages/products_page/products_page_desktop.dart';
 import 'package:swampy/pages/products_page/products_page_mobile.dart';
 import 'package:swampy/pages/products_page/products_page_tablet.dart';
-import 'package:swampy/data/sample_data.dart';
+import 'package:swampy/data/data.dart';
 
 class ProductsPage extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -24,9 +24,9 @@ class ProductsPage extends StatelessWidget {
                 return;
               },
               child: ScreenTypeLayout(
-                desktop: ProductsPageDesktop(products: sampleProducts),
-                tablet: ProductsPageTablet(products: sampleProducts),
-                mobile: ProductsPageMobile(products: sampleProducts),
+                desktop: ProductsPageDesktop(),
+                tablet: ProductsPageTablet(sample: sample),
+                mobile: ProductsPageMobile(sample: sample),
               ))),
     );
   }
