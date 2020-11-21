@@ -78,6 +78,11 @@ class HomePageDesktop extends StatelessWidget {
                                                 .textTheme
                                                 .headline5,
                                             textAlign: TextAlign.justify),
+                                        Text('Total Revenue: ',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline5,
+                                            textAlign: TextAlign.justify),
                                         Padding(
                                             padding: EdgeInsets.symmetric(
                                                 vertical: 7.0)),
