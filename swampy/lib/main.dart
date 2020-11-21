@@ -32,27 +32,32 @@ void main() {
   );
 }
 Future getFirebaseCollection() async {
-  QuerySnapshot querySnapshotProducts = await FirebaseFirestore.instance.collection('products').get();
+  Stopwatch stopwatch = new Stopwatch()..start();
+  FirebaseFirestore.instance.collection('products').get().then((products) {
+    for (int i = 0; i < products.docs.length; i++) {
+      var doc = products.docs[i];
+      var data = doc.data();
+      productsList.add(new Product(id: data['id'], name: data['name'], vendor: data['vendor'], price: data['price'], amountInInventory: data['inventory'], type: data['type'], amountSold: data['amount_sold']));
+    }
+  });
 
   // var top5 = await FirebaseFirestore.instance.collection('products').orderBy('price', descending: true).limit(5).get();
   // for (var doc in top5.docs) {
   //   print(doc.data());
   // }
 
-  for (int i = 0; i < querySnapshotProducts.docs.length; i++) {
-    var doc = querySnapshotProducts.docs[i];
-    var data = doc.data();
-    productsList.add(new Product(id: data['id'], name: data['name'], vendor: data['vendor'], price: data['price'], amountInInventory: data['inventory'], type: data['type'], amountSold: data['amount_sold']));
-  }
 
-  QuerySnapshot querySnapshotOrders = await FirebaseFirestore.instance.collection('orders').get();
 
-  for (int i = 1; i < querySnapshotOrders.docs.length; i++) {
-    var doc = querySnapshotOrders.docs[i];
-    var data = doc.data();
-    ordersList.add(new Order(id: data['id'], orderNumber: data['order_number'], date: DateTime.fromMillisecondsSinceEpoch(data['date'].seconds * 1000), productsAndAmount: {productsList[3]: 2, productsList[4]: 1}, total: data['total'], fulfilled: data['fulfilled']));
-  }
+  FirebaseFirestore.instance.collection('orders').get().then((orders) {
+    for (int i = 1; i < orders.docs.length; i++) {
+      var doc = orders.docs[i];
+      var data = doc.data();
+      ordersList.add(new Order(id: data['id'], orderNumber: data['order_number'], date: DateTime.fromMillisecondsSinceEpoch(data['date'].seconds * 1000), productsAndAmount: {productsList[3]: 2, productsList[4]: 1}, total: data['total'], fulfilled: data['fulfilled']));
+    }
+  });
 
+
+  print('getFirebaseCollection() executed in ${stopwatch.elapsed}');
 }
 
 DateTime reformatDateTime(String s) {
