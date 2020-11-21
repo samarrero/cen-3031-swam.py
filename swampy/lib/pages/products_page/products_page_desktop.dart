@@ -36,7 +36,7 @@ class _ProductsPageDesktopState extends State<ProductsPageDesktop> {
         print('getDocuments ${element.data()}');
         setState(() {
           final data = element.data();
-          products.add(Product(id: data['id'], name: data['name'], vendor: data['vendor'], price: double.parse(data['price']), amountInInventory: int.parse(data['inventory']), type: data['type'], amountSold: int.parse(data['amount_sold'])));
+          products.add(Product(id: data['id'], name: data['name'], vendor: data['vendor'], price: data['price'], amountInInventory: data['inventory'], type: data['type'], amountSold: data['amount_sold']));
         });
       });
     });

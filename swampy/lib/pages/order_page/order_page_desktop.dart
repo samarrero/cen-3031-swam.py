@@ -20,7 +20,7 @@ class OrderPageDesktop extends StatelessWidget {
 
     Order orderInfo = order != null
         ? order :
-    Order(id: 'null', orderNumber: 'null', date: DateTime(0), productsAndAmount: Map<Product, int>(), total: -1, fulfilled: false);
+    Order(id: 'null', orderNumber: null, date: DateTime(0), productsAndAmount: Map<Product, int>(), total: -1, fulfilled: false);
 
     List<ListElement> productsList = [];
     for(var product in orderInfo.productsAndAmount.keys) {
@@ -75,7 +75,7 @@ class OrderPageDesktop extends StatelessWidget {
                                   Padding(
                                       padding:
                                           EdgeInsets.symmetric(vertical: 7.0)),
-                                  Text('Order #' + orderInfo.orderNumber,
+                                  Text('Order #' + orderInfo.orderNumber.toString(),
                                       style:
                                         Theme.of(context).textTheme.headline4.copyWith(fontWeight: FontWeight.bold),
                                       textAlign: TextAlign.justify),

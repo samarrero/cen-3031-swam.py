@@ -33,20 +33,24 @@ void main() {
 }
 Future getFirebaseCollection() async {
   QuerySnapshot querySnapshotProducts = await FirebaseFirestore.instance.collection('products').get();
-  
+
+  // var top5 = await FirebaseFirestore.instance.collection('products').orderBy('price', descending: true).limit(5).get();
+  // for (var doc in top5.docs) {
+  //   print(doc.data());
+  // }
+
   for (int i = 0; i < querySnapshotProducts.docs.length; i++) {
     var doc = querySnapshotProducts.docs[i];
     var data = doc.data();
-    productsList.add(new Product(id: data['id'], name: data['name'], vendor: data['vendor'], price: double.parse(data['price']), amountInInventory: int.parse(data['inventory']), type: data['type'], amountSold: int.parse(data['amount_sold'])));
+    productsList.add(new Product(id: data['id'], name: data['name'], vendor: data['vendor'], price: data['price'], amountInInventory: data['inventory'], type: data['type'], amountSold: data['amount_sold']));
   }
 
   QuerySnapshot querySnapshotOrders = await FirebaseFirestore.instance.collection('orders').get();
 
-  for (int i = 0; i < querySnapshotOrders.docs.length; i++) {
+  for (int i = 1; i < querySnapshotOrders.docs.length; i++) {
     var doc = querySnapshotOrders.docs[i];
     var data = doc.data();
-
-    ordersList.add(new Order(id: data['id'], orderNumber: data['order_number'], date: reformatDateTime(data['date']), productsAndAmount: {productsList[3]: 2, productsList[4]: 1}, total: double.parse(data['total']), fulfilled: data['fulfilled'] == 'TRUE' ? true : false));
+    ordersList.add(new Order(id: data['id'], orderNumber: data['order_number'], date: DateTime.fromMillisecondsSinceEpoch(data['date'].seconds * 1000), productsAndAmount: {productsList[3]: 2, productsList[4]: 1}, total: data['total'], fulfilled: data['fulfilled']));
   }
 
 }

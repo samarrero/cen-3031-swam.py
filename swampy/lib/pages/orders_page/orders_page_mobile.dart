@@ -39,7 +39,7 @@ class OrdersPageMobile extends StatelessWidget {
               route: OrderRoute + order.id,
               object: order,
               items: [
-                order.orderNumber,
+                order.orderNumber.toString(),
                 //TODO: SORTING NUMERICAL VALUES ARE INCORRECT, SORTING BY STRING INSTEAD
                 order.date.month.toString() + "/" + order.date.day.toString() + "/" + order.date.year.toString(),
                 order.getAmount().toString(),

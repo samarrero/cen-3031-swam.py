@@ -3,7 +3,7 @@ import 'package:swampy/models/product.dart';
 
 class Order {
   final String id;
-  final String orderNumber;
+  final int orderNumber;
   final DateTime date;
   final Map<Product, int> productsAndAmount;
   final double total;
