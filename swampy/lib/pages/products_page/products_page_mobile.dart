@@ -4,13 +4,14 @@ import 'package:swampy/components/list/list_element.dart';
 import 'package:swampy/components/list/list_wrapper.dart';
 import 'package:swampy/components/menus/nav_bar.dart';
 import 'package:swampy/components/menus/side_menu.dart';
+import 'package:swampy/data/data.dart';
 import 'package:swampy/models/product.dart';
 import 'package:swampy/router/route.dart';
 
 class ProductsPageMobile extends StatelessWidget {
-  final List<Product> products;
+  ListWrapper listWrapper;
 
-  ProductsPageMobile({this.products});
+  ProductsPageMobile({this.listWrapper});
 
   @override
   Widget build(BuildContext context) {
@@ -28,25 +29,7 @@ class ProductsPageMobile extends StatelessWidget {
       body: SafeArea(
         child: Section(
           title: 'Products',
-          child: ListWrapper(
-            searchType: ' product',
-            titles: ['Product', 'Inventory', 'Type', 'Vendor', '# Sold'],
-            filterSliders: [1, 4],
-            filterCategories: [2, 3],
-            primaryKey: 0,
-            secondaryKey: 4,
-            elements: products.map((product) => ListElement(
-              route: IndividualProductRoute + product.id,
-              object: product,
-              items: [
-                product.name,
-                product.amountInInventory.toString(),
-                product.type,
-                product.vendor,
-                product.amountSold.toString()
-              ],
-            )).toList(),
-          ),
+          child: this.listWrapper,
         ),
       ),
     );

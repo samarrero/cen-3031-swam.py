@@ -49,7 +49,6 @@ class ProductPageDesktop extends StatelessWidget {
                               future: FirebaseFirestore.instance.collection('products').doc(ModalRoute.of(context).settings.name.substring(9)).get(),
                               builder: (context, snapshot) {
                                 print(ModalRoute.of(context).settings.name.substring(9));
-
                                 if (snapshot.hasData) {
                                   return Column(
                                       crossAxisAlignment: CrossAxisAlignment
@@ -73,7 +72,7 @@ class ProductPageDesktop extends StatelessWidget {
                                             padding: EdgeInsets.fromLTRB(
                                                 0.0, 7.0, 0.0, 0.0)),
                                         Text('Price: \$' +
-                                            snapshot.data['price'],
+                                            snapshot.data['price'].toString(),
                                             // order.date.month.toString() + "/" + order.date.day.toString() + "/" + order.date.year.toString()
                                             style:
                                             Theme
@@ -97,7 +96,7 @@ class ProductPageDesktop extends StatelessWidget {
                                                 .headline5,
                                             textAlign: TextAlign.justify),
                                         Text('Current Inventory: ' +
-                                            snapshot.data['inventory'],
+                                            snapshot.data['inventory'].toString(),
                                             style:
                                             Theme
                                                 .of(context)
@@ -105,7 +104,7 @@ class ProductPageDesktop extends StatelessWidget {
                                                 .headline5,
                                             textAlign: TextAlign.justify),
                                         Text('Inventory Ordered: ' +
-                                            snapshot.data['amount_sold'],
+                                            snapshot.data['amount_sold'].toString(),
                                             style:
                                             Theme
                                                 .of(context)
@@ -118,8 +117,7 @@ class ProductPageDesktop extends StatelessWidget {
                                                 vertical: 7.0)),
                                       ]);
                                 }
-
-                                else return Container();
+                                else return Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(Theme.of(context).primaryColor)));
                               }
                             ),
                             // Padding(

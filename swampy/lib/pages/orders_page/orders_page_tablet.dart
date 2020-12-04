@@ -4,13 +4,11 @@ import 'package:swampy/components/list/list_element.dart';
 import 'package:swampy/components/list/list_wrapper.dart';
 import 'package:swampy/components/menus/nav_bar.dart';
 import 'package:swampy/components/menus/side_menu.dart';
+import 'package:swampy/data/data.dart';
 import 'package:swampy/models/order.dart';
 import 'package:swampy/router/route_names.dart';
 
 class OrdersPageTablet extends StatelessWidget {
-  final List<Order> orders;
-
-  OrdersPageTablet({this.orders});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +38,7 @@ class OrdersPageTablet extends StatelessWidget {
                   filterCategories: [4],
                   primaryKey: 0,
                   secondaryKey: 3,
-                  elements: orders.map((order) => ListElement(
+                  elements: ordersList.map((order) => ListElement(
                     route: OrderRoute + order.id,
                     object: order,
                     items: [

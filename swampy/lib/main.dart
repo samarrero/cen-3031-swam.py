@@ -32,7 +32,6 @@ void main() {
   );
 }
 Future getFirebaseCollection() async {
-  Stopwatch stopwatch = new Stopwatch()..start();
   FirebaseFirestore.instance.collection('products').get().then((products) {
     for (int i = 0; i < products.docs.length; i++) {
       var doc = products.docs[i];
@@ -55,9 +54,6 @@ Future getFirebaseCollection() async {
       ordersList.add(new Order(id: data['id'], orderNumber: data['order_number'], date: DateTime.fromMillisecondsSinceEpoch(data['date'].seconds * 1000), productsAndAmount: {productsList[3]: 2, productsList[4]: 1}, total: data['total'], fulfilled: data['fulfilled']));
     }
   });
-
-
-  print('getFirebaseCollection() executed in ${stopwatch.elapsed}');
 }
 
 DateTime reformatDateTime(String s) {

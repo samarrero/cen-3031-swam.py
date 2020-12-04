@@ -100,7 +100,7 @@ class _ListWrapperState extends State<ListWrapper> {
                             ),
                             child: ListView.builder(
                                 physics: AlwaysScrollableScrollPhysics(),
-                                controller: widget.scrollController,
+                                // controller: widget.scrollController,
                                 itemCount: visibleElements.length,
                                 itemBuilder: (context, index) => AnimatedCrossFade(
                                   firstChild: sizingInformation.deviceScreenType != DeviceScreenType.desktop ?

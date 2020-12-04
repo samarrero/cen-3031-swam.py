@@ -5,13 +5,11 @@ import 'package:swampy/components/list/list_element.dart';
 import 'package:swampy/components/list/list_wrapper.dart';
 import 'package:swampy/components/menus/nav_bar.dart';
 import 'package:swampy/components/menus/side_menu.dart';
+import 'package:swampy/data/data.dart';
 import 'package:swampy/models/order.dart';
 import 'package:swampy/router/route_names.dart';
 
 class OrdersPageDesktop extends StatelessWidget {
-  final List<Order> orders;
-
-  OrdersPageDesktop({this.orders});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +39,7 @@ class OrdersPageDesktop extends StatelessWidget {
                     titles: ['Order #', 'Date', 'Amount', 'Total', 'Status'],
                     filterSliders: [2, 3],
                     filterCategories: [4],
-                    elements: orders.map((order) => ListElement(
+                    elements: ordersList.map((order) => ListElement(
                       route: OrderRoute + order.id,
                       object: order,
                       items: [
