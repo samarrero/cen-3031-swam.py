@@ -53,6 +53,7 @@ class HomePageDesktop extends StatelessWidget {
       ),
       body: SafeArea(
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               width: 200,

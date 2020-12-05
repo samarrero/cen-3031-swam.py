@@ -69,7 +69,7 @@ class HomePageTablet extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Section(
-                        capHeight: MediaQuery.of(context).size.height - 220,
+                        capHeight: 520,
                         title: 'Top Performing Products',
                         child: Column(
                           children: [

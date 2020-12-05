@@ -49,7 +49,7 @@ class HomePage extends StatelessWidget {
                         return ScreenTypeLayout(
                           desktop: HomePageDesktop(topProducts: snapshot.data[0], recentOrders: snapshot.data[1]),
                           tablet: HomePageTablet(topProducts: snapshot.data[0], recentOrders: snapshot.data[1]),
-                          mobile: HomePageMobile(sample: sample),
+                          mobile: HomePageMobile(topProducts: snapshot.data[0], recentOrders: snapshot.data[1]),
                         );
                       } else return Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(Theme.of(context).primaryColor)));
                     },
