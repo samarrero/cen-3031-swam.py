@@ -9,9 +9,9 @@ import 'package:swampy/components/menus/side_menu.dart';
 import 'package:swampy/models/product.dart';
 
 class ProductPageDesktop extends StatelessWidget {
-  final List<ListElement> sample;
+  final Column column;
 
-  ProductPageDesktop({this.sample});
+  ProductPageDesktop({this.column});
 
   @override
   Widget build(BuildContext context) {
@@ -42,84 +42,8 @@ class ProductPageDesktop extends StatelessWidget {
                       child: Row(mainAxisAlignment: MainAxisAlignment.start,
                           // mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Padding(
-                                padding:
-                                EdgeInsets.symmetric(horizontal: 15.0)),
-                            FutureBuilder(
-                              future: FirebaseFirestore.instance.collection('products').doc(ModalRoute.of(context).settings.name.substring(9)).get(),
-                              builder: (context, snapshot) {
-                                print(ModalRoute.of(context).settings.name.substring(9));
-                                if (snapshot.hasData) {
-                                  return Column(
-                                      crossAxisAlignment: CrossAxisAlignment
-                                          .start,
-                                      children: [
-                                        Padding(
-                                            padding:
-                                            EdgeInsets.symmetric(
-                                                vertical: 7.0)),
-                                        Text(snapshot.data['name'],
-                                            style:
-                                            Theme
-                                                .of(context)
-                                                .textTheme
-                                                .headline4
-                                                .copyWith(
-                                                fontWeight: FontWeight.bold),
-                                            textAlign: TextAlign.justify),
-
-                                        Padding(
-                                            padding: EdgeInsets.fromLTRB(
-                                                0.0, 7.0, 0.0, 0.0)),
-                                        Text('Price: \$' +
-                                            snapshot.data['price'].toString(),
-                                            // order.date.month.toString() + "/" + order.date.day.toString() + "/" + order.date.year.toString()
-                                            style:
-                                            Theme
-                                                .of(context)
-                                                .textTheme
-                                                .headline5,
-                                            textAlign: TextAlign.justify),
-                                        Text('Vendor: ' +
-                                            snapshot.data['vendor'],
-                                            style:
-                                            Theme
-                                                .of(context)
-                                                .textTheme
-                                                .headline5,
-                                            textAlign: TextAlign.justify),
-                                        Text('Type: ' + snapshot.data['type'],
-                                            style:
-                                            Theme
-                                                .of(context)
-                                                .textTheme
-                                                .headline5,
-                                            textAlign: TextAlign.justify),
-                                        Text('Current Inventory: ' +
-                                            snapshot.data['inventory'].toString(),
-                                            style:
-                                            Theme
-                                                .of(context)
-                                                .textTheme
-                                                .headline5,
-                                            textAlign: TextAlign.justify),
-                                        Text('Inventory Ordered: ' +
-                                            snapshot.data['amount_sold'].toString(),
-                                            style:
-                                            Theme
-                                                .of(context)
-                                                .textTheme
-                                                .headline5,
-                                            textAlign: TextAlign.justify),
-                                        Padding(
-                                            padding:
-                                            EdgeInsets.symmetric(
-                                                vertical: 7.0)),
-                                      ]);
-                                }
-                                else return Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(Theme.of(context).primaryColor)));
-                              }
-                            ),
+                            Padding(padding: EdgeInsets.symmetric(horizontal: 16.0)),
+                            this.column,
                             // Padding(
                             //     padding:
                             //         EdgeInsets.symmetric(horizontal: 100.0)),

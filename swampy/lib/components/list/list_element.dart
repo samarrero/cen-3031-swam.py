@@ -26,9 +26,6 @@ class ListElement extends StatelessWidget {
          FluroRouter.router.navigateTo(
             context,
             route,
-            routeSettings: RouteSettings(
-              arguments: object
-            ),
             transition: fluro.TransitionType.fadeIn,
             transitionDuration: Duration(milliseconds: 150));
         },

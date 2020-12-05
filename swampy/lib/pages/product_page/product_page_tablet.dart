@@ -4,9 +4,9 @@ import 'package:swampy/components/menus/nav_bar.dart';
 import 'package:swampy/components/menus/side_menu.dart';
 
 class ProductPageTablet extends StatelessWidget {
-  final List<ListElement> sample;
+  final Column column;
 
-  ProductPageTablet({this.sample});
+  ProductPageTablet({this.column});
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +27,14 @@ class ProductPageTablet extends StatelessWidget {
             ),
             Container(
               width: MediaQuery.of(context).size.width - 200,
-              child: ListView.builder(
-                itemCount: sample.length,
-                itemBuilder: (context, index) => sample[index],
+              child: Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(32.0)),
+                  elevation: 3.0,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: this.column,
+                  )
               ),
             )
           ],

@@ -22,9 +22,6 @@ class ListCard extends StatelessWidget {
           FluroRouter.router.navigateTo(
               context,
               attributes.route,
-              routeSettings: RouteSettings(
-                  arguments: attributes.object
-              ),
               transition: fluro.TransitionType.fadeIn,
               transitionDuration: Duration(milliseconds: 150));
         },
