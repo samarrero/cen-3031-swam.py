@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:swampy/components/general/column_builder.dart';
+import 'package:swampy/components/general/row_builder.dart';
 import 'package:swampy/components/list/list_element.dart';
 import 'package:swampy/components/menus/nav_bar.dart';
 import 'package:swampy/components/menus/side_menu.dart';
@@ -26,6 +27,8 @@ class HomePageDesktop extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Order> sortedOrders = List.from(ordersList);
     sortedOrders.sort((a, b) => a.date.isBefore(b.date) ? 1 : -1);
+
+    List<String> ordersTitles = ['Order #', 'Date', 'Amount', 'Total', 'Status'];
 
     Map<String, Color> coloredData = {
       topProducts[0]['name'] : Theme.of(context).primaryColor,
@@ -143,8 +146,8 @@ class HomePageDesktop extends StatelessWidget {
                                       // Renders doughnut chart
                                       DoughnutSeries<ChartData, String>(
                                           dataSource: chartData,
-                                          startAngle: 30,
-                                          endAngle: 30,
+                                          // startAngle: 30,
+                                          // endAngle: 30,
                                           innerRadius: '115',
                                           radius: '155',
                                           pointColorMapper:(ChartData data,  _) => data.color,
@@ -160,22 +163,34 @@ class HomePageDesktop extends StatelessWidget {
                     ),
                     Section(
                         title: 'Recent Orders',
-                        child: ColumnBuilder(
-                          itemCount: 3,
-                          itemBuilder: (context, index) {
-                            return ListElement(
-                              route: OrderRoute + sortedOrders[index].id,
-                              object: sortedOrders[index],
-                              items: [
-                                sortedOrders[index].orderNumber.toString(),
-                                //TODO: SORTING NUMERICAL VALUES ARE INCORRECT, SORTING BY STRING INSTEAD
-                                sortedOrders[index].date.month.toString() + "/" + sortedOrders[index].date.day.toString() + "/" + sortedOrders[index].date.year.toString(),
-                                sortedOrders[index].getAmount().toString(),
-                                "\$" + sortedOrders[index].total.toString(),
-                                sortedOrders[index].fulfilled ? 'Fulfilled' : 'Pending'
-                              ],
-                            );
-                          },
+                        child: Column(
+                          children: [
+                            RowBuilder(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                itemCount: ordersTitles.length,
+                                itemBuilder: (context, index) {
+                                  return Container(width: (MediaQuery.of(context).size.width - 200) * 0.11, child: Center(child: Text(ordersTitles[index], style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold),)));
+                                },
+                            ),
+                            SizedBox(height: 8.0),
+                            ColumnBuilder(
+                              itemCount: 3,
+                              itemBuilder: (context, index) {
+                                return ListElement(
+                                  route: OrderRoute + sortedOrders[index].id,
+                                  object: sortedOrders[index],
+                                  items: [
+                                    sortedOrders[index].orderNumber.toString(),
+                                    //TODO: SORTING NUMERICAL VALUES ARE INCORRECT, SORTING BY STRING INSTEAD
+                                    sortedOrders[index].date.month.toString() + "/" + sortedOrders[index].date.day.toString() + "/" + sortedOrders[index].date.year.toString(),
+                                    sortedOrders[index].getAmount().toString(),
+                                    "\$" + sortedOrders[index].total.toString(),
+                                    sortedOrders[index].fulfilled ? 'Fulfilled' : 'Pending'
+                                  ],
+                                );
+                              },
+                            ),
+                          ],
                         )
                     )
                   ],
