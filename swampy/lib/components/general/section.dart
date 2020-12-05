@@ -4,8 +4,9 @@ import 'package:responsive_builder/responsive_builder.dart';
 class Section extends StatelessWidget {
   final String title;
   final Widget child;
+  final double capHeight;
 
-  Section({@required this.title, @required this.child});
+  Section({@required this.title, @required this.child, this.capHeight = -1});
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +23,10 @@ class Section extends StatelessWidget {
               SizedBox(height: 16.0),
               ConstrainedBox(
                   constraints: BoxConstraints(
-                      maxHeight: sizingInformation.deviceScreenType == DeviceScreenType.mobile ?
+                      maxHeight: capHeight == -1 ?
+                      sizingInformation.deviceScreenType == DeviceScreenType.mobile ?
                       MediaQuery.of(context).size.height - (55 + 24 + 28.42 + 21.6) : MediaQuery.of(context).size.height - (70 + 24 + 28.42 + 21.6)
+                          : capHeight
                   ),
                   child: child
               )

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:swampy/components/list/list_element.dart';
 import 'package:swampy/components/menus/nav_bar.dart';
+import 'package:swampy/data/data.dart';
+import 'package:swampy/models/order.dart';
 import 'package:swampy/pages/home_page/home_page_desktop.dart';
 import 'package:swampy/pages/home_page/home_page_mobile.dart';
 import 'package:provider/provider.dart';
@@ -46,7 +48,7 @@ class HomePage extends StatelessWidget {
                       if (snapshot.hasData) {
                         return ScreenTypeLayout(
                           desktop: HomePageDesktop(topProducts: snapshot.data[0], recentOrders: snapshot.data[1]),
-                          tablet: HomePageTablet(sample: sample),
+                          tablet: HomePageTablet(topProducts: snapshot.data[0], recentOrders: snapshot.data[1]),
                           mobile: HomePageMobile(sample: sample),
                         );
                       } else return Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(Theme.of(context).primaryColor)));

@@ -67,6 +67,7 @@ class HomePageDesktop extends StatelessWidget {
                 child: Column(
                   children: [
                     Section(
+                        capHeight: 380,
                         title: 'Top Performing Products',
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -162,6 +163,7 @@ class HomePageDesktop extends StatelessWidget {
                         )
                     ),
                     Section(
+                        capHeight: 180,
                         title: 'Recent Orders',
                         child: Column(
                           children: [
