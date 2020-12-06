@@ -4,9 +4,9 @@ import 'package:swampy/components/menus/nav_bar.dart';
 import 'package:swampy/components/menus/side_menu.dart';
 
 class OrderPageTablet extends StatelessWidget {
-  final List<ListElement> sample;
+  final Column column;
 
-  OrderPageTablet({this.sample});
+  OrderPageTablet({this.column});
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +27,7 @@ class OrderPageTablet extends StatelessWidget {
             ),
             Container(
               width: MediaQuery.of(context).size.width - 200,
-              child: ListView.builder(
-                itemCount: sample.length,
-                itemBuilder: (context, index) => sample[index],
-              ),
-            )
+              child: SingleChildScrollView(child: this.column))
           ],
         ),
       ),

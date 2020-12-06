@@ -4,9 +4,9 @@ import 'package:swampy/components/menus/nav_bar.dart';
 import 'package:swampy/components/menus/side_menu.dart';
 
 class OrderPageMobile extends StatelessWidget {
-  final List<ListElement> sample;
+  final Column column;
 
-  OrderPageMobile({this.sample});
+  OrderPageMobile({this.column});
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +22,8 @@ class OrderPageMobile extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: ListView.builder(
-          itemCount: sample.length,
-          itemBuilder: (context, index) => sample[index],
+        child: SingleChildScrollView(
+          child: this.column
         ),
       ),
     );
