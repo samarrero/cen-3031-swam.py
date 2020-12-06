@@ -14,7 +14,6 @@ import 'package:intl/intl.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp().then((v) => null);
-  getFirebaseCollection();
   FluroRouter.setupRouter();
   runApp(
       // Swampy()

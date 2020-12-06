@@ -23,10 +23,21 @@ class HomePageMobile extends StatelessWidget {
 
   HomePageMobile({this.topProducts, this.recentOrders});
 
+  String getAmounts(prodsNAmts) {
+    int count = 0;
+    for (var k in prodsNAmts.keys) {
+      count += prodsNAmts[k];
+    }
+    return count.toString();
+  }
+
+  String getDate(date) {
+    var d = DateTime.fromMillisecondsSinceEpoch(date.seconds * 1000, isUtc: true);
+    return d.month.toString() + "/" + d.day.toString() + "/" + d.year.toString();
+  }
+
   @override
   Widget build(BuildContext context) {
-    List<Order> sortedOrders = List.from(ordersList);
-    sortedOrders.sort((a, b) => a.date.isBefore(b.date) ? 1 : -1);
 
     List<String> ordersTitles = ['Order #', 'Date', 'Amount', 'Total', 'Status'];
 
@@ -166,15 +177,15 @@ class HomePageMobile extends StatelessWidget {
                         primaryKey: 0,
                         secondaryKey: 3,
                         attributes: ListElement(
-                          route: OrderRoute + sortedOrders[index].id,
-                          object: sortedOrders[index],
+                          route: OrderRoute + this.recentOrders[index]['id'],
+                          object: this.recentOrders[index],
                           items: [
-                            sortedOrders[index].orderNumber.toString(),
+                            this.recentOrders[index]['order_number'].toString(),
                             //TODO: SORTING NUMERICAL VALUES ARE INCORRECT, SORTING BY STRING INSTEAD
-                            sortedOrders[index].date.month.toString() + "/" + sortedOrders[index].date.day.toString() + "/" + sortedOrders[index].date.year.toString(),
-                            sortedOrders[index].getAmount().toString(),
-                            "\$" + sortedOrders[index].total.toString(),
-                            sortedOrders[index].fulfilled ? 'Fulfilled' : 'Pending'
+                            getDate(this.recentOrders[index]['date']),
+                            getAmounts(this.recentOrders[index]['products_and_amounts']),
+                            "\$" + this.recentOrders[index]['total'].toString(),
+                            this.recentOrders[index]['fulfilled'] ? 'Fulfilled' : 'Pending'
                           ],
                         ),
                         descriptors: ordersTitles,
