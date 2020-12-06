@@ -26,7 +26,7 @@ class ProductsPage extends StatelessWidget {
                 overscroll.disallowGlow();
                 return;
               },
-              child : StreamBuilder(
+              child: StreamBuilder(
                   stream: FirebaseFirestore.instance.collection('products').snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {

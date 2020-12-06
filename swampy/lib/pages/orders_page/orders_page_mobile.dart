@@ -9,6 +9,9 @@ import 'package:swampy/models/order.dart';
 import 'package:swampy/router/route.dart';
 
 class OrdersPageMobile extends StatelessWidget {
+  final ListWrapper listWrapper;
+
+  OrdersPageMobile({this.listWrapper});
 
   @override
   Widget build(BuildContext context) {
@@ -26,26 +29,7 @@ class OrdersPageMobile extends StatelessWidget {
       body: SafeArea(
         child: Section(
           title: 'Orders',
-          child: ListWrapper(
-            searchType: 'n order',
-            titles: ['Order #', 'Date', 'Amount', 'Total', 'Status'],
-            filterSliders: [2, 3],
-            filterCategories: [4],
-            primaryKey: 0,
-            secondaryKey: 3,
-            elements: ordersList.map((order) => ListElement(
-              route: OrderRoute + order.id,
-              object: order,
-              items: [
-                order.orderNumber.toString(),
-                //TODO: SORTING NUMERICAL VALUES ARE INCORRECT, SORTING BY STRING INSTEAD
-                order.date.month.toString() + "/" + order.date.day.toString() + "/" + order.date.year.toString(),
-                order.getAmount().toString(),
-                "\$" + order.total.toString(),
-                order.fulfilled ? 'Fulfilled' : 'Pending'
-              ],
-            )).toList(),
-          ),
+          child: this.listWrapper,
         ),
       ),
     );

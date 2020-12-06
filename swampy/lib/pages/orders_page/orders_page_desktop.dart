@@ -10,6 +10,9 @@ import 'package:swampy/models/order.dart';
 import 'package:swampy/router/route_names.dart';
 
 class OrdersPageDesktop extends StatelessWidget {
+  final ListWrapper listWrapper;
+
+  OrdersPageDesktop({this.listWrapper});
 
   @override
   Widget build(BuildContext context) {
@@ -34,24 +37,7 @@ class OrdersPageDesktop extends StatelessWidget {
                 width: MediaQuery.of(context).size.width - 200,
                 child: Section(
                   title: 'Orders',
-                  child: ListWrapper(
-                    searchType: 'n order',
-                    titles: ['Order #', 'Date', 'Amount', 'Total', 'Status'],
-                    filterSliders: [2, 3],
-                    filterCategories: [4],
-                    elements: ordersList.map((order) => ListElement(
-                      route: OrderRoute + order.id,
-                      object: order,
-                      items: [
-                        order.orderNumber.toString(),
-                        //TODO: SORTING NUMERICAL VALUES ARE INCORRECT, SORTING BY STRING INSTEAD
-                        order.date.month.toString() + "/" + order.date.day.toString() + "/" + order.date.year.toString(),
-                        order.getAmount().toString(),
-                        "\$" + order.total.toString(),
-                        order.fulfilled ? 'Fulfilled' : 'Pending'
-                      ],
-                    )).toList(),
-                  ),
+                  child: this.listWrapper,
                 ),
               )
             ],
