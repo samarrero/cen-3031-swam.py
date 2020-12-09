@@ -118,7 +118,27 @@ class AnalyticsPage extends StatelessWidget {
                               color: Theme.of(context).primaryColor
                           )).toList()
                       ),
-                      mobile: AnalyticsPageMobile(),
+                      mobile: AnalyticsPageMobile(
+                          donutColors: {
+                            snapshot.data[0][0]['name'] : Theme.of(context).primaryColor,
+                            snapshot.data[0][1]['name'] : Color.fromRGBO(87, 131, 229, 1),
+                            snapshot.data[0][2]['name'] : Color.fromRGBO(138, 174, 255, 1),
+                            snapshot.data[0][3]['name'] : Color.fromRGBO(187, 208, 255, 1),
+                            snapshot.data[0][4]['name'] : Color.fromRGBO(212, 225, 255, 1)
+                          },
+                          donutData: [
+                            ChartData(x: snapshot.data[0][0]['name'], y: snapshot.data[0][0]['amount_sold'], color: Theme.of(context).primaryColor),
+                            ChartData(x: snapshot.data[0][1]['name'], y: snapshot.data[0][1]['amount_sold'], color: Color.fromRGBO(87, 131, 229, 1)),
+                            ChartData(x: snapshot.data[0][2]['name'], y: snapshot.data[0][2]['amount_sold'], color: Color.fromRGBO(138, 174, 255, 1)),
+                            ChartData(x: snapshot.data[0][3]['name'], y: snapshot.data[0][3]['amount_sold'], color: Color.fromRGBO(187, 208, 255, 1)),
+                            ChartData(x: snapshot.data[0][4]['name'], y: snapshot.data[0][4]['amount_sold'], color: Color.fromRGBO(212, 225, 255, 1)),
+                          ],
+                          ordersData: parsedData.keys.map((time) => ChartData(
+                              x: time,
+                              y: parsedData[time],
+                              color: Theme.of(context).primaryColor
+                          )).toList()
+                      ),
                     );
                   } else return Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(Theme.of(context).primaryColor)));
                 },

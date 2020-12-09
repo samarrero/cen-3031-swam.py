@@ -103,6 +103,15 @@ class AnalyticsPageDesktop extends StatelessWidget {
                                 title: ChartTitle(text: 'Best Performing Products', textStyle: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold)),
                                 annotations: <CircularChartAnnotation>[
                                   CircularChartAnnotation(
+                                      widget: Container(
+                                        child: PhysicalModel(
+                                          child: Container(),
+                                          shape: BoxShape.circle,
+                                          color: Colors.white,
+                                        ),
+                                      )
+                                  ),
+                                  CircularChartAnnotation(
                                     widget: ColumnBuilder(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       itemCount: donutData.length,

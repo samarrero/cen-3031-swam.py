@@ -39,61 +39,25 @@ class AnalyticsPageTablet extends StatelessWidget {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        ConstrainedBox(
-                          constraints: BoxConstraints(
-                              maxWidth: MediaQuery.of(context).size.width,
-                              maxHeight: 500
-                          ),
-                          child: SfCartesianChart(
-                              primaryYAxis: NumericAxis(
-                                //Formatting the labels in locale’s currency pattern with symbol.
-                                numberFormat: NumberFormat.currency(
-                                    locale: 'en_US',
-                                    symbol: "\$"
-                                ),
-                              ),
-                              primaryXAxis: CategoryAxis(),
-                              // Chart title
-                              title: ChartTitle(text: 'Total Sales over Time', textStyle: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold)),
-                              // Enable legend
-                              legend: Legend(isVisible: true, position: LegendPosition.bottom),
-                              // Enable tooltip
-                              tooltipBehavior: TooltipBehavior(
-                                  enable: true,
-                                  color: Colors.grey[800],
-                                  textStyle: Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.normal, color: Colors.white)
-                              ),
-                              series: [
-                                AreaSeries(
-                                    gradient: LinearGradient(
-                                      begin: Alignment.topCenter,
-                                      end: Alignment.bottomCenter,
-                                      colors: [Theme.of(context).primaryColor, Color.fromRGBO(212, 225, 255, 1)],//donutColors.values.toList().sublist(2, 5),
-                                      stops: [0, 1],
-                                    ),
-                                    // trendlines: [
-                                    //   Trendline(type: TrendlineType.linear, color: Colors.redAccent, name: "Trendline")
-                                    // ],
-                                    // borderWidth: 1,
-                                    // borderColor: donutColors.values.toList()[2],
-                                    name: 'Revenue',
-                                    color: Theme.of(context).primaryColor,
-                                    dataSource: ordersData,
-                                    xValueMapper: (sales, _) => sales.x,
-                                    yValueMapper: (sales, _) => sales.y,
-                                    // Enable data label
-                                    dataLabelSettings: DataLabelSettings(isVisible: false))
-                              ]),
-                        ),
-                        SizedBox(height: 32.0),
+                        Text('Best Performing Products', style: Theme.of(context).textTheme.headline4.copyWith(fontWeight: FontWeight.bold)),
+                        SizedBox(height: 24.0),
                         SfCircularChart(
                             tooltipBehavior: TooltipBehavior(
                                 enable: true,
                                 color: Colors.grey[800],
                                 textStyle: Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.normal, color: Colors.white)
                             ),
-                            title: ChartTitle(text: 'Best Performing Products', textStyle: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold)),
+                            // title: ChartTitle(text: 'Best Performing Products', textStyle: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold)),
                             annotations: <CircularChartAnnotation>[
+                              CircularChartAnnotation(
+                                  widget: Container(
+                                    child: PhysicalModel(
+                                      child: Container(),
+                                      shape: BoxShape.circle,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                              ),
                               CircularChartAnnotation(
                                 widget: ColumnBuilder(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -144,6 +108,56 @@ class AnalyticsPageTablet extends StatelessWidget {
                               )
                             ]
                         ),
+                        SizedBox(height: 48.0),
+                        Text('Total Sales Over Time', style: Theme.of(context).textTheme.headline4.copyWith(fontWeight: FontWeight.bold)),
+                        SizedBox(height: 2.0),
+                        ConstrainedBox(
+                          constraints: BoxConstraints(
+                              maxWidth: MediaQuery.of(context).size.width,
+                              maxHeight: 500
+                          ),
+                          child: SfCartesianChart(
+                              primaryYAxis: NumericAxis(
+                                //Formatting the labels in locale’s currency pattern with symbol.
+                                numberFormat: NumberFormat.currency(
+                                    locale: 'en_US',
+                                    symbol: "\$"
+                                ),
+                              ),
+                              primaryXAxis: CategoryAxis(),
+                              // Chart title
+                              // title: ChartTitle(text: 'Total Sales over Time', textStyle: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold)),
+                              // Enable legend
+                              legend: Legend(isVisible: true, position: LegendPosition.bottom),
+                              // Enable tooltip
+                              tooltipBehavior: TooltipBehavior(
+                                  enable: true,
+                                  color: Colors.grey[800],
+                                  textStyle: Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.normal, color: Colors.white)
+                              ),
+                              series: [
+                                AreaSeries(
+                                    gradient: LinearGradient(
+                                      begin: Alignment.topCenter,
+                                      end: Alignment.bottomCenter,
+                                      colors: [Theme.of(context).primaryColor, Color.fromRGBO(212, 225, 255, 1)],//donutColors.values.toList().sublist(2, 5),
+                                      stops: [0, 1],
+                                    ),
+                                    // trendlines: [
+                                    //   Trendline(type: TrendlineType.linear, color: Colors.redAccent, name: "Trendline")
+                                    // ],
+                                    // borderWidth: 1,
+                                    // borderColor: donutColors.values.toList()[2],
+                                    name: 'Revenue',
+                                    color: Theme.of(context).primaryColor,
+                                    dataSource: ordersData,
+                                    xValueMapper: (sales, _) => sales.x,
+                                    yValueMapper: (sales, _) => sales.y,
+                                    // Enable data label
+                                    dataLabelSettings: DataLabelSettings(isVisible: false))
+                              ]),
+                        ),
+                        SizedBox(height: 32.0),
                       ],
                     ),
                   ),
