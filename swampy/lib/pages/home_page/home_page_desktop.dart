@@ -9,6 +9,7 @@ import 'package:swampy/data/data.dart';
 import 'package:swampy/models/order.dart';
 import 'package:swampy/router/route.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:fluro/fluro.dart' as fluro;
 
 class ChartData {
   ChartData({this.x, this.y, this.color});
@@ -87,24 +88,33 @@ class HomePageDesktop extends StatelessWidget {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(24.0)),
                               elevation: 3.0,
-                              child: ConstrainedBox(
-                                constraints: BoxConstraints(
-                                  minWidth: 300,
-                                  maxWidth: 300
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Text(this.topProducts[0]['name'], style: Theme.of(context).textTheme.headline4.copyWith(fontWeight: FontWeight.bold)),
-                                      SizedBox(height: 8),
-                                      Text('Price: \$${this.topProducts[0]['price']}', style: Theme.of(context).textTheme.headline5),
-                                      Text('Vendor: ${this.topProducts[0]['vendor']}', style: Theme.of(context).textTheme.headline5),
-                                      Text('Orders: ${this.topProducts[0]['amount_sold']}', style: Theme.of(context).textTheme.headline5),
-                                      Text('Revenue: \$${this.topProducts[0]['price'] * this.topProducts[0]['amount_sold']}', style: Theme.of(context).textTheme.headline5),
-                                    ],
+                              child: InkWell(
+                                onTap: () {
+                                  FluroRouter.router.navigateTo(
+                                      context,
+                                      IndividualProductRoute + this.topProducts[0]['id'],
+                                      transition: fluro.TransitionType.fadeIn,
+                                      transitionDuration: Duration(milliseconds: 150));
+                                },
+                                child: ConstrainedBox(
+                                  constraints: BoxConstraints(
+                                    minWidth: 300,
+                                    maxWidth: 300
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(this.topProducts[0]['name'], style: Theme.of(context).textTheme.headline4.copyWith(fontWeight: FontWeight.bold)),
+                                        SizedBox(height: 8),
+                                        Text('Price: \$${this.topProducts[0]['price']}', style: Theme.of(context).textTheme.headline5),
+                                        Text('Vendor: ${this.topProducts[0]['vendor']}', style: Theme.of(context).textTheme.headline5),
+                                        Text('Orders: ${this.topProducts[0]['amount_sold']}', style: Theme.of(context).textTheme.headline5),
+                                        Text('Revenue: \$${this.topProducts[0]['price'] * this.topProducts[0]['amount_sold']}', style: Theme.of(context).textTheme.headline5),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
