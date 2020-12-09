@@ -9,8 +9,9 @@ class ListElement extends StatelessWidget {
   bool visible;
   String route;
   Object object;
+  final String id;
 
-  ListElement({this.items, this.visible = true, this.route, this.object});
+  ListElement({this.items, this.visible = true, this.route, this.object, this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +26,6 @@ class ListElement extends StatelessWidget {
          FluroRouter.router.navigateTo(
             context,
             route,
-            routeSettings: RouteSettings(
-              arguments: object
-            ),
             transition: fluro.TransitionType.fadeIn,
             transitionDuration: Duration(milliseconds: 150));
         },
@@ -38,10 +36,11 @@ class ListElement extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 12.0),
               child: SizedBox(
-                width: 150,
+                width: MediaQuery.of(context).size.width * 0.11,
                 child: Center(
                   child: Text(
                     items[index],
+                    overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.headline6,
                   ),
                 ),

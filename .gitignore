@@ -6,3 +6,9 @@ swampy/pubspec.lock
 .idea/modules.xml
 .idea/vcs.xml
 .idea/workspace.xml
+database/key.json
+swampy/.firebase/hosting.cHVibGlj.cache
+swampy/.firebaserc
+swampy/database.rules.json
+swampy/firebase.json
+swampy/public/

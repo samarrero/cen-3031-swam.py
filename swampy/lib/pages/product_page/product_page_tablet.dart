@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:swampy/components/general/section.dart';
 import 'package:swampy/components/list/list_element.dart';
 import 'package:swampy/components/menus/nav_bar.dart';
 import 'package:swampy/components/menus/side_menu.dart';
 
 class ProductPageTablet extends StatelessWidget {
-  final List<ListElement> sample;
+  final Widget child;
 
-  ProductPageTablet({this.sample});
+  ProductPageTablet({this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +28,9 @@ class ProductPageTablet extends StatelessWidget {
             ),
             Container(
               width: MediaQuery.of(context).size.width - 200,
-              child: ListView.builder(
-                itemCount: sample.length,
-                itemBuilder: (context, index) => sample[index],
+              child: Section(
+                title: 'Products',
+                child: this.child,
               ),
             )
           ],

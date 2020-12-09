@@ -60,7 +60,7 @@ class FirebaseAuthService {
       email: email,
       firstName: '${first[0].toUpperCase()}${first.substring(1)}',
       lastName: '${last[0].toUpperCase()}${last.substring(1)}',
-    );;
+    );
   }
 
   Future<void> signOut() async {

@@ -21,6 +21,7 @@ class InputField extends StatefulWidget {
 
 class _InputFieldState extends State<InputField> {
   bool _valid = true;
+  List<String> vowels = ['a', 'e', 'i', 'o'];
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +57,7 @@ class _InputFieldState extends State<InputField> {
         widget.type == InputType.Phone ? TextInputType.phone : widget.type == InputType.Multiline ? TextInputType.multiline : TextInputType.text,
         cursorColor: Colors.black,
         cursorWidth: 2.0,
-        minLines: widget.type == InputType.Multiline ? 10 : 1,
+        minLines: widget.type == InputType.Multiline ? 5 : 1,
         maxLines: widget.type == InputType.Multiline ? null : 1,
         showCursor: true,
         validator: (value) {
@@ -64,7 +65,7 @@ class _InputFieldState extends State<InputField> {
             setState(() {
               _valid = false;
             });
-            return 'Please enter a ${widget.text.toLowerCase()}.';
+            return !vowels.contains(widget.text.toLowerCase()[0]) ? 'Please enter a ${widget.text.toLowerCase()}.' : 'Please enter an ${widget.text.toLowerCase()}';
           }
           else if (widget.type == InputType.Email) {
             final RegExp _emailRegExp = RegExp(

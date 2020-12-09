@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:swampy/components/general/section.dart';
 import 'package:swampy/components/list/list_element.dart';
 import 'package:swampy/components/menus/nav_bar.dart';
 import 'package:swampy/components/menus/side_menu.dart';
 
 class ProductPageMobile extends StatelessWidget {
-  final List<ListElement> sample;
+  final Widget child;
 
-  ProductPageMobile({this.sample});
+  ProductPageMobile({this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +23,9 @@ class ProductPageMobile extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: ListView.builder(
-          itemCount: sample.length,
-          itemBuilder: (context, index) => sample[index],
+        child: Section(
+          title: 'Products',
+          child: this.child
         ),
       ),
     );

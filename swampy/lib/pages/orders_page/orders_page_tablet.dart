@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:swampy/components/general/section.dart';
 import 'package:swampy/components/list/list_element.dart';
+import 'package:swampy/components/list/list_wrapper.dart';
 import 'package:swampy/components/menus/nav_bar.dart';
 import 'package:swampy/components/menus/side_menu.dart';
+import 'package:swampy/data/data.dart';
+import 'package:swampy/models/order.dart';
+import 'package:swampy/router/route_names.dart';
 
 class OrdersPageTablet extends StatelessWidget {
-  final List<ListElement> sample;
+  final ListWrapper listWrapper;
 
-  OrdersPageTablet({this.sample});
+  OrdersPageTablet({this.listWrapper});
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +34,7 @@ class OrdersPageTablet extends StatelessWidget {
               width: MediaQuery.of(context).size.width - 200,
               child: Section(
                 title: 'Orders',
-                child: ListView.builder(
-                  itemCount: sample.length,
-                  itemBuilder: (context, index) => sample[index],
-                ),
+                child: this.listWrapper,
               ),
             )
           ],

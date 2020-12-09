@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:swampy/components/general/column_builder.dart';
 import 'package:swampy/components/general/section.dart';
 import 'package:swampy/components/menus/nav_bar.dart';
 import 'package:swampy/components/menus/side_menu.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
-
+import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:intl/intl.dart';
 
 class AnalyticsPageDesktop extends StatelessWidget {
+  final Map<String, Color> donutColors;
+  final donutData;
+  final ordersData;
+
+  AnalyticsPageDesktop({this.donutColors, this.donutData, this.ordersData});
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -29,7 +36,136 @@ class AnalyticsPageDesktop extends StatelessWidget {
                 width: MediaQuery.of(context).size.width - 200,
                 child: Section(
                   title: 'Analytics',
-                  child: DonutPieChart.withSampleData(),
+                  child: Center(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxWidth: 1440
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 32.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Flexible(
+                              child: ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  maxWidth: 800
+                                ),
+                                child: SfCartesianChart(
+                                    primaryYAxis: NumericAxis(
+                                      //Formatting the labels in locale’s currency pattern with symbol.
+                                        numberFormat: NumberFormat.currency(
+                                            locale: 'en_US',
+                                            symbol: "\$"
+                                        ),
+                                    ),
+                                    primaryXAxis: CategoryAxis(),
+                                    // Chart title
+                                    title: ChartTitle(text: 'Total Sales Over Time', textStyle: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold)),
+                                    // Enable legend
+                                    legend: Legend(isVisible: true, position: LegendPosition.bottom),
+                                    // Enable tooltip
+                                    tooltipBehavior: TooltipBehavior(
+                                        enable: true,
+                                        color: Colors.grey[800],
+                                        textStyle: Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.normal, color: Colors.white)
+                                    ),
+                                    series: [
+                                      AreaSeries(
+                                          gradient: LinearGradient(
+                                              begin: Alignment.topCenter,
+                                              end: Alignment.bottomCenter,
+                                              colors: [Theme.of(context).primaryColor, Color.fromRGBO(212, 225, 255, 1)],//donutColors.values.toList().sublist(2, 5),
+                                              stops: [0, 1],
+                                          ),
+                                          // trendlines: [
+                                          //   Trendline(type: TrendlineType.linear, color: Colors.redAccent, name: "Trendline")
+                                          // ],
+                                          // borderWidth: 1,
+                                          // borderColor: donutColors.values.toList()[2],
+                                          name: 'Revenue',
+                                          color: Theme.of(context).primaryColor,
+                                          dataSource: ordersData,
+                                          xValueMapper: (sales, _) => sales.x,
+                                          yValueMapper: (sales, _) => sales.y,
+                                          // Enable data label
+                                          dataLabelSettings: DataLabelSettings(isVisible: false))
+                                    ]),
+                              ),
+                            ),
+                            SizedBox(width: 32.0),
+                            SfCircularChart(
+                                tooltipBehavior: TooltipBehavior(
+                                  enable: true,
+                                  color: Colors.grey[800],
+                                    textStyle: Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.normal, color: Colors.white)
+                                ),
+                                title: ChartTitle(text: 'Best Performing Products', textStyle: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold)),
+                                annotations: <CircularChartAnnotation>[
+                                  CircularChartAnnotation(
+                                      widget: Container(
+                                        child: PhysicalModel(
+                                          child: Container(),
+                                          shape: BoxShape.circle,
+                                          color: Colors.white,
+                                        ),
+                                      )
+                                  ),
+                                  CircularChartAnnotation(
+                                    widget: ColumnBuilder(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      itemCount: donutData.length,
+                                      itemBuilder: (context, index) {
+                                        return ConstrainedBox(
+                                          constraints: BoxConstraints(
+                                              maxWidth: 160
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(vertical: 2.5),
+                                            child: Row(
+                                              children: [
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(100),
+                                                      color: donutColors[donutData[index].x]
+                                                  ),
+                                                  width: 16,
+                                                  height: 16,
+                                                ),
+                                                SizedBox(width: 8.0),
+                                                Flexible(
+                                                    fit: FlexFit.loose,
+                                                    child: Text(donutData[index].x,
+                                                        style: Theme.of(context).textTheme.headline5,
+                                                        overflow: TextOverflow.ellipsis)
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  )
+                                ],
+                                series: <CircularSeries>[
+                                  // Renders doughnut chart
+                                  DoughnutSeries(
+                                    dataSource: donutData,
+                                    // startAngle: 30,
+                                    // endAngle: 30,
+                                    innerRadius: '115',
+                                    radius: '155',
+                                    pointColorMapper:(data,  _) => data.color,
+                                    xValueMapper: (data, _) => data.x,
+                                    yValueMapper: (data, _) => data.y,
+                                  )
+                                ]
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               )
             ],
@@ -38,59 +174,4 @@ class AnalyticsPageDesktop extends StatelessWidget {
       ),
     );
   }
-}
-
-/// Donut chart example. This is a simple pie chart with a hole in the middle.
-
-class DonutPieChart extends StatelessWidget {
-  final List<charts.Series> seriesList;
-  final bool animate;
-
-  DonutPieChart(this.seriesList, {this.animate});
-
-  /// Creates a [PieChart] with sample data and no transition.
-  factory DonutPieChart.withSampleData() {
-    return new DonutPieChart(
-      _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
-    );
-  }
-
-
-  @override
-  Widget build(BuildContext context) {
-    return new charts.PieChart(seriesList,
-        animate: animate,
-        // Configure the width of the pie slices to 60px. The remaining space in
-        // the chart will be left as a hole in the center.
-        defaultRenderer: new charts.ArcRendererConfig(arcWidth: 80));
-  }
-
-  /// Create one series with sample hard coded data.
-  static List<charts.Series<LinearSales, int>> _createSampleData() {
-    final data = [
-      new LinearSales(0, 100),
-      new LinearSales(1, 75),
-      new LinearSales(2, 25),
-      new LinearSales(3, 5),
-    ];
-
-    return [
-      new charts.Series<LinearSales, int>(
-        id: 'Sales',
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
-        data: data,
-      )
-    ];
-  }
-}
-
-/// Sample linear data type.
-class LinearSales {
-  final int year;
-  final int sales;
-
-  LinearSales(this.year, this.sales);
 }
