@@ -44,9 +44,9 @@ class ProductPage extends StatelessWidget {
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       return ScreenTypeLayout(
-                        desktop: ProductPageDesktop(child: ProductDescriptor(document: snapshot.data, scaffoldKey: _scaffoldKey)),
-                        tablet: ProductPageTablet(child: ProductDescriptor(document: snapshot.data, scaffoldKey: _scaffoldKey)),
-                        mobile: ProductPageMobile(child: ProductDescriptor(document: snapshot.data, scaffoldKey: _scaffoldKey)),
+                        desktop: ProductPageDesktop(child: ProductBody(document: snapshot.data, scaffoldKey: _scaffoldKey)),
+                        tablet: ProductPageTablet(child: ProductBody(document: snapshot.data, scaffoldKey: _scaffoldKey)),
+                        mobile: ProductPageMobile(child: ProductBody(document: snapshot.data, scaffoldKey: _scaffoldKey)),
                       );
                     }
                     else return Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(Theme.of(context).primaryColor)));
@@ -55,6 +55,83 @@ class ProductPage extends StatelessWidget {
     );
   }
 }
+
+class ProductBody extends StatelessWidget {
+  final DocumentSnapshot document;
+  final GlobalKey<ScaffoldState> scaffoldKey;
+
+  ProductBody({this.document, this.scaffoldKey});
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          ProductDescriptor(document: document, scaffoldKey: scaffoldKey),
+          SizedBox(height: 12.0),
+          MediaQuery.of(context).size.width >= 950 ? Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16.0)),
+                elevation: 3.0,
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0),
+                    child: Text('Current Inventory: ' + document['inventory'].toString(), style: Theme.of(context).textTheme.headline4.copyWith(fontWeight: FontWeight.bold))
+                ),
+              ),
+              SizedBox(width: 8.0),
+              Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16.0)),
+                elevation: 3.0,
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0),
+                    child: Text('Amount Sold: ' + document['amount_sold'].toString(), style: Theme.of(context).textTheme.headline4.copyWith(fontWeight: FontWeight.bold))
+                ),
+              )
+            ],
+          ) : SizedBox.shrink(),
+            // Column(
+            //       children: [
+            //         Card(
+            //           shape: RoundedRectangleBorder(
+            //               borderRadius: BorderRadius.circular(16.0)),
+            //           elevation: 3.0,
+            //           child: Padding(
+            //               padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0),
+            //               child: ConstrainedBox(
+            //                   constraints: BoxConstraints(
+            //                     minWidth: MediaQuery.of(context).size.width
+            //                   ),
+            //                   child: Center(child: Text('Current Inventory: ' + document['inventory'].toString(), style: Theme.of(context).textTheme.headline4.copyWith(fontWeight: FontWeight.bold)))
+            //               )
+            //           ),
+            //         ),
+            //         Card(
+            //           shape: RoundedRectangleBorder(
+            //               borderRadius: BorderRadius.circular(16.0)),
+            //           elevation: 3.0,
+            //           child: Padding(
+            //               padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0),
+            //               child: ConstrainedBox(
+            //                   constraints: BoxConstraints(
+            //                       minWidth: MediaQuery.of(context).size.width
+            //                   ),
+            //                 child: Center(child: Text('Amount Sold: ' + document['amount_sold'].toString(), style: Theme.of(context).textTheme.headline4.copyWith(fontWeight: FontWeight.bold)))
+            //             )
+            //           ),
+            //         )
+            //       ],
+            //     )
+        ],
+      ),
+    );
+  }
+}
+
 
 class ProductDescriptor extends StatefulWidget {
   final DocumentSnapshot document;
@@ -106,11 +183,56 @@ class StaticProductDescriptor extends StatelessWidget {
                 Text(document['name'],
                   style: Theme.of(context).textTheme.headline4.copyWith(fontWeight: FontWeight.bold),),
                 SizedBox(height: 8.0),
-                Text('Price: \$' + document['price'].toString(), style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5)),
-                Text('Vendor: ' + document['vendor'], style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5)),
-                Text('Type: ' + document['type'], style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5)),
-                Text('Current Inventory: ' + document['inventory'].toString(), style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5)),
-                Text('Inventory Ordered: ' + document['amount_sold'].toString(), style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5)),
+                RichText(
+                  text: TextSpan(
+                      style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5),
+                      children: [
+                        TextSpan(text: 'Price'),
+                        TextSpan(text: '  ', style: Theme.of(context).textTheme.headline6),
+                        TextSpan(text: '\$' + document['price'].toString(), style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold))
+                      ]
+                  ),
+                ),
+                RichText(
+                  text: TextSpan(
+                      style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5),
+                      children: [
+                        TextSpan(text: 'Type'),
+                        TextSpan(text: '  ', style: Theme.of(context).textTheme.headline6),
+                        TextSpan(text: document['type'], style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold))
+                      ]
+                  ),
+                ),
+                RichText(
+                  text: TextSpan(
+                      style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5),
+                      children: [
+                        TextSpan(text: 'Vendor'),
+                        TextSpan(text: '  ', style: Theme.of(context).textTheme.headline6),
+                        TextSpan(text: document['vendor'], style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold))
+                      ]
+                  ),
+                ),
+                MediaQuery.of(context).size.width < 950 ? RichText(
+                  text: TextSpan(
+                      style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5),
+                      children: [
+                        TextSpan(text: 'Current Inventory'),
+                        TextSpan(text: '  ', style: Theme.of(context).textTheme.headline6),
+                        TextSpan(text: document['inventory'].toString(), style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold))
+                      ]
+                  ),
+                ) : SizedBox.shrink(),
+                MediaQuery.of(context).size.width < 950 ? RichText(
+                  text: TextSpan(
+                      style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5),
+                      children: [
+                        TextSpan(text: 'Amount Sold'),
+                        TextSpan(text: '  ', style: Theme.of(context).textTheme.headline6),
+                        TextSpan(text: document['amount_sold'].toString(), style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold))
+                      ]
+                  ),
+                ) : SizedBox.shrink(),
                 SizedBox(height: 16.0),
                 Text('Description:', style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold, height: 1.5)),
                 SizedBox(height: 2.0),
@@ -167,16 +289,36 @@ class _EditableProductDescriptorState extends State<EditableProductDescriptor> {
                       Text(widget.document['name'],
                         style: Theme.of(context).textTheme.headline4.copyWith(fontWeight: FontWeight.bold),),
                       SizedBox(height: 8.0),
-                      Text('Price: \$' + widget.document['price'].toString(),
-                          style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5)),
-                      Text('Vendor: ' + widget.document['vendor'],
-                          style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5)),
-                      Text('Type: ' + widget.document['type'],
-                          style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5)),
-                      Text('Current Inventory: ' + widget.document['inventory'].toString(),
-                          style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5)),
-                      Text('Inventory Ordered: ' + widget.document['amount_sold'].toString(),
-                          style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5)),
+                      RichText(
+                        text: TextSpan(
+                            style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5),
+                            children: [
+                              TextSpan(text: 'Price'),
+                              TextSpan(text: '  ', style: Theme.of(context).textTheme.headline6),
+                              TextSpan(text: '\$' + widget.document['price'].toString(), style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold))
+                            ]
+                        ),
+                      ),
+                      RichText(
+                        text: TextSpan(
+                            style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5),
+                            children: [
+                              TextSpan(text: 'Type'),
+                              TextSpan(text: '  ', style: Theme.of(context).textTheme.headline6),
+                              TextSpan(text: widget.document['type'], style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold))
+                            ]
+                        ),
+                      ),
+                      RichText(
+                        text: TextSpan(
+                            style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5),
+                            children: [
+                              TextSpan(text: 'Vendor'),
+                              TextSpan(text: '  ', style: Theme.of(context).textTheme.headline6),
+                              TextSpan(text: widget.document['vendor'], style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold))
+                            ]
+                        ),
+                      ),
                       SizedBox(height: 16.0),
                       AnimatedCrossFade(
                         firstChild: Column(
