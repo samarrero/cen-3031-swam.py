@@ -39,7 +39,6 @@ class ProductPage extends StatelessWidget {
               child: FutureBuilder(
                   future: FirebaseFirestore.instance.collection('products').doc(ModalRoute.of(context).settings.name.substring(9)).get(),
                   builder: (context, snapshot) {
-                    print(ModalRoute.of(context).settings.name.substring(9));
                     if (snapshot.hasData) {
                       return ScreenTypeLayout(
                         desktop: ProductPageDesktop(column: Column(

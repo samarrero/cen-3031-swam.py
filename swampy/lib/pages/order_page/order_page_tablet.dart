@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:swampy/components/general/section.dart';
 import 'package:swampy/components/list/list_element.dart';
 import 'package:swampy/components/menus/nav_bar.dart';
 import 'package:swampy/components/menus/side_menu.dart';
@@ -27,7 +28,10 @@ class OrderPageTablet extends StatelessWidget {
             ),
             Container(
               width: MediaQuery.of(context).size.width - 200,
-              child: SingleChildScrollView(child: this.column))
+              child: Section(
+                  title: 'Orders',
+                  child: SingleChildScrollView(child: this.column))
+            )
           ],
         ),
       ),
