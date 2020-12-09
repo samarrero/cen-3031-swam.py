@@ -1,16 +1,16 @@
 # thanks to https://medium.com/@cbrannen/importing-data-into-firestore-using-python-dce2d6d3cd51
+# and https://firebase.google.com/docs/firestore/manage-data/delete-data
 # run this file to populate the firestore database
-
-# WARNING: THIS WILL NOT DELETE EXISTING DOCUMENTS, SO MANUALLY DELETE THEM ON FIREBASE
 
 from dateutil import parser
 import random
 from lorem_text import lorem
 import pprint as pprint
 import csv
-
 import firebase_admin
 from firebase_admin import credentials, firestore
+
+deleteOnly = False
 
 cred = credentials.Certificate("./key.json")
 app = firebase_admin.initialize_app(cred)
@@ -20,39 +20,26 @@ store = firestore.client()
 prod_ids = []
 
 
-def productsGenerateDescriptions():
-    print("Generating random lorem descriptions for products.")
-    doc_ref = store.collection("products").stream()
+def delete_collection(coll_name, coll_ref, batch_size):
+    docs = coll_ref.limit(batch_size).stream()
 
-    for doc in doc_ref:
-        d = doc.to_dict()
-        d["description"] = lorem.paragraph()
-        store.collection("products").document(doc.id).set(d)
-        prod_ids.append(doc.id)
-    print("Done!")
+    col_size = 0
+    for o in coll_ref.get():
+        col_size += 1
 
+    if col_size == 0:
+        print(f"{coll_name} collection is empty; no docs deleted.")
+    else:
+        print(f"Deleting existing {col_size} docs from {coll_name}.")
 
-def ordersGenerateProductMaps():
-    print("Generating random product maps (product and amount) for orders.")
-    doc_ref = store.collection("orders").stream()
+    deleted = 0
 
-    for doc in doc_ref:
-        d = doc.to_dict()
-        random.shuffle(prod_ids)
-        count = 0
-        prods = {}
-        r = random.randint(1, 6)
-        for i in range(r):
-            prods[prod_ids[i]] = random.randint(1, 21)
-        for prod in prods:
-            count += (
-                store.collection("products").document(prod).get().to_dict()["price"]
-                * prods[prod]
-            )
-        d["products_and_amounts"] = prods
-        d["total"] = count
-        store.collection("orders").document(doc.id).set(d)
-    print("Done!")
+    for doc in docs:
+        doc.reference.delete()
+        deleted = deleted + 1
+
+    if deleted >= batch_size:
+        return delete_collection(coll_name, coll_ref, batch_size)
 
 
 def batch_data(iterable, n=1):
@@ -61,12 +48,9 @@ def batch_data(iterable, n=1):
         yield iterable[ndx : min(ndx + n, l)]
 
 
-def write(file_path, collection_name):
+def write_to_firestore(file_path, collection_name):
 
-    print(
-        "Writing to firestore - file_path: " + file_path,
-        "collection_name: " + collection_name,
-    )
+    print(f"Writing {collection_name} collection to firestore.")
 
     data = []
     headers = []
@@ -116,26 +100,57 @@ def write(file_path, collection_name):
             doc_data = store.collection(collection_name).document(doc.id)
             doc_data.update({"id": doc.id})
 
-        print(f"Done with {collection_name}.\n")
+        print(f"Done!\n")
 
 
-automated = True
+def products_generate_descriptions():
+    print("Generating random lorem descriptions for products.")
+    doc_ref = store.collection("products").stream()
+
+    for doc in doc_ref:
+        d = doc.to_dict()
+        d["description"] = lorem.paragraph()
+        store.collection("products").document(doc.id).set(d)
+        prod_ids.append(doc.id)
+    print("Done!\n")
+
+
+def orders_generate_product_maps():
+    print("Generating random product maps (product and amount) for orders.")
+    doc_ref = store.collection("orders").stream()
+
+    for doc in doc_ref:
+        d = doc.to_dict()
+        random.shuffle(prod_ids)
+        count = 0
+        prods = {}
+        r = random.randint(1, 6)
+        for i in range(r):
+            prods[prod_ids[i]] = random.randint(1, 21)
+        for prod in prods:
+            count += (
+                store.collection("products").document(prod).get().to_dict()["price"]
+                * prods[prod]
+            )
+        d["products_and_amounts"] = prods
+        d["total"] = count
+        store.collection("orders").document(doc.id).set(d)
+    print("Done!\n")
+
 
 collections = ["products", "orders"]
 
-if automated:
-
+if deleteOnly:
     for collection in collections:
+        delete_collection(collection, store.collection(collection), 100)
+
+else:
+    for collection in collections:
+        delete_collection(collection, store.collection(collection), 100)
         file_path = "./" + collection + ".csv"
         collection_name = collection
 
-        write(file_path, collection_name)
-else:
+        write_to_firestore(file_path, collection_name)
 
-    file_path = "./" + input("input csv file name: ") + ".csv"
-    collection_name = input("input collection name: ")
-
-    write(file_path, collection_name)
-
-productsGenerateDescriptions()
-ordersGenerateProductMaps()
+    products_generate_descriptions()
+    orders_generate_product_maps()
