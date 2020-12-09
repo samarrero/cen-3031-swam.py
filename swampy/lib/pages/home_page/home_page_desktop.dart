@@ -119,65 +119,74 @@ class HomePageDesktop extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            Card(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(256.0)),
-                              elevation: 5.0,
-                              child: Container(
-                                width: 310,
-                                height: 310,
-                                child: SfCircularChart(
-                                    annotations: <CircularChartAnnotation>[
-                                      CircularChartAnnotation(
-                                          widget: ColumnBuilder(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            itemCount: topProducts.length,
-                                            itemBuilder: (context, index) {
-                                              return ConstrainedBox(
-                                                constraints: BoxConstraints(
-                                                    maxWidth: 160
-                                                ),
-                                                child: Padding(
-                                                  padding: const EdgeInsets.symmetric(vertical: 2.5),
-                                                  child: Row(
-                                                    children: [
-                                                      Container(
-                                                        decoration: BoxDecoration(
-                                                          borderRadius: BorderRadius.circular(100),
-                                                          color: coloredData[topProducts[index]['name']]
-                                                        ),
-                                                        width: 16,
-                                                        height: 16,
-                                                      ),
-                                                      SizedBox(width: 8.0),
-                                                      Flexible(
-                                                          fit: FlexFit.loose,
-                                                          child: Text(topProducts[index]['name'],
-                                                              style: Theme.of(context).textTheme.headline5,
-                                                              overflow: TextOverflow.ellipsis)
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                          ),
+                            Container(
+                              width: 310,
+                              height: 310,
+                              child: SfCircularChart(
+                                  tooltipBehavior: TooltipBehavior(
+                                      enable: true,
+                                      color: Colors.grey[800],
+                                      textStyle: Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.normal, color: Colors.white)
+                                  ),
+                                  annotations: <CircularChartAnnotation>[
+                                    CircularChartAnnotation(
+                                      widget: Container(
+                                        child: PhysicalModel(
+                                          child: Container(),
+                                          shape: BoxShape.circle,
+                                          color: Colors.white,
+                                        ),
                                       )
-                                    ],
-                                    series: <CircularSeries>[
-                                      // Renders doughnut chart
-                                      DoughnutSeries<ChartData, String>(
-                                          dataSource: chartData,
-                                          // startAngle: 30,
-                                          // endAngle: 30,
-                                          innerRadius: '115',
-                                          radius: '155',
-                                          pointColorMapper:(ChartData data,  _) => data.color,
-                                          xValueMapper: (ChartData data, _) => data.x,
-                                          yValueMapper: (ChartData data, _) => data.y,
-                                      )
-                                    ]
-                                ),
+                                    ),
+                                    CircularChartAnnotation(
+                                        widget: ColumnBuilder(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          itemCount: topProducts.length,
+                                          itemBuilder: (context, index) {
+                                            return ConstrainedBox(
+                                              constraints: BoxConstraints(
+                                                  maxWidth: 160
+                                              ),
+                                              child: Padding(
+                                                padding: const EdgeInsets.symmetric(vertical: 2.5),
+                                                child: Row(
+                                                  children: [
+                                                    Container(
+                                                      decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(100),
+                                                        color: coloredData[topProducts[index]['name']]
+                                                      ),
+                                                      width: 16,
+                                                      height: 16,
+                                                    ),
+                                                    SizedBox(width: 8.0),
+                                                    Flexible(
+                                                        fit: FlexFit.loose,
+                                                        child: Text(topProducts[index]['name'],
+                                                            style: Theme.of(context).textTheme.headline5,
+                                                            overflow: TextOverflow.ellipsis)
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                    )
+                                  ],
+                                  series: <CircularSeries>[
+                                    // Renders doughnut chart
+                                    DoughnutSeries<ChartData, String>(
+                                        dataSource: chartData,
+                                        // startAngle: 30,
+                                        // endAngle: 30,
+                                        innerRadius: '115',
+                                        radius: '155',
+                                        pointColorMapper:(ChartData data,  _) => data.color,
+                                        xValueMapper: (ChartData data, _) => data.x,
+                                        yValueMapper: (ChartData data, _) => data.y,
+                                    )
+                                  ]
                               ),
                             )
                           ],

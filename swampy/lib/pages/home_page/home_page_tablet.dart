@@ -126,7 +126,21 @@ class HomePageTablet extends StatelessWidget {
                                 width: 310,
                                 height: 310,
                                 child: SfCircularChart(
+                                    tooltipBehavior: TooltipBehavior(
+                                        enable: true,
+                                        color: Colors.grey[800],
+                                        textStyle: Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.normal, color: Colors.white)
+                                    ),
                                     annotations: <CircularChartAnnotation>[
+                                      CircularChartAnnotation(
+                                          widget: Container(
+                                            child: PhysicalModel(
+                                              child: Container(),
+                                              shape: BoxShape.circle,
+                                              color: Colors.white,
+                                            ),
+                                          )
+                                      ),
                                       CircularChartAnnotation(
                                         widget: ColumnBuilder(
                                           crossAxisAlignment: CrossAxisAlignment.start,
