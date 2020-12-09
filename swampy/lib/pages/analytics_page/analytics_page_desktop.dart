@@ -90,6 +90,7 @@ class AnalyticsPageDesktop extends StatelessWidget {
                             color: Colors.grey[800],
                               textStyle: Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.normal, color: Colors.white)
                           ),
+                          title: ChartTitle(text: 'Best Performing Products', textStyle: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold)),
                           annotations: <CircularChartAnnotation>[
                             CircularChartAnnotation(
                               widget: ColumnBuilder(
