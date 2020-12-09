@@ -88,39 +88,45 @@ class StaticProductDescriptor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(32.0)),
-      elevation: 3.0,
-      child: Padding(
-        padding: const EdgeInsets.all(32.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(document['name'],
-              style: Theme.of(context).textTheme.headline4.copyWith(fontWeight: FontWeight.bold),),
-            SizedBox(height: 8.0),
-            Text('Price: \$' + document['price'].toString(),
-                style: Theme.of(context).textTheme.headline5),
-            SizedBox(height: 2.0),
-            Text('Vendor: ' + document['vendor'],
-                style: Theme.of(context).textTheme.headline5),
-            SizedBox(height: 2.0),
-            Text('Type: ' + document['type'],
-                style: Theme.of(context).textTheme.headline5),
-            SizedBox(height: 2.0),
-            Text('Current Inventory: ' + document['inventory'].toString(),
-                style: Theme.of(context).textTheme.headline5),
-            SizedBox(height: 2.0),
-            Text('Inventory Ordered: ' + document['amount_sold'].toString(),
-                style: Theme.of(context).textTheme.headline5),
-            SizedBox(height: 16.0),
-            Text('Description:', style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold),),
-            SizedBox(height: 2.0),
-            Text(document['description'], style: Theme.of(context).textTheme.headline5,),
-          ],
-        ),
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Card(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(32.0)),
+            elevation: 3.0,
+            child: Padding(
+              padding: const EdgeInsets.all(32.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(document['name'],
+                    style: Theme.of(context).textTheme.headline4.copyWith(fontWeight: FontWeight.bold),),
+                  SizedBox(height: 8.0),
+                  Text('Price: \$' + document['price'].toString(),
+                      style: Theme.of(context).textTheme.headline5),
+                  SizedBox(height: 2.0),
+                  Text('Vendor: ' + document['vendor'],
+                      style: Theme.of(context).textTheme.headline5),
+                  SizedBox(height: 2.0),
+                  Text('Type: ' + document['type'],
+                      style: Theme.of(context).textTheme.headline5),
+                  SizedBox(height: 2.0),
+                  Text('Current Inventory: ' + document['inventory'].toString(),
+                      style: Theme.of(context).textTheme.headline5),
+                  SizedBox(height: 2.0),
+                  Text('Inventory Ordered: ' + document['amount_sold'].toString(),
+                      style: Theme.of(context).textTheme.headline5),
+                  SizedBox(height: 16.0),
+                  Text('Description:', style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold),),
+                  SizedBox(height: 2.0),
+                  Text(document['description'], style: Theme.of(context).textTheme.headline5,),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -138,90 +144,99 @@ class EditableProductDescriptor extends StatefulWidget {
 
 class _EditableProductDescriptorState extends State<EditableProductDescriptor> {
   bool _isEditing = false;
+  bool _isLoading = false;
   TextEditingController _textEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(32.0)),
-      elevation: 3.0,
+    return SingleChildScrollView(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisSize: MainAxisSize.min,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(32.0),
+          Card(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(32.0)),
+            elevation: 3.0,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(widget.document['name'],
-                  style: Theme.of(context).textTheme.headline4.copyWith(fontWeight: FontWeight.bold),),
-                SizedBox(height: 8.0),
-                Text('Price: \$' + widget.document['price'].toString(),
-                    style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5)),
-                Text('Vendor: ' + widget.document['vendor'],
-                    style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5)),
-                Text('Type: ' + widget.document['type'],
-                    style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5)),
-                Text('Current Inventory: ' + widget.document['inventory'].toString(),
-                    style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5)),
-                Text('Inventory Ordered: ' + widget.document['amount_sold'].toString(),
-                    style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5)),
-                SizedBox(height: 16.0),
-                AnimatedCrossFade(
-                  firstChild: Column(
+                Padding(
+                  padding: const EdgeInsets.all(32.0),
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text('Description:', style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold, height: 1.5),),
-                      SizedBox(height: 2.0),
-                      Text(widget.document['description'], style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5),),
+                      Text(widget.document['name'],
+                        style: Theme.of(context).textTheme.headline4.copyWith(fontWeight: FontWeight.bold),),
+                      SizedBox(height: 8.0),
+                      Text('Price: \$' + widget.document['price'].toString(),
+                          style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5)),
+                      Text('Vendor: ' + widget.document['vendor'],
+                          style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5)),
+                      Text('Type: ' + widget.document['type'],
+                          style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5)),
+                      Text('Current Inventory: ' + widget.document['inventory'].toString(),
+                          style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5)),
+                      Text('Inventory Ordered: ' + widget.document['amount_sold'].toString(),
+                          style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5)),
+                      SizedBox(height: 16.0),
+                      AnimatedCrossFade(
+                        firstChild: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Description:', style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold, height: 1.5),),
+                            SizedBox(height: 2.0),
+                            Text(widget.document['description'], style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5),),
+                          ],
+                        ),
+                        secondChild: _isLoading ? Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(Theme.of(context).primaryColor))) : InputField(text: 'Description', type: InputType.Multiline, controller: _textEditingController),
+                        crossFadeState: _isEditing ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+                        duration: Duration(milliseconds: 150),
+                        firstCurve: Curves.easeIn,
+                        secondCurve: Curves.easeOut
+                      )
                     ],
                   ),
-                  secondChild: InputField(text: 'Description', type: InputType.Multiline, controller: _textEditingController),
-                  crossFadeState: _isEditing ? CrossFadeState.showSecond : CrossFadeState.showFirst,
-                  duration: Duration(milliseconds: 150),
-                  firstCurve: Curves.easeIn,
-                  secondCurve: Curves.easeOut
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 32.0, right: 32.0),
+                  child: FlatButton(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.0)),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                      child: Text(_isEditing ? 'Done' : 'Edit', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
+                    ),
+                    color: Theme.of(context).primaryColor,
+                    onPressed: () {
+                      setState(() {
+                        _isEditing = !_isEditing;
+                        if (_isEditing == false) {
+                          _isLoading = true;
+                          try {
+                            FirebaseFirestore.instance.collection('products').doc(
+                                ModalRoute.of(context).settings.name.substring(9)).update({
+                              'description': _textEditingController.value.text
+                            }).then((val) {
+                              widget.scaffoldKey.currentState.showSnackBar(SnackBar(
+                                content: Text('Successfully updated the description.'),
+                              ));
+                            });
+                          } catch (e) {
+                            widget.scaffoldKey.currentState.showSnackBar(SnackBar(
+                              content: Text('Sorry, an error occurred: $e'),
+                            ));
+                          }
+                          _isLoading = false;
+                        } else {
+                          _textEditingController.text = widget.document['description'];
+                        }
+                      });
+                    },
+                  ),
                 )
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 32.0, right: 32.0),
-            child: FlatButton(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.0)),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: Text(_isEditing ? 'Done' : 'Edit', style: Theme.of(context).textTheme.button.copyWith(color: Colors.white)),
-              ),
-              color: Theme.of(context).primaryColor,
-              onPressed: () {
-                setState(() {
-                  _isEditing = !_isEditing;
-                  if (_isEditing == false) {
-                    try {
-                      FirebaseFirestore.instance.collection('products').doc(
-                          ModalRoute.of(context).settings.name.substring(9)).update({
-                        'description': _textEditingController.value.text
-                      }).then((val) {
-                        widget.scaffoldKey.currentState.showSnackBar(SnackBar(
-                          content: Text('Successfully updated the description.'),
-                        ));
-                      });
-                    } catch (e) {
-                      widget.scaffoldKey.currentState.showSnackBar(SnackBar(
-                        content: Text('Sorry, an error occurred: $e'),
-                      ));
-                    }
-                  } else {
-                    _textEditingController.text = widget.document['description'];
-                  }
-                });
-              },
-            ),
-          )
         ],
       ),
     );
