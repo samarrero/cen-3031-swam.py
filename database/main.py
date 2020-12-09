@@ -1,6 +1,8 @@
 # thanks to https://medium.com/@cbrannen/importing-data-into-firestore-using-python-dce2d6d3cd51
 # run this file to populate the firestore database
 
+# WARNING: THIS WILL NOT DELETE EXISTING DOCUMENTS, SO MANUALLY DELETE THEM ON FIREBASE
+
 from dateutil import parser
 import random
 from lorem_text import lorem
