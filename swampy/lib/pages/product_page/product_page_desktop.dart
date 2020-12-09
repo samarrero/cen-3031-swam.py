@@ -10,9 +10,9 @@ import 'package:swampy/components/menus/side_menu.dart';
 import 'package:swampy/models/product.dart';
 
 class ProductPageDesktop extends StatelessWidget {
-  final Column column;
+  final Widget child;
 
-  ProductPageDesktop({this.column});
+  ProductPageDesktop({this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -37,36 +37,8 @@ class ProductPageDesktop extends StatelessWidget {
                   title: 'Products',
                   child:
                     SingleChildScrollView(
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(32.0)),
-                        elevation: 3.0,
-                        child: Row(mainAxisAlignment: MainAxisAlignment.start,
-                            // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Padding(padding: EdgeInsets.symmetric(horizontal: 16.0)),
-                              this.column,
-                              // Padding(
-                              //     padding:
-                              //         EdgeInsets.symmetric(horizontal: 100.0)),
-                              // Column(
-                              //     crossAxisAlignment: CrossAxisAlignment.start,
-                              //     children: [
-                              //       Padding(
-                              //           padding: EdgeInsets.symmetric(
-                              //               vertical: 7.0, horizontal: 15.0)),
-                              //       Text('Customer Information',
-                              //           style:
-                              //               Theme.of(context).textTheme.headline5,
-                              //           textAlign: TextAlign.start),
-                              //       Padding(
-                              //           padding: EdgeInsets.symmetric(
-                              //               vertical: 7.0, horizontal: 15.0)),
-                              //     ]),
-                            ]),
-                      ),
+                      child: this.child,
                     ),
-
                 ),
               ),
           ],
