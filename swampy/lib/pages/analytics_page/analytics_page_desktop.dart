@@ -65,8 +65,8 @@ class AnalyticsPageDesktop extends StatelessWidget {
                                   gradient: LinearGradient(
                                       begin: Alignment.topCenter,
                                       end: Alignment.bottomCenter,
-                                      colors: donutColors.values.toList().sublist(2, 5),
-                                      stops: [0, 0.5, 1],
+                                      colors: [Theme.of(context).primaryColor, Color.fromRGBO(212, 225, 255, 1)],//donutColors.values.toList().sublist(2, 5),
+                                      stops: [0, 1],
                                   ),
                                   // trendlines: [
                                   //   Trendline(type: TrendlineType.linear, color: Colors.redAccent, name: "Trendline")
