@@ -43,21 +43,22 @@ class ListCard extends StatelessWidget {
                       ),
                       SizedBox(height: 6.0,),
                       ColumnBuilder(
-                          itemCount: attributes.items.length,
-                          itemBuilder: (context, index) {
-                            return index != primaryKey && index != secondaryKey ? Column(
-                              children: [
-                                SizedBox(height: 6.0,),
-                                Row(
-                                  children: [
-                                    Text(descriptors[index], style: Theme.of(context).textTheme.headline5,),
-                                    SizedBox(width: 8.0,),
-                                    Text(attributes.items[index], style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold),),
-                                  ],
-                                ),
-                              ],
-                            ) : SizedBox.shrink();
-                          },
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        itemCount: attributes.items.length,
+                        itemBuilder: (context, index) {
+                          return index != primaryKey && index != secondaryKey ? RichText(
+                            textAlign: TextAlign.start,
+                            overflow: TextOverflow.ellipsis,
+                            text: TextSpan(
+                                style: Theme.of(context).textTheme.headline5.copyWith(height: 1.8),
+                                children: [
+                                  TextSpan(text: descriptors[index], style: Theme.of(context).textTheme.headline5,),
+                                  TextSpan(text: '  ', style: Theme.of(context).textTheme.headline6),
+                                  TextSpan(text: attributes.items[index], style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold))
+                                ]
+                            ),
+                          ) : SizedBox.shrink();
+                        },
                       )
                     ]
                 ),

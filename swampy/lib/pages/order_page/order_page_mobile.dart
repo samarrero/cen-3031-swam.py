@@ -5,9 +5,9 @@ import 'package:swampy/components/menus/nav_bar.dart';
 import 'package:swampy/components/menus/side_menu.dart';
 
 class OrderPageMobile extends StatelessWidget {
-  final Column column;
+  final Widget child;
 
-  OrderPageMobile({this.column});
+  OrderPageMobile({this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class OrderPageMobile extends StatelessWidget {
         child: Section(
           title: 'Orders',
           child: SingleChildScrollView(
-            child: this.column
+            child: this.child
           ),
         ),
       ),

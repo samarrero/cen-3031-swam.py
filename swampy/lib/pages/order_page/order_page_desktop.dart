@@ -11,9 +11,9 @@ import 'package:swampy/components/general/row_builder.dart';
 import 'package:swampy/router/route_names.dart';
 
 class OrderPageDesktop extends StatelessWidget {
-  final Column column;
+  final Widget child;
 
-  OrderPageDesktop({this.column});
+  OrderPageDesktop({this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +59,7 @@ class OrderPageDesktop extends StatelessWidget {
               child: Section(
                 title: 'Orders',
                 child: SingleChildScrollView(
-                  child: this.column,
+                    child: this.child
                 ),
               ),
             ),
