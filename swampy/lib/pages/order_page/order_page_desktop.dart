@@ -56,8 +56,11 @@ class OrderPageDesktop extends StatelessWidget {
             ),
             Container(
               width: MediaQuery.of(context).size.width - 200,
-              child: SingleChildScrollView(
-                child: this.column,
+              child: Section(
+                title: 'Orders',
+                child: SingleChildScrollView(
+                  child: this.column,
+                ),
               ),
             ),
           ],
