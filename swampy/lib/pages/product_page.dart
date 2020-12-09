@@ -358,13 +358,22 @@ class _EditableProductDescriptorState extends State<EditableProductDescriptor> {
                               ModalRoute.of(context).settings.name.substring(9)).update({
                             'description': _textEditingController.value.text
                           }).then((val) {
+
                             widget.scaffoldKey.currentState.showSnackBar(SnackBar(
-                              content: Text('Successfully updated the description.'),
+                                backgroundColor: Colors.grey[800],
+                                content: Padding(
+                                  padding: const EdgeInsets.only(top: 12.0, bottom: 18.0),
+                                  child: Text('Successfully updated the description.', style: Theme.of(context).textTheme.headline4.copyWith(color: Colors.white)),
+                                )
                             ));
                           });
                         } catch (e) {
                           widget.scaffoldKey.currentState.showSnackBar(SnackBar(
-                            content: Text('Sorry, an error occurred: $e'),
+                              backgroundColor: Colors.grey[800],
+                              content: Padding(
+                                padding: const EdgeInsets.only(top: 12.0, bottom: 18.0),
+                                child: Text('Sorry, an error occurred: $e', style: Theme.of(context).textTheme.headline4.copyWith(color: Colors.white)),
+                              )
                           ));
                         }
                         _isLoading = false;

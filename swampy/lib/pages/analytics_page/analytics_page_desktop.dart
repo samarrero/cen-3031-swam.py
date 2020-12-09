@@ -61,7 +61,7 @@ class AnalyticsPageDesktop extends StatelessWidget {
                                     ),
                                     primaryXAxis: CategoryAxis(),
                                     // Chart title
-                                    title: ChartTitle(text: 'Total Sales over Time', textStyle: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold)),
+                                    title: ChartTitle(text: 'Total Sales Over Time', textStyle: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold)),
                                     // Enable legend
                                     legend: Legend(isVisible: true, position: LegendPosition.bottom),
                                     // Enable tooltip
