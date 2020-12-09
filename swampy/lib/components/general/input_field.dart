@@ -56,7 +56,7 @@ class _InputFieldState extends State<InputField> {
         widget.type == InputType.Phone ? TextInputType.phone : widget.type == InputType.Multiline ? TextInputType.multiline : TextInputType.text,
         cursorColor: Colors.black,
         cursorWidth: 2.0,
-        minLines: widget.type == InputType.Multiline ? 10 : 1,
+        minLines: widget.type == InputType.Multiline ? 5 : 1,
         maxLines: widget.type == InputType.Multiline ? null : 1,
         showCursor: true,
         validator: (value) {
