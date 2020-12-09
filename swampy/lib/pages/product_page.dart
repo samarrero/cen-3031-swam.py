@@ -91,38 +91,34 @@ class StaticProductDescriptor extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          Card(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(32.0)),
-            elevation: 3.0,
-            child: Padding(
-              padding: const EdgeInsets.all(32.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(document['name'],
-                    style: Theme.of(context).textTheme.headline4.copyWith(fontWeight: FontWeight.bold),),
-                  SizedBox(height: 8.0),
-                  Text('Price: \$' + document['price'].toString(),
-                      style: Theme.of(context).textTheme.headline5),
-                  SizedBox(height: 2.0),
-                  Text('Vendor: ' + document['vendor'],
-                      style: Theme.of(context).textTheme.headline5),
-                  SizedBox(height: 2.0),
-                  Text('Type: ' + document['type'],
-                      style: Theme.of(context).textTheme.headline5),
-                  SizedBox(height: 2.0),
-                  Text('Current Inventory: ' + document['inventory'].toString(),
-                      style: Theme.of(context).textTheme.headline5),
-                  SizedBox(height: 2.0),
-                  Text('Inventory Ordered: ' + document['amount_sold'].toString(),
-                      style: Theme.of(context).textTheme.headline5),
-                  SizedBox(height: 16.0),
-                  Text('Description:', style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold),),
-                  SizedBox(height: 2.0),
-                  Text(document['description'], style: Theme.of(context).textTheme.headline5,),
-                ],
+          ConstrainedBox(
+            constraints: BoxConstraints(
+              minWidth: MediaQuery.of(context).size.width,
+            ),
+            child: Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(32.0)),
+              elevation: 3.0,
+              child: Padding(
+                padding: const EdgeInsets.all(32.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(document['name'],
+                      style: Theme.of(context).textTheme.headline4.copyWith(fontWeight: FontWeight.bold),),
+                    SizedBox(height: 8.0),
+                    Text('Price: \$' + document['price'].toString(), style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5)),
+                    Text('Vendor: ' + document['vendor'], style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5)),
+                    Text('Type: ' + document['type'], style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5)),
+                    Text('Current Inventory: ' + document['inventory'].toString(), style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5)),
+                    Text('Inventory Ordered: ' + document['amount_sold'].toString(), style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5)),
+                    SizedBox(height: 16.0),
+                    Text('Description:', style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold, height: 1.5)),
+                    SizedBox(height: 2.0),
+                    Text(document['description'], style: Theme.of(context).textTheme.headline5.copyWith(height: 1.5),),
+                  ],
+                ),
               ),
             ),
           ),
