@@ -69,6 +69,7 @@ class Swampy extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'CEN 3031 Dashboard for Imprint Genius',
       debugShowCheckedModeBanner: false,
       theme: Style.theme,
       initialRoute: HomeRoute,
