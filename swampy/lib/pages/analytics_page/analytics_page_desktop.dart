@@ -39,8 +39,10 @@ class AnalyticsPageDesktop extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Container(
-                        width: 500,
+                      ConstrainedBox(
+                        constraints: BoxConstraints(
+                          maxWidth: MediaQuery.of(context).size.width - 700
+                        ),
                         child: SfCartesianChart(
                             primaryYAxis: NumericAxis(
                               //Formatting the labels in locale’s currency pattern with symbol.
@@ -53,7 +55,7 @@ class AnalyticsPageDesktop extends StatelessWidget {
                             // Chart title
                             title: ChartTitle(text: 'Total Sales over Time', textStyle: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold)),
                             // Enable legend
-                            legend: Legend(isVisible: true),
+                            legend: Legend(isVisible: true, position: LegendPosition.bottom),
                             // Enable tooltip
                             tooltipBehavior: TooltipBehavior(
                                 enable: true,
