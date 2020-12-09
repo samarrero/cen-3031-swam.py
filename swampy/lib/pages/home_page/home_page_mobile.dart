@@ -125,10 +125,11 @@ class HomePageMobile extends StatelessWidget {
                             annotations: <CircularChartAnnotation>[
                               CircularChartAnnotation(
                                   widget: Container(
-                                    child: PhysicalModel(
-                                      child: Container(),
-                                      shape: BoxShape.circle,
-                                      color: Colors.white,
+                                    width: 230,
+                                    height: 230,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        shape: BoxShape.circle
                                     ),
                                   )
                               ),

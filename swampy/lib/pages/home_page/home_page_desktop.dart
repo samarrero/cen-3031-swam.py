@@ -131,10 +131,11 @@ class HomePageDesktop extends StatelessWidget {
                                   annotations: <CircularChartAnnotation>[
                                     CircularChartAnnotation(
                                       widget: Container(
-                                        child: PhysicalModel(
-                                          child: Container(),
-                                          shape: BoxShape.circle,
+                                        width: 230,
+                                        height: 230,
+                                        decoration: BoxDecoration(
                                           color: Colors.white,
+                                          shape: BoxShape.circle
                                         ),
                                       )
                                     ),
