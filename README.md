@@ -16,8 +16,9 @@
 	2. Set swampy/web/index.html’s firebaseConfig’s value to the Firebase SDK snippet’s firebaseConfig value
 	3. In the sidebar, go under Develop and click on Cloud Firestore and create a database
 	4. Populate the database with main.py located in the repo’s database folder. You will need a key.json file to run the script
-		1. On Firebase, click on the gear next to Project Overview and then Project Settings. 
-		2. Then click on the Service Accounts tab, Firebase Admin SDK, select Python, and Generate new private key. Download and save the file to the repo’s database folder as key.json
+		1. On Firebase, click on the gear next to Project Overview and then Project Settings
+		2. Then click on the Service Accounts tab, Firebase Admin SDK, select Python, and Generate new private key
+			1. Download and save the file to the repo’s database folder as key.json
 	7. Add a user (for admin powers on web app) through Authentication in the sidebar
 		1. Use email/password under Sign-in method and create the user through the Users Tab
 	8. In Android Studio set Chrome (web) as the device and run!
